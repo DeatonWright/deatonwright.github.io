@@ -18,9 +18,22 @@
             background: #64ffda;
             color: #0a192f;
         }
+        #interactive-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        main, header, aside, footer {
+            position: relative;
+            z-index: 1;
+        }
         .section {
             min-height: 80vh;
-            padding: 100px 0;
+            padding: 80px 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -32,6 +45,7 @@
         }
         .skill-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
         }
         .skill-card:hover {
             transform: translateY(-10px);
@@ -82,6 +96,33 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .interest-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        .interest-card img {
+            transition: transform 0.4s ease;
+        }
+        .interest-card:hover img {
+            transform: scale(1.1);
+        }
+        .interest-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 1.5rem 1rem 1rem;
+            color: white;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .interest-card:hover .interest-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
         /* Animation delays */
         .fade-in-1 { animation-delay: 0.2s; }
         .fade-in-2 { animation-delay: 0.4s; }
@@ -91,13 +132,14 @@
     </style>
 </head>
 <body class="antialiased leading-relaxed">
+    <canvas id="interactive-canvas"></canvas>
     <!-- Floating Social Links -->
     <aside class="hidden md:block fixed bottom-0 left-10 z-10">
         <div class="flex flex-col items-center space-y-6">
             <a href="https://github.com/your-github-username" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             </a>
-            <a href="https://www.linkedin.com/in/your-linkedin-profile" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1">
+            <a href="https://www.linkedin.com/in/deaton-wright" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
             </a>
             <div class="h-24 w-px bg-gray-500"></div>
@@ -123,6 +165,7 @@
                     <a href="#about" class="nav-link text-gray-700">About</a>
                     <a href="#skills" class="nav-link text-gray-700">Skills</a>
                     <a href="#experience" class="nav-link text-gray-700">Experience</a>
+                    <a href="#interests" class="nav-link text-gray-700">Interests</a>
                     <a href="#contact" class="nav-link text-gray-700">Contact</a>
                     <a href="#" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-slate-900 transition-colors">Resume</a>
                 </nav>
@@ -137,6 +180,7 @@
                 <a href="#about" class="nav-link text-gray-700">About</a>
                 <a href="#skills" class="nav-link text-gray-700">Skills</a>
                 <a href="#experience" class="nav-link text-gray-700">Experience</a>
+                <a href="#interests" class="nav-link text-gray-700">Interests</a>
                 <a href="#contact" class="nav-link text-gray-700">Contact</a>
                 <a href="#" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-slate-900 transition-colors">Resume</a>
             </div>
@@ -156,7 +200,7 @@
                     I'm a results-oriented business leader specializing in building and scaling ventures in high-growth environments. I turn data into strategic insights and align teams to achieve ambitious growth.
                 </p>
                 <div class="mt-8 fade-in fade-in-5">
-                    <a href="#contact" class="bg-transparent border-2 border-teal-300 text-teal-300 font-semibold py-3 px-8 rounded-md hover:bg-teal-300 hover:text-slate-900 transition-all duration-300">
+                    <a href="#contact" class="bg-teal-400 text-slate-900 font-bold py-3 px-8 rounded-md hover:bg-teal-300 transition-colors text-lg">
                         Get In Touch
                     </a>
                 </div>
@@ -167,7 +211,8 @@
         <section id="about" class="section">
             <div class="w-full">
                 <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
-                    <span class="text-teal-500 mr-4">01.</span> About Me
+                    <span class="flex-grow h-px bg-gray-200 mr-4"></span>
+                    About Me
                     <span class="flex-grow h-px bg-gray-200 ml-4"></span>
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-12">
@@ -185,7 +230,7 @@
                     <div class="md:col-span-2 flex justify-center items-start">
                          <div class="relative w-64 h-64">
                             <div class="absolute inset-0 bg-teal-400 rounded-lg transform -rotate-3 transition-transform duration-500 hover:rotate-0"></div>
-                            <img src="https://placehold.co/400x400/ffffff/000000?text=DW" alt="Deaton Wright" class="relative w-full h-full object-cover rounded-lg shadow-2xl">
+                            <img src="Deaton Wright.jpg" alt="Deaton Wright" class="relative w-full h-full object-cover rounded-lg shadow-2xl">
                         </div>
                     </div>
                 </div>
@@ -197,29 +242,25 @@
              <div class="w-full text-center">
                 <h2 class="text-3xl font-bold text-gray-900 mb-12 flex items-center justify-center">
                     <span class="flex-grow h-px bg-gray-200 mr-4"></span>
-                    <span class="text-teal-500 mr-4">02.</span> My Toolkit
+                    My Toolkit
                     <span class="flex-grow h-px bg-gray-200 ml-4"></span>
                 </h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <!-- Core Competencies -->
-                    <div class="skill-card glass-effect p-6 rounded-lg text-center">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Core Competencies</h3>
-                        <p class="text-gray-600 text-sm">Strategic Planning, P&L Management, Market Expansion, Process Improvement, Global Strategy.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Strategic Leadership</h3>
+                        <p class="text-gray-600 text-sm">I excel at defining a strategic vision and leading cross-functional teams to execute on it. My expertise includes P&L management, market expansion, global strategy, and fostering innovation to drive sustainable growth.</p>
                     </div>
-                    <!-- Data & Analytics -->
-                    <div class="skill-card glass-effect p-6 rounded-lg text-center">
+                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col">
                         <h3 class="text-xl font-bold text-gray-900 mb-2">Data & Analytics</h3>
-                        <p class="text-gray-600 text-sm">SQL, Tableau, Power BI, Google Analytics, A/B Testing, Financial Modeling, Customer Segmentation.</p>
+                        <p class="text-gray-600 text-sm">Leveraging tools like SQL, Tableau, and Power BI to transform raw data into actionable insights. Proficient in financial modeling, A/B testing, and customer segmentation to uncover growth opportunities and drive decisions.</p>
                     </div>
-                    <!-- Revenue & Growth -->
-                    <div class="skill-card glass-effect p-6 rounded-lg text-center">
+                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col">
                         <h3 class="text-xl font-bold text-gray-900 mb-2">Revenue & Growth</h3>
-                        <p class="text-gray-600 text-sm">Customer Acquisition & Retention, Pricing Strategy, Subscription Models, Promotion Management.</p>
+                        <p class="text-gray-600 text-sm">Specializing in full-funnel growth, from customer acquisition to retention. I develop and implement pricing strategies, subscription models, and promotional campaigns that maximize revenue and market share.</p>
                     </div>
-                    <!-- Technical Tools -->
-                    <div class="skill-card glass-effect p-6 rounded-lg text-center">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Technical Tools</h3>
-                        <p class="text-gray-600 text-sm">Python, Advanced Excel, Airtable, Microsoft Azure.</p>
+                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Technical Proficiency</h3>
+                        <p class="text-gray-600 text-sm">Comfortable in modern tech environments, utilizing Python for data analysis, Advanced Excel for complex modeling, and platforms like Airtable and Microsoft Azure to streamline operations and build scalable solutions.</p>
                     </div>
                 </div>
             </div>
@@ -229,12 +270,12 @@
         <section id="experience" class="section">
             <div class="w-full">
                 <h2 class="text-3xl font-bold text-gray-900 mb-12 flex items-center">
-                    <span class="text-teal-500 mr-4">03.</span> Where I've Worked
+                    <span class="flex-grow h-px bg-gray-200 mr-4"></span>
+                    Where I've Worked
                     <span class="flex-grow h-px bg-gray-200 ml-4"></span>
                 </h2>
                 <div class="relative pl-8">
                     <div class="timeline-line"></div>
-                    <!-- Experience Item 1 -->
                     <div class="timeline-item mb-12 relative">
                         <div class="cursor-pointer" onclick="toggleExperience('exp1')">
                             <h3 class="text-xl font-bold text-gray-900">Regional Manager</h3>
@@ -242,14 +283,12 @@
                             <p class="text-gray-500 text-sm mt-1">August 2023 - Present</p>
                         </div>
                         <ul id="exp1" class="list-disc list-inside text-gray-600 mt-4 space-y-2 pl-4 max-h-0 overflow-hidden transition-max-height duration-700 ease-in-out">
-                            <li>Leveraged advanced SQL and Excel to build scalable reporting dashboards, boosting team efficiency by 25%.</li>
-                            <li>Collaborated on a go-to-market strategy for a new market, exceeding initial targets by 57%.</li>
-                            <li>Influenced a strategic pivot that unlocked a new revenue stream by distilling complex operational data.</li>
-                            <li>Improved operational efficiency by 15% through end-to-end strategic initiatives.</li>
-                            <li>Mentored and developed high-performing cross-functional teams with a culture of transparency.</li>
+                            <li>Architected scalable reporting dashboards using advanced SQL and Excel, increasing team efficiency by 25% and providing leadership with real-time performance insights.</li>
+                            <li>Co-developed a comprehensive go-to-market strategy for a new market pipeline, leading to a successful launch that surpassed initial targets by 57%.</li>
+                            <li>Distilled complex operational data into actionable business intelligence, influencing a strategic pivot that unlocked a significant new revenue stream.</li>
+                            <li>Led end-to-end strategic initiatives to drive growth, from ideation to execution, overseeing a project that improved operational efficiency by 15% and reduced costs.</li>
                         </ul>
                     </div>
-                     <!-- Experience Item 2 -->
                     <div class="timeline-item mb-12 relative">
                         <div class="cursor-pointer" onclick="toggleExperience('exp2')">
                             <h3 class="text-xl font-bold text-gray-900">Vice President - Operations</h3>
@@ -257,14 +296,12 @@
                             <p class="text-gray-500 text-sm mt-1">Jan 2021 - Aug 2023</p>
                         </div>
                         <ul id="exp2" class="list-disc list-inside text-gray-600 mt-4 space-y-2 pl-4 max-h-0 overflow-hidden transition-max-height duration-700 ease-in-out">
-                            <li>Drove an 80% increase in new customer acquisition via data-driven promotional campaigns.</li>
-                            <li>Improved customer satisfaction by 70% and reduced churn by 50% by introducing tiered service options.</li>
-                            <li>Achieved a 180% revenue increase for key products through strategic pricing.</li>
-                            <li>Overhauled global shipping processes across 42 countries, reducing costs by 50%.</li>
-                            <li>Secured $2.5 million in investment for a new market segment entry.</li>
+                            <li>Spearheaded a data-driven strategy leveraging purchasing patterns to launch targeted promotional campaigns, driving an 80% increase in new customer acquisition.</li>
+                            <li>Revitalized service delivery by introducing tiered service options, which improved customer satisfaction scores by 70% and reduced churn by 50%.</li>
+                            <li>Translated comprehensive market analyses into actionable pricing strategies, resulting in a 180% revenue increase for key services.</li>
+                            <li>Oversaw a global program to overhaul shipping processes across 42 countries, negotiating with new carriers to reduce average shipping costs by 50%.</li>
                         </ul>
                     </div>
-                     <!-- Experience Item 3 -->
                     <div class="timeline-item relative">
                         <div class="cursor-pointer" onclick="toggleExperience('exp3')">
                             <h3 class="text-xl font-bold text-gray-900">General Manager</h3>
@@ -272,12 +309,66 @@
                             <p class="text-gray-500 text-sm mt-1">May 2016 - Jan 2021</p>
                         </div>
                         <ul id="exp3" class="list-disc list-inside text-gray-600 mt-4 space-y-2 pl-4 max-h-0 overflow-hidden transition-max-height duration-700 ease-in-out">
-                           <li>Engineered a customer segmentation framework fueling an 80% rise in new customer acquisition.</li>
-                            <li>Revitalized customer experience, improving satisfaction scores by 70% and cutting churn by 50%.</li>
-                            <li>Synthesized market analyses into a pricing strategy that drove a 180% revenue increase.</li>
-                            <li>Streamlined go-to-market processes by orchestrating cross-functional alignment.</li>
-                            <li>Steered a multi-million dollar business unit to profitability through optimized P&L management.</li>
+                           <li>Engineered a data-driven customer segmentation framework that fueled an 80% increase in new customer acquisition and a 15% improvement in retention.</li>
+                            <li>Revitalized the customer experience by designing and launching tiered service options, which improved satisfaction scores by 70% and reduced churn by 50%.</li>
+                            <li>Synthesized competitive and market analyses into a pricing strategy that drove a 180% increase in revenue for key product lines.</li>
+                            <li>Steered a multi-million dollar business unit to profitability by optimizing P&L management and implementing strategic cost-cutting initiatives.</li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interests Section -->
+        <section id="interests" class="section">
+            <div class="w-full">
+                <h2 class="text-3xl font-bold text-gray-900 mb-12 flex items-center justify-center">
+                    <span class="flex-grow h-px bg-gray-200 mr-4"></span>
+                    Beyond the Office
+                    <span class="flex-grow h-px bg-gray-200 ml-4"></span>
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="interest-card shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1502680390409-64d73836b212?auto=format&fit=crop&q=80&w=600" alt="Surfing" class="w-full h-full object-cover">
+                        <div class="interest-overlay">
+                            <h3 class="font-bold text-xl">Surfing</h3>
+                            <p class="text-sm mt-1">Chasing waves and finding balance on the water.</p>
+                        </div>
+                    </div>
+                    <div class="interest-card shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&q=80&w=600" alt="Hiking" class="w-full h-full object-cover">
+                        <div class="interest-overlay">
+                            <h3 class="font-bold text-xl">Hiking</h3>
+                             <p class="text-sm mt-1">Exploring new trails and disconnecting in nature.</p>
+                        </div>
+                    </div>
+                    <div class="interest-card shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1617544026288-a9d3bbf10c66?auto=format&fit=crop&q=80&w=600" alt="Kiteboarding" class="w-full h-full object-cover">
+                        <div class="interest-overlay">
+                            <h3 class="font-bold text-xl">Kiteboarding</h3>
+                            <p class="text-sm mt-1">Harnessing the wind for an adrenaline-fueled ride.</p>
+                        </div>
+                    </div>
+                    <div class="interest-card shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&q=80&w=600" alt="Camping" class="w-full h-full object-cover">
+                        <div class="interest-overlay">
+                            <h3 class="font-bold text-xl">Camping</h3>
+                            <p class="text-sm mt-1">Nights under the stars and mornings by the campfire.</p>
+                        </div>
+                    </div>
+                    <div class="interest-card shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1519709212071-0a8c5b364b1a?auto=format&fit=crop&q=80&w=600" alt="Fishing" class="w-full h-full object-cover">
+                        <div class="interest-overlay">
+                            <h3 class="font-bold text-xl">Fishing</h3>
+                            <p class="text-sm mt-1">The perfect blend of patience, strategy, and the outdoors.</p>
+                        </div>
+                    </div>
+                    <div class="interest-card shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1549221884-2d4825d12224?auto=format&fit=crop&q=80&w=600" alt="Snowboarding" class="w-full h-full object-cover">
+                        <div class="interest-overlay">
+                            <h3 class="font-bold text-xl">Snowboarding</h3>
+                            <p class="text-sm mt-1">Carving down mountains and enjoying the winter landscape.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -297,7 +388,11 @@
         <!-- Contact Section -->
         <section id="contact" class="section text-center">
             <div class="w-full">
-                <h2 class="text-teal-500 text-lg font-medium">04. What's Next?</h2>
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center justify-center">
+                    <span class="flex-grow h-px bg-gray-200 mr-4"></span>
+                    What's Next?
+                    <span class="flex-grow h-px bg-gray-200 ml-4"></span>
+                </h2>
                 <h3 class="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">Get In Touch</h3>
                 <p class="text-gray-600 max-w-lg mx-auto mb-10">
                     I'm always open to discussing new opportunities and collaborations. Whether you have a question or just want to say hi, my inbox is always open.
@@ -315,6 +410,108 @@
     </footer>
 
     <script>
+        // --- Interactive Canvas Background ---
+        const canvas = document.getElementById('interactive-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        const mouse = {
+            x: null,
+            y: null,
+            radius: (canvas.height/100) * (canvas.width/100)
+        }
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+        
+        window.addEventListener('mouseout', () => {
+             mouse.x = undefined;
+             mouse.y = undefined;
+        });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            mouse.radius = (canvas.height/100) * (canvas.width/100);
+            init();
+        });
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = 'rgba(26, 188, 156, 0.2)';
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+                
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mouse.radius + this.size){
+                    if(mouse.x < this.x && this.x < canvas.width - this.size * 10){
+                        this.x += 5;
+                    }
+                    if(mouse.x > this.x && this.x > this.size * 10){
+                        this.x -= 5;
+                    }
+                    if(mouse.y < this.y && this.y < canvas.height - this.size * 10){
+                        this.y += 5;
+                    }
+                    if(mouse.y > this.y && this.y > this.size * 10){
+                        this.y -= 5;
+                    }
+                }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i=0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 0.4) - 0.2;
+                let directionY = (Math.random() * 0.4) - 0.2;
+                let color = '#1abc9c';
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0,0,innerWidth, innerHeight);
+            for (let i=0; i<particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+        }
+        
+        init();
+        animate();
+
         // --- Mobile Menu Toggle ---
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -328,10 +525,8 @@
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             if (scrollTop > lastScrollTop) {
-                // Downscroll
                 header.style.top = '-100px';
             } else {
-                // Upscroll
                 header.style.top = '0';
             }
             if (scrollTop > 100) {
@@ -358,7 +553,6 @@
         function type() {
             const currentPhrase = phrases[phraseIndex];
             let displayText = '';
-
             if (isDeleting) {
                 displayText = currentPhrase.substring(0, charIndex - 1);
                 charIndex--;
@@ -366,41 +560,41 @@
                 displayText = currentPhrase.substring(0, charIndex + 1);
                 charIndex++;
             }
-
             typewriterElement.textContent = displayText;
-
             let typeSpeed = isDeleting ? 75 : 150;
-
             if (!isDeleting && charIndex === currentPhrase.length) {
-                typeSpeed = 2000; // Pause at end
+                typeSpeed = 2000;
                 isDeleting = true;
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 phraseIndex = (phraseIndex + 1) % phrases.length;
-                typeSpeed = 500; // Pause before new phrase
+                typeSpeed = 500;
             }
-
             setTimeout(type, typeSpeed);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(type, 1500); // Start after intro animation
+            setTimeout(type, 1500);
         });
 
         // --- Experience Accordion ---
         function toggleExperience(id) {
             const element = document.getElementById(id);
+            document.querySelectorAll('.timeline-item ul').forEach(ul => {
+                if (ul.id !== id) {
+                    ul.style.maxHeight = null;
+                }
+            });
             if (element.style.maxHeight) {
                 element.style.maxHeight = null;
             } else {
                 element.style.maxHeight = element.scrollHeight + "px";
             }
         }
-        // Auto-open the first experience item
+        
         window.addEventListener('load', () => {
              toggleExperience('exp1');
         });
-
 
         // --- Active Nav Link on Scroll ---
         const sections = document.querySelectorAll('section');
