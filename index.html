@@ -1,405 +1,426 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deaton Wright | Strategic Business Leader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #ffffff;
-            --text-color: #121212;
-            --text-secondary-color: #555555;
-            --accent-color: #d946ef; /* Fuchsia */
-            --card-bg-color: rgba(248, 249, 250, 0.6); /* Semi-transparent white */
-            --border-color: rgba(0, 0, 0, 0.1);
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.7;
-            overflow-x: hidden;
-            position: relative;
+            background-color: #ffffff;
+            color: #212529;
         }
-        
-        /* Animated Aurora Background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 10% 20%, #d946ef30, transparent 30%),
-                        radial-gradient(circle at 80% 70%, #5a67d830, transparent 40%);
-            z-index: -1;
-            animation: moveGradient 20s ease-in-out infinite alternate;
+        ::selection {
+            background: #64ffda;
+            color: #0a192f;
         }
-
-        @keyframes moveGradient {
-            from { transform: translate(0, 0) scale(1); }
-            to { transform: translate(100px, -100px) scale(1.5); }
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        /* --- Header --- */
-        header {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            padding: 1rem 0;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 100;
-        }
-        
-        .nav-container {
+        .section {
+            min-height: 80vh;
+            padding: 100px 0;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 2rem;
         }
-
-        .logo {
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: var(--text-color);
-            text-decoration: none;
+        .glass-effect {
+            background: rgba(248, 249, 250, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
-        
-        .nav-links a {
-            margin-left: 2rem;
-            text-decoration: none;
-            color: var(--text-secondary-color);
-            font-weight: 600;
-            position: relative;
-            transition: color 0.3s;
+        .skill-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
-        .nav-links a:hover {
-            color: var(--accent-color);
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        
-        .nav-links a::after {
+        .timeline-item::before {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--accent-color);
-            transition: width 0.3s;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #64ffda;
+            border: 3px solid #ffffff;
         }
-        
-        .nav-links a:hover::after {
-            width: 100%;
+        .timeline-line {
+            position: absolute;
+            left: -21px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #dee2e6;
         }
-
-        /* --- Sections & Animations --- */
-        section {
-            padding: 6rem 0;
+        .nav-link {
+            transition: color 0.3s;
         }
-
-        .section-title {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 3rem;
-            text-align: center;
+        .nav-link:hover, .nav-link.active {
+            color: #64ffda;
         }
-        
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s, transform 0.8s;
-            transition-timing-function: ease-out;
-        }
-        
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- Hero Section --- */
-        #hero {
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-        }
-        
-        .hero-content {
-            text-align: center;
-        }
-        
-        #hero h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, var(--accent-color), #222);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        #hero p {
-            font-size: 1.25rem;
-            color: var(--text-secondary-color);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
-
-        .cta-button {
+        .typewriter-cursor {
             display: inline-block;
-            background: var(--text-color);
-            color: var(--bg-color);
-            padding: 1rem 2.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
+            width: 8px;
+            height: 1.5em;
+            background-color: #64ffda;
+            animation: blink 0.7s infinite;
         }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
-
-        /* --- Cards (Used for Experience & Projects) --- */
-        .card-grid {
-            display: grid;
-            gap: 2rem;
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+            opacity: 0;
         }
-
-        .card {
-            background: var(--card-bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* --- Experience Section --- */
-        #experience .card-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .experience-item {
-            display: flex;
-            gap: 2rem;
-        }
-        .experience-date {
-            min-width: 150px;
-            font-weight: 600;
-            color: var(--text-secondary-color);
-        }
-        .experience-details h3 {
-            margin-bottom: 0.25rem;
-            font-size: 1.25rem;
-        }
-        .experience-details p {
-            color: var(--accent-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        .experience-details ul {
-            list-style-position: inside;
-            color: var(--text-secondary-color);
-        }
-
-        /* --- Projects Section --- */
-        #projects .card-grid {
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        }
-
-        .project-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .project-card p {
-            color: var(--text-secondary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .project-links a {
-            text-decoration: none;
-            color: var(--accent-color);
-            font-weight: 600;
-            margin-right: 1.5rem;
-            transition: opacity 0.3s;
-        }
-
-        .project-links a:hover {
-            opacity: 0.7;
-        }
-        
-        /* --- Contact Section --- */
-        #contact {
-            text-align: center;
-        }
-
-        #contact p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            color: var(--text-secondary-color);
-        }
-        
-        .contact-email {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-
-        /* Responsive Design */
-        @media(max-width: 768px) {
-            .nav-links { display: none; } /* Simpler for example, would add hamburger menu */
-            #hero h1 { font-size: 3rem; }
-            .section-title { font-size: 2.5rem; }
-            .experience-item { flex-direction: column; gap: 0.5rem; }
-        }
-
+        /* Animation delays */
+        .fade-in-1 { animation-delay: 0.2s; }
+        .fade-in-2 { animation-delay: 0.4s; }
+        .fade-in-3 { animation-delay: 0.6s; }
+        .fade-in-4 { animation-delay: 0.8s; }
+        .fade-in-5 { animation-delay: 1s; }
     </style>
 </head>
-<body>
+<body class="antialiased leading-relaxed">
+    <!-- Floating Social Links -->
+    <aside class="hidden md:block fixed bottom-0 left-10 z-10">
+        <div class="flex flex-col items-center space-y-6">
+            <a href="https://github.com/your-github-username" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/your-linkedin-profile" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+            <div class="h-24 w-px bg-gray-500"></div>
+        </div>
+    </aside>
 
-    <header>
-        <div class="nav-container">
-            <a href="#hero" class="logo">DW.</a>
-            <nav class="nav-links">
-                <a href="#experience">Experience</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </nav>
+    <!-- Floating Email Link -->
+    <aside class="hidden md:block fixed bottom-0 right-10 z-10">
+        <div class="flex flex-col items-center space-y-6">
+            <a href="mailto:wrightdeaton@gmail.com" class="text-gray-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1" style="writing-mode: vertical-rl;">
+                wrightdeaton@gmail.com
+            </a>
+            <div class="h-24 w-px bg-gray-500"></div>
+        </div>
+    </aside>
+
+    <!-- Header / Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 glass-effect shadow-md">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#hero" class="text-2xl font-extrabold text-teal-500">DW</a>
+                <nav class="hidden md:flex space-x-8 items-center text-sm">
+                    <a href="#about" class="nav-link text-gray-700">About</a>
+                    <a href="#skills" class="nav-link text-gray-700">Skills</a>
+                    <a href="#experience" class="nav-link text-gray-700">Experience</a>
+                    <a href="#contact" class="nav-link text-gray-700">Contact</a>
+                    <a href="#" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-slate-900 transition-colors">Resume</a>
+                </nav>
+                <button id="mobile-menu-btn" class="md:hidden text-teal-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+         <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="flex flex-col items-center space-y-4 py-4">
+                <a href="#about" class="nav-link text-gray-700">About</a>
+                <a href="#skills" class="nav-link text-gray-700">Skills</a>
+                <a href="#experience" class="nav-link text-gray-700">Experience</a>
+                <a href="#contact" class="nav-link text-gray-700">Contact</a>
+                <a href="#" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-slate-900 transition-colors">Resume</a>
+            </div>
         </div>
     </header>
 
-    <main>
-        <section id="hero" class="container">
-            <div class="hero-content reveal">
-                <h1>Deaton Wright</h1>
-                <p>Results-driven business leader with a decade of experience transforming complex data into revenue growth and operational excellence in high-stakes environments.</p>
-                <a href="#projects" class="cta-button">View My Work</a>
-            </div>
-        </section>
-
-        <section id="experience" class="container">
-            <h2 class="section-title reveal">Career Trajectory</h2>
-            <div class="card-grid">
-                <div class="card experience-item reveal">
-                    <div class="experience-date">2023 – Present</div>
-                    <div class="experience-details">
-                        <h3>Regional Manager</h3>
-                        <p>Bird | Spin (Myrtle Grove, NC)</p>
-                        <ul>
-                            <li>Engineered a data-driven customer segmentation framework, fueling an 80% surge in customer acquisition.</li>
-                            <li>Orchestrated a go-to-market strategy that shattered initial launch targets by 57%.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card experience-item reveal">
-                    <div class="experience-date">2021 – 2023</div>
-                    <div class="experience-details">
-                        <h3>Vice President, Operations</h3>
-                        <p>WB Surf</p>
-                        <ul>
-                            <li>Drove a 180% revenue increase for key products via a data-driven pricing & service strategy.</li>
-                            <li>Architected a global shipping overhaul across 42 countries, slashing costs by 50%.</li>
-                            <li>Secured a $2.5M investment by authoring a data-backed proposal for a new market segment.</li>
-                        </ul>
-                    </div>
-                </div>
-                 <div class="card experience-item reveal">
-                    <div class="experience-date">2016 – 2021</div>
-                    <div class="experience-details">
-                        <h3>General Manager</h3>
-                        <p>Real</p>
-                        <ul>
-                            <li>Directed a strategic shift that propelled the business to a 15% increase in operational efficiency.</li>
-                            <li>Steered the business unit to sustained profitability through robust P&L management.</li>
-                        </ul>
-                    </div>
+    <main class="container mx-auto px-6 sm:px-12 md:px-20 lg:px-32">
+        <!-- Hero Section -->
+        <section id="hero" class="section flex-col justify-center min-h-screen">
+            <div class="w-full">
+                <p class="text-teal-500 text-lg mb-4 fade-in fade-in-1">Hi, my name is</p>
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 fade-in fade-in-2">Deaton Wright.</h1>
+                <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold text-gray-600 mt-2 fade-in fade-in-3">
+                    <span id="typewriter"></span><span class="typewriter-cursor"></span>
+                </h2>
+                <p class="mt-6 max-w-xl text-lg text-gray-600 fade-in fade-in-4">
+                    I'm a results-oriented business leader specializing in building and scaling ventures in high-growth environments. I turn data into strategic insights and align teams to achieve ambitious growth.
+                </p>
+                <div class="mt-8 fade-in fade-in-5">
+                    <a href="#contact" class="bg-transparent border-2 border-teal-300 text-teal-300 font-semibold py-3 px-8 rounded-md hover:bg-teal-300 hover:text-slate-900 transition-all duration-300">
+                        Get In Touch
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="container">
-            <h2 class="section-title reveal">Key Projects</h2>
-            <div class="card-grid">
-                <div class="card project-card reveal">
-                    <h3>Global Supply Chain Dashboard</h3>
-                    <p>An interactive analytics dashboard built to monitor and optimize global logistics, leading to a 50% reduction in average shipping costs.</p>
-                    <div class="project-links">
-                        <a href="https://public.tableau.com/app/profile/tableau.examples/viz/Superstore/Superstore" target="_blank">Live Demo →</a>
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="w-full">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+                    <span class="text-teal-500 mr-4">01.</span> About Me
+                    <span class="flex-grow h-px bg-gray-200 ml-4"></span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-12">
+                    <div class="md:col-span-3 text-gray-600 space-y-4 text-lg">
+                        <p>
+                           With over 10 years of experience, I thrive in high-growth environments, specializing in building and scaling new business ventures. My expertise lies in leading complex programs, managing multiple brands, and driving strategic insights from data. 
+                        </p>
+                        <p>
+                            I have a proven ability to align diverse, cross-functional teams to achieve ambitious growth targets. My approach is rooted in a deep understanding of analytics, operational efficiency, and the power of compelling storytelling.
+                        </p>
+                        <p>
+                            I'm currently seeking to leverage my skills to drive the expansion of innovative new ventures and contribute to building the future of business services.
+                        </p>
                     </div>
-                </div>
-                <div class="card project-card reveal">
-                    <h3>Customer Lifetime Value Engine</h3>
-                    <p>A Python-based segmentation framework that powered targeted campaigns, driving an 80% increase in new customer acquisition.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/hsu-vincent/customer-segmentation-using-kmeans" target="_blank">GitHub Repo →</a>
-                    </div>
-                </div>
-                <div class="card project-card reveal">
-                    <h3>Market Expansion Simulator</h3>
-                    <p>A sophisticated financial model to simulate P&L outcomes for new market entry, instrumental in securing a $2.5M investment.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/pb-j/monte-carlo-portfolio-optimization" target="_blank">View Model →</a>
+                    <div class="md:col-span-2 flex justify-center items-start">
+                         <div class="relative w-64 h-64">
+                            <div class="absolute inset-0 bg-teal-400 rounded-lg transform -rotate-3 transition-transform duration-500 hover:rotate-0"></div>
+                            <img src="https://placehold.co/400x400/ffffff/000000?text=DW" alt="Deaton Wright" class="relative w-full h-full object-cover rounded-lg shadow-2xl">
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="container">
-            <h2 class="section-title reveal">Get In Touch</h2>
-            <div class="reveal">
-                <p>I'm always open to discussing new opportunities and challenges in the tech space. Feel free to reach out.</p>
-                <a href="mailto:wrightdeaton@gmail.com" class="contact-email">wrightdeaton@gmail.com</a>
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+             <div class="w-full text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-12 flex items-center justify-center">
+                    <span class="flex-grow h-px bg-gray-200 mr-4"></span>
+                    <span class="text-teal-500 mr-4">02.</span> My Toolkit
+                    <span class="flex-grow h-px bg-gray-200 ml-4"></span>
+                </h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Core Competencies -->
+                    <div class="skill-card glass-effect p-6 rounded-lg text-center">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Core Competencies</h3>
+                        <p class="text-gray-600 text-sm">Strategic Planning, P&L Management, Market Expansion, Process Improvement, Global Strategy.</p>
+                    </div>
+                    <!-- Data & Analytics -->
+                    <div class="skill-card glass-effect p-6 rounded-lg text-center">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Data & Analytics</h3>
+                        <p class="text-gray-600 text-sm">SQL, Tableau, Power BI, Google Analytics, A/B Testing, Financial Modeling, Customer Segmentation.</p>
+                    </div>
+                    <!-- Revenue & Growth -->
+                    <div class="skill-card glass-effect p-6 rounded-lg text-center">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Revenue & Growth</h3>
+                        <p class="text-gray-600 text-sm">Customer Acquisition & Retention, Pricing Strategy, Subscription Models, Promotion Management.</p>
+                    </div>
+                    <!-- Technical Tools -->
+                    <div class="skill-card glass-effect p-6 rounded-lg text-center">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Technical Tools</h3>
+                        <p class="text-gray-600 text-sm">Python, Advanced Excel, Airtable, Microsoft Azure.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+            <div class="w-full">
+                <h2 class="text-3xl font-bold text-gray-900 mb-12 flex items-center">
+                    <span class="text-teal-500 mr-4">03.</span> Where I've Worked
+                    <span class="flex-grow h-px bg-gray-200 ml-4"></span>
+                </h2>
+                <div class="relative pl-8">
+                    <div class="timeline-line"></div>
+                    <!-- Experience Item 1 -->
+                    <div class="timeline-item mb-12 relative">
+                        <div class="cursor-pointer" onclick="toggleExperience('exp1')">
+                            <h3 class="text-xl font-bold text-gray-900">Regional Manager</h3>
+                            <p class="text-teal-500 text-md">Bird | Spin</p>
+                            <p class="text-gray-500 text-sm mt-1">August 2023 - Present</p>
+                        </div>
+                        <ul id="exp1" class="list-disc list-inside text-gray-600 mt-4 space-y-2 pl-4 max-h-0 overflow-hidden transition-max-height duration-700 ease-in-out">
+                            <li>Leveraged advanced SQL and Excel to build scalable reporting dashboards, boosting team efficiency by 25%.</li>
+                            <li>Collaborated on a go-to-market strategy for a new market, exceeding initial targets by 57%.</li>
+                            <li>Influenced a strategic pivot that unlocked a new revenue stream by distilling complex operational data.</li>
+                            <li>Improved operational efficiency by 15% through end-to-end strategic initiatives.</li>
+                            <li>Mentored and developed high-performing cross-functional teams with a culture of transparency.</li>
+                        </ul>
+                    </div>
+                     <!-- Experience Item 2 -->
+                    <div class="timeline-item mb-12 relative">
+                        <div class="cursor-pointer" onclick="toggleExperience('exp2')">
+                            <h3 class="text-xl font-bold text-gray-900">Vice President - Operations</h3>
+                            <p class="text-teal-500 text-md">WB Surf</p>
+                            <p class="text-gray-500 text-sm mt-1">Jan 2021 - Aug 2023</p>
+                        </div>
+                        <ul id="exp2" class="list-disc list-inside text-gray-600 mt-4 space-y-2 pl-4 max-h-0 overflow-hidden transition-max-height duration-700 ease-in-out">
+                            <li>Drove an 80% increase in new customer acquisition via data-driven promotional campaigns.</li>
+                            <li>Improved customer satisfaction by 70% and reduced churn by 50% by introducing tiered service options.</li>
+                            <li>Achieved a 180% revenue increase for key products through strategic pricing.</li>
+                            <li>Overhauled global shipping processes across 42 countries, reducing costs by 50%.</li>
+                            <li>Secured $2.5 million in investment for a new market segment entry.</li>
+                        </ul>
+                    </div>
+                     <!-- Experience Item 3 -->
+                    <div class="timeline-item relative">
+                        <div class="cursor-pointer" onclick="toggleExperience('exp3')">
+                            <h3 class="text-xl font-bold text-gray-900">General Manager</h3>
+                            <p class="text-teal-500 text-md">Real</p>
+                            <p class="text-gray-500 text-sm mt-1">May 2016 - Jan 2021</p>
+                        </div>
+                        <ul id="exp3" class="list-disc list-inside text-gray-600 mt-4 space-y-2 pl-4 max-h-0 overflow-hidden transition-max-height duration-700 ease-in-out">
+                           <li>Engineered a customer segmentation framework fueling an 80% rise in new customer acquisition.</li>
+                            <li>Revitalized customer experience, improving satisfaction scores by 70% and cutting churn by 50%.</li>
+                            <li>Synthesized market analyses into a pricing strategy that drove a 180% revenue increase.</li>
+                            <li>Streamlined go-to-market processes by orchestrating cross-functional alignment.</li>
+                            <li>Steered a multi-million dollar business unit to profitability through optimized P&L management.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Education Section -->
+        <section id="education" class="section">
+            <div class="w-full text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8">Education</h2>
+                <div class="inline-block glass-effect p-8 rounded-lg text-center">
+                    <h3 class="text-2xl font-bold text-teal-500">University of North Carolina, Wilmington</h3>
+                    <p class="text-gray-700 text-lg mt-2">BS - Business Analytics, Management and Leadership</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section text-center">
+            <div class="w-full">
+                <h2 class="text-teal-500 text-lg font-medium">04. What's Next?</h2>
+                <h3 class="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">Get In Touch</h3>
+                <p class="text-gray-600 max-w-lg mx-auto mb-10">
+                    I'm always open to discussing new opportunities and collaborations. Whether you have a question or just want to say hi, my inbox is always open.
+                </p>
+                <a href="mailto:wrightdeaton@gmail.com" class="bg-teal-400 text-slate-900 font-bold py-4 px-10 rounded-md hover:bg-teal-300 transition-colors text-lg">
+                    Say Hello
+                </a>
             </div>
         </section>
     </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const revealElements = document.querySelectorAll('.reveal');
+    <footer class="text-center py-6 text-gray-500 text-sm">
+        <p>Designed & Built by AI</p>
+        <p>Hosted on GitHub Pages</p>
+    </footer>
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, {
-                threshold: 0.1
+    <script>
+        // --- Mobile Menu Toggle ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- Header scroll effect ---
+        let lastScrollTop = 0;
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop) {
+                // Downscroll
+                header.style.top = '-100px';
+            } else {
+                // Upscroll
+                header.style.top = '0';
+            }
+            if (scrollTop > 100) {
+                 header.classList.add('py-2');
+                 header.classList.remove('py-4');
+            } else {
+                header.classList.remove('py-2');
+                header.classList.add('py-4');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        // --- Typewriter Effect ---
+        const typewriterElement = document.getElementById('typewriter');
+        const phrases = [
+            "I build and scale businesses.",
+            "I create value from data.",
+            "I lead high-performing teams."
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            let displayText = '';
+
+            if (isDeleting) {
+                displayText = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                displayText = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            typewriterElement.textContent = displayText;
+
+            let typeSpeed = isDeleting ? 75 : 150;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000; // Pause at end
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500; // Pause before new phrase
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(type, 1500); // Start after intro animation
+        });
+
+        // --- Experience Accordion ---
+        function toggleExperience(id) {
+            const element = document.getElementById(id);
+            if (element.style.maxHeight) {
+                element.style.maxHeight = null;
+            } else {
+                element.style.maxHeight = element.scrollHeight + "px";
+            }
+        }
+        // Auto-open the first experience item
+        window.addEventListener('load', () => {
+             toggleExperience('exp1');
+        });
+
+
+        // --- Active Nav Link on Scroll ---
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
             });
 
-            revealElements.forEach(element => {
-                observer.observe(element);
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
             });
         });
     </script>
