@@ -6,13 +6,21 @@
     <title>Deaton Wright | Strategic Business Leader</title>
     <style>
         :root {
-            --primary-color: #3b82f6; /* A professional blue */
-            --secondary-color: #d1d5db; /* Light gray for accents */
-            --background-color: #f9fafb; /* Off-white for a clean look */
-            --text-color: #1f2937; /* Dark gray for readability */
-            --card-background: #ffffff; /* White for cards */
+            --primary-color: #3b82f6;
+            --secondary-color: #d1d5db;
+            --background-color: #f9fafb;
+            --text-color: #1f2937;
+            --card-background: #ffffff;
+            --hover-background: #f3f4f6;
         }
-
+        
+        body.dark-mode {
+            --background-color: #1f2937;
+            --text-color: #f9fafb;
+            --card-background: #374151;
+            --hover-background: #4b5563;
+        }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
@@ -20,17 +28,19 @@
             padding: 0;
             background-color: var(--background-color);
             color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
         }
-        
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 2rem;
         }
-
+        
         header {
             text-align: center;
             padding: 4rem 0 2rem;
+            position: relative;
         }
 
         header h1 {
@@ -39,13 +49,17 @@
             color: var(--primary-color);
             line-height: 1.2;
         }
-
+        
         header p.tagline {
             font-size: 1.25rem;
             margin-top: 0.5rem;
             color: #4b5563;
         }
         
+        body.dark-mode header p.tagline {
+            color: #d1d5db;
+        }
+
         .contact-info {
             margin-top: 1rem;
             font-size: 0.9rem;
@@ -57,13 +71,21 @@
             text-decoration: none;
             margin: 0 0.5rem;
         }
-
+        
         .section {
             background-color: var(--card-background);
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             padding: 2rem;
             margin-bottom: 2rem;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+        }
+        
+        .section.visible {
+            transform: translateY(0);
+            opacity: 1;
         }
         
         .section-title {
@@ -72,12 +94,6 @@
             border-bottom: 2px solid var(--secondary-color);
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
-        }
-
-        .about p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #4b5563;
         }
 
         .experience-item {
@@ -92,24 +108,32 @@
             font-weight: 600;
             color: #4b5563;
         }
+        
+        body.dark-mode .experience-item .date {
+            color: #9ca3af;
+        }
 
         .experience-item .details {
             flex-grow: 1;
         }
-
+        
         .experience-item h3 {
             margin-top: 0;
             margin-bottom: 0.25rem;
             font-size: 1.25rem;
             color: var(--text-color);
         }
-
+        
         .experience-item p.role {
             font-style: italic;
             color: #6b7280;
             margin: 0 0 1rem;
         }
         
+        body.dark-mode .experience-item p.role {
+            color: #d1d5db;
+        }
+
         .experience-item ul {
             list-style: none;
             padding-left: 0;
@@ -130,6 +154,27 @@
             font-weight: bold;
             font-size: 1.2rem;
             top: -0.2rem;
+        }
+        
+        .experience-item .more-content {
+            display: none;
+        }
+        
+        .read-more-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .read-more-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--card-background);
         }
 
         .skills-grid {
@@ -154,12 +199,41 @@
         }
 
         .skill-category li {
-            background-color: var(--background-color);
+            background-color: var(--hover-background);
             border-radius: 6px;
             padding: 0.5rem 0.75rem;
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
-            color: #4b5563;
+            color: var(--text-color);
+        }
+        
+        #dark-mode-toggle {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 20px;
+            background-color: var(--card-background);
+            border: 2px solid var(--secondary-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        #dark-mode-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        
+        body.dark-mode #dark-mode-toggle::after {
+            transform: translateX(18px);
         }
 
         @media (max-width: 768px) {
@@ -176,6 +250,9 @@
                 margin-bottom: 0.5rem;
                 width: 100%;
             }
+            #dark-mode-toggle {
+                right: 1rem;
+            }
         }
     </style>
 </head>
@@ -183,6 +260,7 @@
 
 <header>
     <div class="container">
+        <div id="dark-mode-toggle"></div>
         <h1>Deaton Wright</h1>
         <p class="tagline">Strategic Business Leader | Driving Growth Through Data & Operations</p>
         <div class="contact-info">
@@ -209,9 +287,12 @@
                 <ul>
                     <li>**Drove Hyper-Efficient Growth:** Engineered a sophisticated data-driven customer segmentation framework that fueled an explosive 80% surge in new customer acquisition and a substantial 15% improvement in retention, demonstrating a mastery of market dynamics.</li>
                     <li>**Revolutionized Go-to-Market Strategy:** Orchestrated a flawless go-to-market plan for a new market pipeline by aligning product, marketing, and operations teams, culminating in a launch that shattered initial targets by an astonishing 57%.</li>
-                    <li>**Unleashed Operational Excellence:** Transformed raw, complex operational data into actionable insights, designing and implementing system efficiencies that reduced processing time by an incredible 50% and saved thousands of labor hours, directly impacting the bottom line.</li>
-                    <li>**Secured Executive Buy-In:** Developed and delivered high-impact presentations to executive leadership and board members, translating intricate strategic visions and business performance into a compelling narrative that secured unanimous buy-in for critical new projects.</li>
+                    <div class="more-content">
+                        <li>**Unleashed Operational Excellence:** Transformed raw, complex operational data into actionable insights, designing and implementing system efficiencies that reduced processing time by an incredible 50% and saved thousands of labor hours, directly impacting the bottom line.</li>
+                        <li>**Secured Executive Buy-In:** Developed and delivered high-impact presentations to executive leadership and board members, translating intricate strategic visions and business performance into a compelling narrative that secured unanimous buy-in for critical new projects.</li>
+                    </div>
                 </ul>
+                <button class="read-more-btn">Read More</button>
             </div>
         </div>
 
@@ -223,9 +304,12 @@
                 <ul>
                     <li>**Catalyzed Revenue Explosion:** Synthesized comprehensive competitive and market analyses into a powerful pricing and service strategy that single-handedly drove a monumental 180% increase in revenue for key product lines.</li>
                     <li>**Transformed Customer Experience:** Revitalized the service delivery and customer journey by architecting and launching tiered service options, which improved customer satisfaction scores by 70% and reduced churn by an unprecedented 50%.</li>
-                    <li>**Masterminded Global Supply Chain Overhaul:** Led a complex, multi-million dollar program to completely overhaul shipping processes across 42 countries, negotiating with new carriers to streamline workflows and slash average shipping costs by 50%.</li>
-                    <li>**Secured Critical Investment:** Authored a data-backed strategic proposal that secured a critical $2.5 million investment and executive buy-in, successfully pioneering a high-growth new market segment.</li>
+                    <div class="more-content">
+                        <li>**Masterminded Global Supply Chain Overhaul:** Led a complex, multi-million dollar program to completely overhaul shipping processes across 42 countries, negotiating with new carriers to streamline workflows and slash average shipping costs by 50%.</li>
+                        <li>**Secured Critical Investment:** Authored a data-backed strategic proposal that secured a critical $2.5 million investment and executive buy-in, successfully pioneering a high-growth new market segment.</li>
+                    </div>
                 </ul>
+                <button class="read-more-btn">Read More</button>
             </div>
         </div>
 
@@ -237,8 +321,11 @@
                 <ul>
                     <li>**Fueled Early-Stage Growth:** Directed a strategic shift that propelled the business forward, achieving a 15% increase in operational efficiency and significant cost reductions through end-to-end process optimization.</li>
                     <li>**Optimized P&L Management:** Steered the business unit toward sustained profitability by implementing robust financial controls and cost-cutting initiatives that maximized resource allocation.</li>
-                    <li>**Mentored High-Performing Teams:** Built and led a high-performing cross-functional team, fostering a culture of ownership and accountability that became the bedrock for successful strategic execution.</li>
+                    <div class="more-content">
+                        <li>**Mentored High-Performing Teams:** Built and led a high-performing cross-functional team, fostering a culture of ownership and accountability that became the bedrock for successful strategic execution.</li>
+                    </div>
                 </ul>
+                <button class="read-more-btn">Read More</button>
             </div>
         </div>
     </section>
@@ -297,6 +384,51 @@
         </div>
     </section>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // "Read More" Toggle
+        const readMoreBtns = document.querySelectorAll('.read-more-btn');
+        readMoreBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const moreContent = btn.previousElementSibling;
+                if (moreContent.style.display === 'block') {
+                    moreContent.style.display = 'none';
+                    btn.textContent = 'Read More';
+                } else {
+                    moreContent.style.display = 'block';
+                    btn.textContent = 'Read Less';
+                }
+            });
+        });
+
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Animate Sections on Scroll
+        const sections = document.querySelectorAll('.section');
+        const observerOptions = {
+            root: null,
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    });
+</script>
 
 </body>
 </html>
