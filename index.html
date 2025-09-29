@@ -63,7 +63,7 @@
         .profile-pic svg {
             width: 60px;
             height: 60px;
-            stroke: var(--text-secondary);
+            color: var(--text-secondary); /* Use color for currentColor */
         }
 
         .sidebar h1 {
@@ -98,8 +98,8 @@
             width: 20px;
             height: 20px;
             margin-right: 1rem;
-            stroke: var(--text-secondary);
-            transition: stroke 0.2s;
+            color: var(--text-secondary); /* Use color for currentColor */
+            transition: color 0.2s;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -108,7 +108,7 @@
         }
 
         .nav-link:hover svg, .nav-link.active svg {
-            stroke: var(--accent);
+            color: var(--accent);
         }
 
         /* --- Main Content --- */
@@ -344,7 +344,7 @@
                 margin-left: 0;
                 padding: 2rem;
             }
-            /* Add mobile navigation toggle if needed */
+            /* In a real app, a button would be added to toggle the sidebar on mobile */
         }
         
     </style>
@@ -362,8 +362,266 @@
         
         <nav>
             <a href="#" class="nav-link active" data-page="about">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
                 About Me
             </a>
             <a href="#" class="nav-link" data-page="experience">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.07a2.25 2.25 0 01-2.25 2.25h-13.5a2.25 2.25 0 01-2.25-2.25v-4.07m18-4.21v-4.07a2.25 2.25 0 00-2.2
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.07a2.25 2.25 0 01-2.25 2.25h-13.5a2.25 2.25 0 01-2.25-2.25v-4.07m18-4.21v-4.07a2.25 2.25 0 00-2.25-2.25h-13.5a2.25 2.25 0 00-2.25-2.25v4.07m18 0v-4.21m0 4.21v4.07m0-4.07L15.75 12m0 0l-3.75-3.75M15.75 12l3.75 3.75M4.5 12l3.75 3.75M4.5 12l3.75-3.75" />
+                </svg>
+                Experience
+            </a>
+            <a href="#" class="nav-link" data-page="projects">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                </svg>
+                Projects
+            </a>
+            <a href="#" class="nav-link" data-page="play">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+                </svg>
+                Play a Game
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        
+        <section id="about" class="page active">
+            <h2 class="page-title">About Me</h2>
+            <div class="about-content">
+                <p>I am a dynamic and results-oriented business leader with a decade of experience architecting growth in high-stakes environments. My career is defined by a relentless drive to <strong>translate complex data into actionable strategies</strong> that accelerate revenue, optimize operations, and capture new markets.</p>
+                <p>I thrive at the intersection of analytics, strategy, and leadership, specializing in building and scaling business ventures from the ground up. Whether it's overhauling a global supply chain or engineering a customer segmentation model that drives 80% growth, I deliver results by aligning diverse, cross-functional teams toward ambitious goals. I am seeking to leverage this expertise to spearhead the next wave of innovation at <strong>Airbnb</strong>.</p>
+            </div>
+            <h3 class="page-title" style="font-size: 1.8rem; margin-top: 3rem;">Skills & Expertise</h3>
+            <div class="skills-grid">
+                <div class="skill-item">SQL<span class="tooltip">Advanced querying for data extraction and analysis.</span></div>
+                <div class="skill-item">Python<span class="tooltip">Used for data analysis, automation, and modeling.</span></div>
+                <div class="skill-item">Tableau / Power BI<span class="tooltip">Creating interactive dashboards for business intelligence.</span></div>
+                <div class="skill-item">Financial Modeling<span class="tooltip">Building forecast and P&L models in Advanced Excel.</span></div>
+                <div class="skill-item">Strategic Planning<span class="tooltip">Developing long-term growth and market-entry strategies.</span></div>
+                <div class="skill-item">P&L Management<span class="tooltip">Overseeing multi-million dollar business unit profitability.</span></div>
+            </div>
+        </section>
+
+        <section id="experience" class="page">
+            <h2 class="page-title">Professional Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Regional Manager, Bird | Spin</h3>
+                    <p>August 2023 - Present</p>
+                    <ul>
+                        <li>Engineered a data-driven customer segmentation framework, fueling an 80% surge in customer acquisition.</li>
+                        <li>Orchestrated a go-to-market strategy that shattered initial launch targets by 57%.</li>
+                        <li>Implemented system efficiencies that cut data processing time by 50%, saving thousands of labor hours.</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h3>Vice President - Operations, WB Surf</h3>
+                    <p>Jan 2021 - Aug 2023</p>
+                    <ul>
+                        <li>Drove a monumental 180% revenue increase for key products via a new pricing and service strategy.</li>
+                        <li>Architected a global shipping overhaul across 42 countries, slashing costs by 50%.</li>
+                        <li>Secured a $2.5 million investment by authoring a data-backed proposal for a new market segment.</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h3>General Manager, Real</h3>
+                    <p>May 2016 - Jan 2021</p>
+                    <ul>
+                        <li>Directed a strategic shift that propelled the business to a 15% increase in operational efficiency.</li>
+                        <li>Steered the business unit to sustained profitability through robust P&L management and cost-cutting.</li>
+                        <li>Built and mentored a high-performing cross-functional team, fostering a culture of accountability.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="page">
+            <h2 class="page-title">Key Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="https://placehold.co/600x400/111827/22d3ee?text=Dashboard" alt="Project Dashboard" class="project-image">
+                    <div class="project-content">
+                        <h3>Global Supply Chain Dashboard</h3>
+                        <p>An interactive analytics dashboard built to monitor and optimize global shipping logistics, leading to a 50% reduction in average shipping costs.</p>
+                        <div class="project-links">
+                            <a href="#" target="_blank">Live Demo →</a>
+                            <a href="#" target="_blank">GitHub Repo →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://placehold.co/600x400/111827/22d3ee?text=Growth+Engine" alt="Project Growth" class="project-image">
+                    <div class="project-content">
+                        <h3>Customer Lifetime Value Engine</h3>
+                        <p>A Python-based segmentation framework that powered targeted campaigns, driving an 80% increase in new customer acquisition.</p>
+                        <div class="project-links">
+                            <a href="#" target="_blank">View Analysis →</a>
+                            <a href="#" target="_blank">GitHub Repo →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://placehold.co/600x400/111827/22d3ee?text=Forecast+Model" alt="Project Model" class="project-image">
+                    <div class="project-content">
+                        <h3>Market Expansion Simulator</h3>
+                        <p>A sophisticated financial model to simulate P&L outcomes for new market entry, instrumental in securing a $2.5M investment.</p>
+                        <div class="project-links">
+                            <a href="#" target="_blank">View Model →</a>
+                            <a href="#" target="_blank">GitHub Repo →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="play" class="page">
+            <h2 class="page-title">Play Tic-Tac-Toe</h2>
+            <div class="game-container">
+                <h3 class="game-status">Player X's turn</h3>
+                <div class="game-board">
+                    <div class="game-cell" data-cell-index="0"></div>
+                    <div class="game-cell" data-cell-index="1"></div>
+                    <div class="game-cell" data-cell-index="2"></div>
+                    <div class="game-cell" data-cell-index="3"></div>
+                    <div class="game-cell" data-cell-index="4"></div>
+                    <div class="game-cell" data-cell-index="5"></div>
+                    <div class="game-cell" data-cell-index="6"></div>
+                    <div class="game-cell" data-cell-index="7"></div>
+                    <div class="game-cell" data-cell-index="8"></div>
+                </div>
+                <button class="game-reset">Restart Game</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Page Navigation ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    const targetPage = link.getAttribute('data-page');
+
+                    // Update active link
+                    navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    link.classList.add('active');
+
+                    // Update active page
+                    pages.forEach(page => {
+                        if (page.id === targetPage) {
+                            page.classList.add('active');
+                        } else {
+                            page.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            // --- Tic-Tac-Toe Game Logic ---
+            const statusDisplay = document.querySelector('.game-status');
+            const gameBoard = document.querySelector('.game-board');
+            const cells = document.querySelectorAll('.game-cell');
+            const resetButton = document.querySelector('.game-reset');
+
+            let gameActive = true;
+            let currentPlayer = 'X';
+            let gameState = ["", "", "", "", "", "", "", "", ""];
+
+            const winningMessage = () => `Player ${currentPlayer} has won!`;
+            const drawMessage = () => `Game ended in a draw!`;
+            const currentPlayerTurn = () => `Player ${currentPlayer}'s turn`;
+
+            statusDisplay.innerHTML = currentPlayerTurn();
+
+            const winningConditions = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+
+            function handleCellPlayed(clickedCell, clickedCellIndex) {
+                gameState[clickedCellIndex] = currentPlayer;
+                clickedCell.innerHTML = currentPlayer;
+                if(currentPlayer === 'X') {
+                    clickedCell.style.color = 'var(--accent)';
+                } else {
+                    clickedCell.style.color = 'var(--text-primary)';
+                }
+            }
+
+            function handlePlayerChange() {
+                currentPlayer = currentPlayer === "X" ? "O" : "X";
+                statusDisplay.innerHTML = currentPlayerTurn();
+            }
+
+            function handleResultValidation() {
+                let roundWon = false;
+                for (let i = 0; i < winningConditions.length; i++) {
+                    const winCondition = winningConditions[i];
+                    let a = gameState[winCondition[0]];
+                    let b = gameState[winCondition[1]];
+                    let c = gameState[winCondition[2]];
+                    if (a === '' || b === '' || c === '') {
+                        continue;
+                    }
+                    if (a === b && b === c) {
+                        roundWon = true;
+                        break;
+                    }
+                }
+
+                if (roundWon) {
+                    statusDisplay.innerHTML = winningMessage();
+                    gameActive = false;
+                    return;
+                }
+
+                let roundDraw = !gameState.includes("");
+                if (roundDraw) {
+                    statusDisplay.innerHTML = drawMessage();
+                    gameActive = false;
+                    return;
+                }
+
+                handlePlayerChange();
+            }
+
+            function handleCellClick(e) {
+                const clickedCell = e.target;
+                const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
+
+                if (gameState[clickedCellIndex] !== "" || !gameActive) {
+                    return;
+                }
+
+                handleCellPlayed(clickedCell, clickedCellIndex);
+                handleResultValidation();
+            }
+
+            function handleRestartGame() {
+                gameActive = true;
+                currentPlayer = "X";
+                gameState = ["", "", "", "", "", "", "", "", ""];
+                statusDisplay.innerHTML = currentPlayerTurn();
+                cells.forEach(cell => {
+                    cell.innerHTML = "";
+                    cell.style.color = 'inherit';
+                });
+            }
+
+            cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+            resetButton.addEventListener('click', handleRestartGame);
+        });
+    </script>
+</body>
+</html>
