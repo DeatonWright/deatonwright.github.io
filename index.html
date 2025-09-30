@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -328,11 +328,12 @@
                     <span class="flex-grow h-px bg-gray-200 ml-4"></span>
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="interest-card shadow-lg">
-                        <img src="https://images.unsplash.com/photo-1531722569936-825d3dd91b15?auto=format&fit=crop&w=800&q=80" alt="Surfing" class="w-full h-full object-cover">
+                    <div id="surfing-gallery-trigger" class="interest-card shadow-lg cursor-pointer">
+                        <img src="https://i.postimg.cc/PqgS4sM5/deaton-surfing.jpg" alt="Surfing" class="w-full h-full object-cover">
                         <div class="interest-overlay">
                             <h3 class="font-bold text-xl">Surfing</h3>
                             <p class="text-sm mt-1">Chasing waves and finding balance on the water.</p>
+                            <p class="text-xs mt-2 font-bold uppercase tracking-wider">Click to see more</p>
                         </div>
                     </div>
                     <div class="interest-card shadow-lg">
@@ -408,6 +409,16 @@
         <p>Designed & Built by AI</p>
         <p>Hosted on GitHub Pages</p>
     </footer>
+
+    <!-- Image Gallery Modal -->
+    <div id="gallery-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center p-4">
+        <div class="relative">
+            <img id="modal-img" src="" alt="Gallery image" class="max-w-[90vw] max-h-[85vh] object-contain rounded-lg">
+            <button id="close-modal" class="absolute -top-4 -right-4 text-white bg-gray-800 rounded-full w-10 h-10 flex items-center justify-center text-2xl">&times;</button>
+            <button id="prev-img" class="absolute top-1/2 left-4 -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center text-3xl hover:bg-opacity-75">&#8249;</button>
+            <button id="next-img" class="absolute top-1/2 right-4 -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center text-3xl hover:bg-opacity-75">&#8250;</button>
+        </div>
+    </div>
 
     <script>
         // --- Interactive Canvas Background ---
@@ -614,6 +625,68 @@
                 link.classList.remove('active');
                 if (link.getAttribute('href').includes(current)) {
                     link.classList.add('active');
+                }
+            });
+        });
+
+        // --- Image Gallery Modal ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const surfingGalleryTrigger = document.getElementById('surfing-gallery-trigger');
+            const modal = document.getElementById('gallery-modal');
+            if (!surfingGalleryTrigger || !modal) return;
+
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalImg = document.getElementById('modal-img');
+            const prevBtn = document.getElementById('prev-img');
+            const nextBtn = document.getElementById('next-img');
+
+            const surfingImages = [
+                'https://i.postimg.cc/PqgS4sM5/deaton-surfing.jpg',
+                'https://images.unsplash.com/photo-1502680390469-be75c67b6329?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1516393623525-cea97b2c0f13?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1588622238332-9844703632f4?auto=format&fit=crop&w=1200&q=80'
+            ];
+            let currentImageIndex = 0;
+
+            function showImage(index) {
+                modalImg.src = surfingImages[index];
+                currentImageIndex = index;
+            }
+
+            surfingGalleryTrigger.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+                showImage(0);
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                const nextIndex = (currentImageIndex + 1) % surfingImages.length;
+                showImage(nextIndex);
+            });
+
+            prevBtn.addEventListener('click', () => {
+                const prevIndex = (currentImageIndex - 1 + surfingImages.length) % surfingImages.length;
+                showImage(prevIndex);
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (!modal.classList.contains('hidden')) {
+                    if (e.key === 'ArrowRight') {
+                        nextBtn.click();
+                    } else if (e.key === 'ArrowLeft') {
+                        prevBtn.click();
+                    } else if (e.key === 'Escape') {
+                        closeModalBtn.click();
+                    }
                 }
             });
         });
