@@ -9,13 +9,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --accent: #64ffda;
+            --card-bg: rgba(248, 249, 250, 0.8);
+            --header-bg: rgba(255, 255, 255, 0.8);
+            --border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        html.dark {
+            --bg-color: #0a192f;
+            --text-primary: #ccd6f6;
+            --text-secondary: #8892b0;
+            --header-bg: rgba(10, 25, 47, 0.85);
+            --card-bg: rgba(23, 42, 69, 0.8);
+            --border-color: rgba(100, 255, 218, 0.1);
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #212529;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         ::selection {
-            background: #64ffda;
+            background: var(--accent);
             color: #0a192f;
         }
         #interactive-canvas {
@@ -39,9 +59,13 @@
             align-items: center;
         }
         .glass-effect {
-            background: rgba(248, 249, 250, 0.8);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        header#header {
+            background: var(--header-bg);
         }
         .skill-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -51,17 +75,21 @@
             transform: translateY(-10px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+        html.dark .skill-card:hover {
+             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
         .timeline-item::before {
             content: '';
             position: absolute;
             left: -30px;
-            top: 50%;
+            top: 1.25rem;
             transform: translateY(-50%);
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background-color: #64ffda;
-            border: 3px solid #ffffff;
+            background-color: var(--accent);
+            border: 3px solid var(--bg-color);
+            transition: border-color 0.3s ease;
         }
         .timeline-line {
             position: absolute;
@@ -69,33 +97,28 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background-color: #dee2e6;
+            background-color: var(--border-color);
+            transition: background-color 0.3s ease;
         }
         .nav-link {
             transition: color 0.3s;
+            color: var(--text-secondary);
         }
         .nav-link:hover, .nav-link.active {
-            color: #64ffda;
+            color: var(--accent);
         }
         .typewriter-cursor {
             display: inline-block;
             width: 8px;
             height: 1.5em;
-            background-color: #64ffda;
+            background-color: var(--accent);
             animation: blink 0.7s infinite;
         }
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
-        .fade-in {
-            animation: fadeIn 1s ease-in-out forwards;
-            opacity: 0;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+       
         .interest-card {
             position: relative;
             overflow: hidden;
@@ -123,36 +146,43 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* Animation delays */
-        .fade-in-1 { animation-delay: 0.2s; }
-        .fade-in-2 { animation-delay: 0.4s; }
-        .fade-in-3 { animation-delay: 0.6s; }
-        .fade-in-4 { animation-delay: 0.8s; }
-        .fade-in-5 { animation-delay: 1s; }
+
+        /* Animate on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition-delay: var(--delay, 0s);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
     </style>
 </head>
-<body class="antialiased leading-relaxed">
+<body class="antialiased leading-relaxed text-slate-800">
     <canvas id="interactive-canvas"></canvas>
     <!-- Floating Social Links -->
     <aside class="hidden md:block fixed bottom-0 left-10 z-10">
         <div class="flex flex-col items-center space-y-6">
-            <a href="https://github.com/your-github-username" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1">
+            <a href="https://github.com/your-github-username" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             </a>
-            <a href="https://www.linkedin.com/in/deaton-wright" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1">
+            <a href="https://www.linkedin.com/in/deaton-wright" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
             </a>
-            <div class="h-24 w-px bg-gray-500"></div>
+            <div class="h-24 w-px bg-slate-500"></div>
         </div>
     </aside>
 
     <!-- Floating Email Link -->
     <aside class="hidden md:block fixed bottom-0 right-10 z-10">
         <div class="flex flex-col items-center space-y-6">
-            <a href="mailto:wrightdeaton@gmail.com" class="text-gray-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1" style="writing-mode: vertical-rl;">
+            <a href="mailto:wrightdeaton@gmail.com" class="text-slate-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1" style="writing-mode: vertical-rl;">
                 wrightdeaton@gmail.com
             </a>
-            <div class="h-24 w-px bg-gray-500"></div>
+            <div class="h-24 w-px bg-slate-500"></div>
         </div>
     </aside>
 
@@ -162,12 +192,16 @@
             <div class="flex justify-between items-center">
                 <a href="#hero" class="text-2xl font-extrabold text-teal-500">DW</a>
                 <nav class="hidden md:flex space-x-8 items-center text-sm">
-                    <a href="#about" class="nav-link text-gray-700">About</a>
-                    <a href="#skills" class="nav-link text-gray-700">Skills</a>
-                    <a href="#experience" class="nav-link text-gray-700">Experience</a>
-                    <a href="#interests" class="nav-link text-gray-700">Interests</a>
-                    <a href="#contact" class="nav-link text-gray-700">Contact</a>
-                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-slate-900 transition-colors">Resume</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#experience" class="nav-link">Experience</a>
+                    <a href="#interests" class="nav-link">Interests</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-white transition-colors">Resume</a>
+                    <button id="theme-toggle" class="w-10 h-10 rounded-lg flex items-center justify-center text-slate-500 hover:text-teal-400">
+                        <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 10.607a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
                 </nav>
                 <button id="mobile-menu-btn" class="md:hidden text-teal-500">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -177,12 +211,12 @@
          <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden">
             <div class="flex flex-col items-center space-y-4 py-4">
-                <a href="#about" class="nav-link text-gray-700">About</a>
-                <a href="#skills" class="nav-link text-gray-700">Skills</a>
-                <a href="#experience" class="nav-link text-gray-700">Experience</a>
-                <a href="#interests" class="nav-link text-gray-700">Interests</a>
-                <a href="#contact" class="nav-link text-gray-700">Contact</a>
-                <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-slate-900 transition-colors">Resume</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#interests" class="nav-link">Interests</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-white transition-colors">Resume</a>
             </div>
         </div>
     </header>
@@ -191,15 +225,15 @@
         <!-- Hero Section -->
         <section id="hero" class="section flex-col justify-center min-h-screen">
             <div class="w-full">
-                <p class="text-teal-500 text-lg mb-4 fade-in fade-in-1">Hi, my name is</p>
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 fade-in fade-in-2">Deaton Wright.</h1>
-                <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold text-gray-600 mt-2 fade-in fade-in-3">
+                <p class="text-teal-500 text-lg mb-4 reveal" style="--delay: 0.1s;">Hi, my name is</p>
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold reveal" style="color: var(--text-primary); --delay: 0.2s;">Deaton Wright.</h1>
+                <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold mt-2 reveal" style="color: var(--text-secondary); --delay: 0.3s;">
                     <span id="typewriter"></span><span class="typewriter-cursor"></span>
                 </h2>
-                <p class="mt-6 max-w-xl text-lg text-gray-600 fade-in fade-in-4">
+                <p class="mt-6 max-w-xl text-lg reveal" style="color: var(--text-secondary); --delay: 0.4s;">
                     I'm a results-oriented business leader specializing in building and scaling ventures in high-growth environments. I turn data into strategic insights and align teams to achieve ambitious growth.
                 </p>
-                <div class="mt-8 fade-in fade-in-5">
+                <div class="mt-8 reveal" style="--delay: 0.5s;">
                     <a href="#contact" class="bg-teal-400 text-slate-900 font-bold py-3 px-8 rounded-md hover:bg-teal-300 transition-colors text-lg">
                         Get In Touch
                     </a>
@@ -208,15 +242,15 @@
         </section>
 
         <!-- About Section -->
-        <section id="about" class="section">
+        <section id="about" class="section reveal">
             <div class="w-full">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+                <h2 class="text-3xl font-bold mb-8 flex items-center" style="color: var(--text-primary);">
                     <span class="flex-grow h-px bg-gray-200 mr-4"></span>
                     About Me
                     <span class="flex-grow h-px bg-gray-200 ml-4"></span>
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-12">
-                    <div class="md:col-span-3 text-gray-600 space-y-4 text-lg">
+                    <div class="md:col-span-3 space-y-4 text-lg" style="color: var(--text-secondary);">
                         <p>
                            With over 10 years of experience, I thrive in high-growth environments, specializing in building and scaling new business ventures. My expertise lies in leading complex programs, managing multiple brands, and driving strategic insights from data. 
                         </p>
@@ -238,77 +272,77 @@
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" class="section">
+        <section id="skills" class="section reveal">
              <div class="w-full text-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-12 flex items-center justify-center">
+                <h2 class="text-3xl font-bold mb-12 flex items-center justify-center" style="color: var(--text-primary);">
                     <span class="flex-grow h-px bg-gray-200 mr-4"></span>
                     My Toolkit
                     <span class="flex-grow h-px bg-gray-200 ml-4"></span>
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Strategic Leadership</h3>
-                        <p class="text-gray-600 text-sm">I excel at defining a strategic vision and leading cross-functional teams to execute on it. My expertise includes P&L management, market expansion, global strategy, and fostering innovation to drive sustainable growth.</p>
+                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col reveal" style="--delay: 0.1s;">
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Strategic Leadership</h3>
+                        <p class="text-sm" style="color: var(--text-secondary);">I excel at defining a strategic vision and leading cross-functional teams to execute on it. My expertise includes P&L management, market expansion, global strategy, and fostering innovation to drive sustainable growth.</p>
                     </div>
-                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Data & Analytics</h3>
-                        <p class="text-gray-600 text-sm">Leveraging tools like SQL, Tableau, and Power BI to transform raw data into actionable insights. Proficient in financial modeling, A/B testing, and customer segmentation to uncover growth opportunities and drive decisions.</p>
+                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col reveal" style="--delay: 0.2s;">
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Data & Analytics</h3>
+                        <p class="text-sm" style="color: var(--text-secondary);">Leveraging tools like SQL, Tableau, and Power BI to transform raw data into actionable insights. Proficient in financial modeling, A/B testing, and customer segmentation to uncover growth opportunities and drive decisions.</p>
                     </div>
-                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Revenue & Growth</h3>
-                        <p class="text-gray-600 text-sm">Specializing in full-funnel growth, from customer acquisition to retention. I develop and implement pricing strategies, subscription models, and promotional campaigns that maximize revenue and market share.</p>
+                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col reveal" style="--delay: 0.3s;">
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Revenue & Growth</h3>
+                        <p class="text-sm" style="color: var(--text-secondary);">Specializing in full-funnel growth, from customer acquisition to retention. I develop and implement pricing strategies, subscription models, and promotional campaigns that maximize revenue and market share.</p>
                     </div>
-                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Technical Proficiency</h3>
-                        <p class="text-gray-600 text-sm">Comfortable in modern tech environments, utilizing Python for data analysis, Advanced Excel for complex modeling, and platforms like Airtable and Microsoft Azure to streamline operations and build scalable solutions.</p>
+                    <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col reveal" style="--delay: 0.4s;">
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Technical Proficiency</h3>
+                        <p class="text-sm" style="color: var(--text-secondary);">Comfortable in modern tech environments, utilizing Python for data analysis, Advanced Excel for complex modeling, and platforms like Airtable and Microsoft Azure to streamline operations and build scalable solutions.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Experience Section -->
-        <section id="experience" class="section">
+        <section id="experience" class="section reveal">
             <div class="w-full">
-                <h2 class="text-3xl font-bold text-gray-900 mb-12 flex items-center">
+                <h2 class="text-3xl font-bold mb-12 flex items-center" style="color: var(--text-primary);">
                     <span class="flex-grow h-px bg-gray-200 mr-4"></span>
                     Where I've Worked
                     <span class="flex-grow h-px bg-gray-200 ml-4"></span>
                 </h2>
                 <div class="relative pl-8">
                     <div class="timeline-line"></div>
-                    <div class="timeline-item mb-12 relative">
+                    <div class="timeline-item mb-12 relative reveal">
                         <div>
-                            <h3 class="text-xl font-bold text-gray-900">Regional Manager</h3>
+                            <h3 class="text-xl font-bold" style="color: var(--text-primary);">Regional Manager</h3>
                             <p class="text-teal-500 text-md">Bird | Spin</p>
-                            <p class="text-gray-500 text-sm mt-1">August 2023 - Present</p>
+                            <p class="text-sm mt-1" style="color: var(--text-secondary);">August 2023 - Present</p>
                         </div>
-                        <ul id="exp1" class="list-disc list-inside text-gray-600 mt-4 space-y-2 pl-4">
+                        <ul class="list-disc list-inside mt-4 space-y-2 pl-4" style="color: var(--text-secondary);">
                             <li>Architected scalable reporting dashboards using advanced SQL and Excel, increasing team efficiency by 25% and providing leadership with real-time performance insights.</li>
                             <li>Co-developed a comprehensive go-to-market strategy for a new market pipeline, leading to a successful launch that surpassed initial targets by 57%.</li>
                             <li>Distilled complex operational data into actionable business intelligence, influencing a strategic pivot that unlocked a significant new revenue stream.</li>
                             <li>Led end-to-end strategic initiatives to drive growth, from ideation to execution, overseeing a project that improved operational efficiency by 15% and reduced costs.</li>
                         </ul>
                     </div>
-                    <div class="timeline-item mb-12 relative">
+                    <div class="timeline-item mb-12 relative reveal">
                         <div>
-                            <h3 class="text-xl font-bold text-gray-900">Vice President - Operations</h3>
+                            <h3 class="text-xl font-bold" style="color: var(--text-primary);">Vice President - Operations</h3>
                             <p class="text-teal-500 text-md">WB Surf</p>
-                            <p class="text-gray-500 text-sm mt-1">Jan 2021 - Aug 2023</p>
+                            <p class="text-sm mt-1" style="color: var(--text-secondary);">Jan 2021 - Aug 2023</p>
                         </div>
-                        <ul id="exp2" class="list-disc list-inside text-gray-600 mt-4 space-y-2 pl-4">
+                        <ul class="list-disc list-inside mt-4 space-y-2 pl-4" style="color: var(--text-secondary);">
                             <li>Spearheaded a data-driven strategy leveraging purchasing patterns to launch targeted promotional campaigns, driving an 80% increase in new customer acquisition.</li>
                             <li>Revitalized service delivery by introducing tiered service options, which improved customer satisfaction scores by 70% and reduced churn by 50%.</li>
                             <li>Translated comprehensive market analyses into actionable pricing strategies, resulting in a 180% revenue increase for key services.</li>
                             <li>Oversaw a global program to overhaul shipping processes across 42 countries, negotiating with new carriers to reduce average shipping costs by 50%.</li>
                         </ul>
                     </div>
-                    <div class="timeline-item relative">
+                    <div class="timeline-item relative reveal">
                         <div>
-                            <h3 class="text-xl font-bold text-gray-900">General Manager</h3>
+                            <h3 class="text-xl font-bold" style="color: var(--text-primary);">General Manager</h3>
                             <p class="text-teal-500 text-md">Real</p>
-                            <p class="text-gray-500 text-sm mt-1">May 2016 - Jan 2021</p>
+                            <p class="text-sm mt-1" style="color: var(--text-secondary);">May 2016 - Jan 2021</p>
                         </div>
-                        <ul id="exp3" class="list-disc list-inside text-gray-600 mt-4 space-y-2 pl-4">
+                        <ul class="list-disc list-inside mt-4 space-y-2 pl-4" style="color: var(--text-secondary);">
                            <li>Engineered a data-driven customer segmentation framework that fueled an 80% increase in new customer acquisition and a 15% improvement in retention.</li>
                             <li>Revitalized the customer experience by designing and launching tiered service options, which improved satisfaction scores by 70% and reduced churn by 50%.</li>
                             <li>Synthesized competitive and market analyses into a pricing strategy that drove a 180% increase in revenue for key product lines.</li>
@@ -320,50 +354,50 @@
         </section>
 
         <!-- Interests Section -->
-        <section id="interests" class="section">
+        <section id="interests" class="section reveal">
             <div class="w-full">
-                <h2 class="text-3xl font-bold text-gray-900 mb-12 flex items-center justify-center">
+                <h2 class="text-3xl font-bold mb-12 flex items-center justify-center" style="color: var(--text-primary);">
                     <span class="flex-grow h-px bg-gray-200 mr-4"></span>
                     Beyond the Office
                     <span class="flex-grow h-px bg-gray-200 ml-4"></span>
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div id="surfing-gallery-trigger" class="interest-card shadow-lg cursor-pointer">
+                    <div class="interest-card shadow-lg reveal" style="--delay: 0.1s;">
                         <img src="surfing-1.jpg" alt="Surfing" class="w-full h-full object-cover">
                         <div class="interest-overlay">
                             <h3 class="font-bold text-xl">Surfing</h3>
                             <p class="text-sm mt-1">Chasing waves and finding balance on the water.</p>
                         </div>
                     </div>
-                    <div class="interest-card shadow-lg">
+                    <div class="interest-card shadow-lg reveal" style="--delay: 0.2s;">
                         <img src="hiking.jpg" alt="Hiking" class="w-full h-full object-cover">
                         <div class="interest-overlay">
                             <h3 class="font-bold text-xl">Hiking</h3>
                              <p class="text-sm mt-1">Exploring new trails and disconnecting in nature.</p>
                         </div>
                     </div>
-                    <div class="interest-card shadow-lg">
+                    <div class="interest-card shadow-lg reveal" style="--delay: 0.3s;">
                         <img src="kiteboarding.jpg" alt="Kiteboarding" class="w-full h-full object-cover">
                         <div class="interest-overlay">
                             <h3 class="font-bold text-xl">Kiteboarding</h3>
                             <p class="text-sm mt-1">Harnessing the wind for an adrenaline-fueled ride.</p>
                         </div>
                     </div>
-                    <div class="interest-card shadow-lg">
+                    <div class="interest-card shadow-lg reveal" style="--delay: 0.4s;">
                         <img src="camping.jpg" alt="Camping" class="w-full h-full object-cover">
                         <div class="interest-overlay">
                             <h3 class="font-bold text-xl">Camping</h3>
                             <p class="text-sm mt-1">Nights under the stars and mornings by the campfire.</p>
                         </div>
                     </div>
-                    <div class="interest-card shadow-lg">
+                    <div class="interest-card shadow-lg reveal" style="--delay: 0.5s;">
                         <img src="fishing.jpg" alt="Fishing" class="w-full h-full object-cover">
                         <div class="interest-overlay">
                             <h3 class="font-bold text-xl">Fishing</h3>
                             <p class="text-sm mt-1">The perfect blend of patience, strategy, and the outdoors.</p>
                         </div>
                     </div>
-                    <div class="interest-card shadow-lg">
+                    <div class="interest-card shadow-lg reveal" style="--delay: 0.6s;">
                         <img src="snowboarding.jpg" alt="Snowboarding" class="w-full h-full object-cover">
                         <div class="interest-overlay">
                             <h3 class="font-bold text-xl">Snowboarding</h3>
@@ -375,26 +409,26 @@
         </section>
         
         <!-- Education Section -->
-        <section id="education" class="section">
+        <section id="education" class="section reveal">
             <div class="w-full text-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Education</h2>
+                <h2 class="text-3xl font-bold mb-8" style="color: var(--text-primary);">Education</h2>
                 <div class="inline-block glass-effect p-8 rounded-lg text-center">
                     <h3 class="text-2xl font-bold text-teal-500">University of North Carolina, Wilmington</h3>
-                    <p class="text-gray-700 text-lg mt-2">BS - Business Analytics, Management and Leadership</p>
+                    <p class="text-lg mt-2" style="color: var(--text-secondary);">BS - Business Analytics, Management and Leadership</p>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="section text-center">
+        <section id="contact" class="section text-center reveal">
             <div class="w-full">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center justify-center">
+                <h2 class="text-3xl font-bold mb-8 flex items-center justify-center" style="color: var(--text-primary);">
                     <span class="flex-grow h-px bg-gray-200 mr-4"></span>
                     What's Next?
                     <span class="flex-grow h-px bg-gray-200 ml-4"></span>
                 </h2>
-                <h3 class="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">Get In Touch</h3>
-                <p class="text-gray-600 max-w-lg mx-auto mb-10">
+                <h3 class="text-4xl md:text-5xl font-bold mt-4 mb-6" style="color: var(--text-primary);">Get In Touch</h3>
+                <p class="max-w-lg mx-auto mb-10" style="color: var(--text-secondary);">
                     I'm always open to discussing new opportunities and collaborations. Whether you have a question or just want to say hi, my inbox is always open.
                 </p>
                 <a href="mailto:wrightdeaton@gmail.com" class="bg-teal-400 text-slate-900 font-bold py-4 px-10 rounded-md hover:bg-teal-300 transition-colors text-lg">
@@ -404,20 +438,10 @@
         </section>
     </main>
 
-    <footer class="text-center py-6 text-gray-500 text-sm">
+    <footer class="text-center py-6 text-sm" style="color: var(--text-secondary);">
         <p>Designed & Built by AI</p>
         <p>Hosted on GitHub Pages</p>
     </footer>
-
-    <!-- Image Gallery Modal -->
-    <div id="gallery-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center p-4">
-        <div class="relative">
-            <img id="modal-img" src="" alt="Gallery image" class="max-w-[90vw] max-h-[85vh] object-contain rounded-lg">
-            <button id="close-modal" class="absolute -top-4 -right-4 text-white bg-gray-800 rounded-full w-10 h-10 flex items-center justify-center text-2xl">&times;</button>
-            <button id="prev-img" class="absolute top-1/2 left-4 -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center text-3xl hover:bg-opacity-75">&#8249;</button>
-            <button id="next-img" class="absolute top-1/2 right-4 -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center text-3xl hover:bg-opacity-75">&#8250;</button>
-        </div>
-    </div>
 
     <script>
         // --- Interactive Canvas Background ---
@@ -425,25 +449,11 @@
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
         let particlesArray;
+        const mouse = { x: null, y: null, radius: (canvas.height/100) * (canvas.width/100) };
 
-        const mouse = {
-            x: null,
-            y: null,
-            radius: (canvas.height/100) * (canvas.width/100)
-        }
-
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
-        
-        window.addEventListener('mouseout', () => {
-             mouse.x = undefined;
-             mouse.y = undefined;
-        });
-
+        window.addEventListener('mousemove', (event) => { mouse.x = event.x; mouse.y = event.y; });
+        window.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -452,44 +462,28 @@
         });
 
         class Particle {
-            constructor(x, y, directionX, directionY, size, color) {
-                this.x = x;
-                this.y = y;
-                this.directionX = directionX;
-                this.directionY = directionY;
-                this.size = size;
-                this.color = color;
+            constructor(x, y, directionX, directionY, size) {
+                this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size;
             }
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = 'rgba(26, 188, 156, 0.2)';
+                const particleColor = document.documentElement.classList.contains('dark') ? 'rgba(100, 255, 218, 0.15)' : 'rgba(26, 188, 156, 0.2)';
+                ctx.fillStyle = particleColor;
                 ctx.fill();
             }
             update() {
-                if (this.x > canvas.width || this.x < 0) {
-                    this.directionX = -this.directionX;
-                }
-                if (this.y > canvas.height || this.y < 0) {
-                    this.directionY = -this.directionY;
-                }
+                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
                 
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
                 let distance = Math.sqrt(dx * dx + dy * dy);
                 if (distance < mouse.radius + this.size){
-                    if(mouse.x < this.x && this.x < canvas.width - this.size * 10){
-                        this.x += 5;
-                    }
-                    if(mouse.x > this.x && this.x > this.size * 10){
-                        this.x -= 5;
-                    }
-                    if(mouse.y < this.y && this.y < canvas.height - this.size * 10){
-                        this.y += 5;
-                    }
-                    if(mouse.y > this.y && this.y > this.size * 10){
-                        this.y -= 5;
-                    }
+                    if(mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 3;
+                    if(mouse.x > this.x && this.x > this.size * 10) this.x -= 3;
+                    if(mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 3;
+                    if(mouse.y > this.y && this.y > this.size * 10) this.y -= 3;
                 }
                 this.x += this.directionX;
                 this.y += this.directionY;
@@ -506,8 +500,7 @@
                 let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
                 let directionX = (Math.random() * 0.4) - 0.2;
                 let directionY = (Math.random() * 0.4) - 0.2;
-                let color = '#1abc9c';
-                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+                particlesArray.push(new Particle(x, y, directionX, directionY, size));
             }
         }
 
@@ -525,72 +518,82 @@
         // --- Mobile Menu Toggle ---
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
         // --- Header scroll effect ---
         let lastScrollTop = 0;
         const header = document.getElementById('header');
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop) {
-                header.style.top = '-100px';
-            } else {
-                header.style.top = '0';
-            }
-            if (scrollTop > 100) {
-                 header.classList.add('py-2');
-                 header.classList.remove('py-4');
-            } else {
-                header.classList.remove('py-2');
-                header.classList.add('py-4');
-            }
+            header.style.top = scrollTop > lastScrollTop ? '-100px' : '0';
+            if (scrollTop > 100) header.classList.add('py-2'); else header.classList.remove('py-2');
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         });
 
         // --- Typewriter Effect ---
         const typewriterElement = document.getElementById('typewriter');
-        const phrases = [
-            "I build and scale businesses.",
-            "I create value from data.",
-            "I lead high-performing teams."
-        ];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
+        const phrases = ["I build and scale businesses.", "I create value from data.", "I lead high-performing teams."];
+        let phraseIndex = 0, charIndex = 0, isDeleting = false;
 
         function type() {
             const currentPhrase = phrases[phraseIndex];
-            let displayText = '';
-            if (isDeleting) {
-                displayText = currentPhrase.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                displayText = currentPhrase.substring(0, charIndex + 1);
-                charIndex++;
-            }
-            typewriterElement.textContent = displayText;
+            if (isDeleting) charIndex--; else charIndex++;
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex);
             let typeSpeed = isDeleting ? 75 : 150;
-            if (!isDeleting && charIndex === currentPhrase.length) {
-                typeSpeed = 2000;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                typeSpeed = 500;
-            }
+            if (!isDeleting && charIndex === currentPhrase.length) { typeSpeed = 2000; isDeleting = true; } 
+            else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500; }
             setTimeout(type, typeSpeed);
         }
+        
+        // --- Theme Toggle ---
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const themeToggleButton = document.getElementById('theme-toggle');
 
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeToggleLightIcon.classList.add('hidden');
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+        }
+        
+        // Check for saved theme in localStorage
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            applyTheme('dark');
+        } else {
+            applyTheme('light');
+        }
+
+        themeToggleButton.addEventListener('click', function() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
+            applyTheme(isDark ? 'dark' : 'light');
+        });
+
+        // --- Animate on Scroll ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // --- Run on DOMContentLoaded ---
         document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(type, 1500);
+            setTimeout(type, 1500); // Start typewriter
+            document.querySelectorAll('.reveal').forEach((el) => observer.observe(el)); // Start observing elements
         });
 
         // --- Active Nav Link on Scroll ---
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('.nav-link');
-
         window.addEventListener('scroll', () => {
             let current = '';
             sections.forEach(section => {
@@ -600,73 +603,10 @@
                     current = section.getAttribute('id');
                 }
             });
-
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href').includes(current)) {
                     link.classList.add('active');
-                }
-            });
-        });
-
-        // --- Image Gallery Modal ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const surfingGalleryTrigger = document.getElementById('surfing-gallery-trigger');
-            const modal = document.getElementById('gallery-modal');
-            if (!surfingGalleryTrigger || !modal) return;
-
-            const closeModalBtn = document.getElementById('close-modal');
-            const modalImg = document.getElementById('modal-img');
-            const prevBtn = document.getElementById('prev-img');
-            const nextBtn = document.getElementById('next-img');
-
-            const surfingImages = [
-                'surfing-1.jpg',
-                'surfing-2.jpg',
-                'surfing-3.jpg',
-                'surfing-4.jpg'
-            ];
-            let currentImageIndex = 0;
-
-            function showImage(index) {
-                modalImg.src = surfingImages[index];
-                currentImageIndex = index;
-            }
-
-            surfingGalleryTrigger.addEventListener('click', () => {
-                modal.classList.remove('hidden');
-                showImage(0);
-            });
-
-            closeModalBtn.addEventListener('click', () => {
-                modal.classList.add('hidden');
-            });
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.add('hidden');
-                }
-            });
-
-            nextBtn.addEventListener('click', () => {
-                const nextIndex = (currentImageIndex + 1) % surfingImages.length;
-                showImage(nextIndex);
-            });
-
-            prevBtn.addEventListener('click', () => {
-                const prevIndex = (currentImageIndex - 1 + surfingImages.length) % surfingImages.length;
-                showImage(prevIndex);
-            });
-            
-            document.addEventListener('keydown', (e) => {
-                if (!modal.classList.contains('hidden')) {
-                    if (e.key === 'ArrowRight') {
-                        nextBtn.click();
-                    } else if (e.key === 'ArrowLeft') {
-                        prevBtn.click();
-                    } else if (e.key === 'Escape') {
-                        closeModalBtn.click();
-                    }
                 }
             });
         });
