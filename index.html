@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deaton Wright | Strategic Business Leader</title>
+    <title>Deaton Wright | Strategic Operations Leader</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -118,7 +118,7 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
-       
+        
         .interest-card {
             position: relative;
             overflow: hidden;
@@ -163,7 +163,6 @@
 </head>
 <body class="antialiased leading-relaxed text-slate-800">
     <canvas id="interactive-canvas"></canvas>
-    <!-- Floating Social Links -->
     <aside class="hidden md:block fixed bottom-0 left-10 z-10">
         <div class="flex flex-col items-center space-y-6">
             <a href="https://github.com/your-github-username" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1">
@@ -176,7 +175,6 @@
         </div>
     </aside>
 
-    <!-- Floating Email Link -->
     <aside class="hidden md:block fixed bottom-0 right-10 z-10">
         <div class="flex flex-col items-center space-y-6">
             <a href="mailto:wrightdeaton@gmail.com" class="text-slate-500 hover:text-teal-400 transform transition-transform hover:-translate-y-1" style="writing-mode: vertical-rl;">
@@ -186,7 +184,6 @@
         </div>
     </aside>
 
-    <!-- Header / Navigation -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 glass-effect shadow-md">
         <div class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
@@ -197,7 +194,7 @@
                     <a href="#experience" class="nav-link">Experience</a>
                     <a href="#interests" class="nav-link">Interests</a>
                     <a href="#contact" class="nav-link">Contact</a>
-                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-white transition-colors">Resume</a>
+                    <a href="Deaton Wright - Resume.pdf" target="_blank" rel="noopener noreferrer" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-white transition-colors">Resume</a>
                     <button id="theme-toggle" class="w-10 h-10 rounded-lg flex items-center justify-center text-slate-500 hover:text-teal-400">
                         <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
                         <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 10.607a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
@@ -208,21 +205,19 @@
                 </button>
             </div>
         </div>
-         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden">
+         <div id="mobile-menu" class="hidden md:hidden">
             <div class="flex flex-col items-center space-y-4 py-4">
                 <a href="#about" class="nav-link">About</a>
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#experience" class="nav-link">Experience</a>
                 <a href="#interests" class="nav-link">Interests</a>
                 <a href="#contact" class="nav-link">Contact</a>
-                <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-white transition-colors">Resume</a>
+                <a href="Deaton Wright - Resume.pdf" target="_blank" rel="noopener noreferrer" class="bg-transparent border-2 border-teal-400 text-teal-500 font-bold px-4 py-2 rounded-md hover:bg-teal-400 hover:text-white transition-colors">Resume</a>
             </div>
         </div>
     </header>
 
     <main class="container mx-auto px-6 sm:px-12 md:px-20 lg:px-32">
-        <!-- Hero Section -->
         <section id="hero" class="section flex-col justify-center min-h-screen">
             <div class="w-full">
                 <p class="text-teal-500 text-lg mb-4 reveal" style="--delay: 0.1s;">Hi, my name is</p>
@@ -231,7 +226,7 @@
                     <span id="typewriter"></span><span class="typewriter-cursor"></span>
                 </h2>
                 <p class="mt-6 max-w-xl text-lg reveal" style="color: var(--text-secondary); --delay: 0.4s;">
-                    I'm a results-oriented business leader specializing in building and scaling ventures in high-growth environments. I turn data into strategic insights and align teams to achieve ambitious growth.
+                    I'm a strategic and data-driven operational leader with 9+ years of experience specializing in P&L ownership and fueling sustainable growth for major markets at companies like Bird and Spin.
                 </p>
                 <div class="mt-8 reveal" style="--delay: 0.5s;">
                     <a href="#contact" class="bg-teal-400 text-slate-900 font-bold py-3 px-8 rounded-md hover:bg-teal-300 transition-colors text-lg">
@@ -241,7 +236,6 @@
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="section reveal">
             <div class="w-full">
                 <h2 class="text-3xl font-bold mb-8 flex items-center" style="color: var(--text-primary);">
@@ -252,26 +246,25 @@
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-12">
                     <div class="md:col-span-3 space-y-4 text-lg" style="color: var(--text-secondary);">
                         <p>
-                           With over 10 years of experience, I thrive in high-growth environments, specializing in building and scaling new business ventures. My expertise lies in leading complex programs, managing multiple brands, and driving strategic insights from data. 
+                            Hello! I'm Deaton, an operational leader with over 9 years of experience driving growth and operational excellence in dynamic, fast-paced environments.
                         </p>
                         <p>
-                            I have a proven ability to align diverse, cross-functional teams to achieve ambitious growth targets. My approach is rooted in a deep understanding of analytics, operational efficiency, and the power of compelling storytelling.
+                            My career has been centered on owning the full P&L for major markets, building and mentoring high-performing teams, and forging key partnerships with city officials to ensure sustainable growth. I thrive on turning complex data into actionable strategies that optimize marketplace dynamics and consistently exceed profitability targets.
                         </p>
                         <p>
-                            I'm currently seeking to leverage my skills to drive the expansion of innovative new ventures and contribute to building the future of business services.
+                           Whether it's launching new markets, developing innovative pricing strategies, or overhauling global processes, my goal is always the same: build efficient systems and lead teams to deliver exceptional results.
                         </p>
                     </div>
                     <div class="md:col-span-2 flex justify-center items-start">
                          <div class="relative w-64 h-64">
-                            <div class="absolute inset-0 bg-teal-400 rounded-lg transform -rotate-3 transition-transform duration-500 hover:rotate-0"></div>
-                            <img src="profile-photo.jpg" alt="Deaton Wright" class="relative w-full h-full object-cover rounded-lg shadow-2xl">
-                        </div>
+                             <div class="absolute inset-0 bg-teal-400 rounded-lg transform -rotate-3 transition-transform duration-500 hover:rotate-0"></div>
+                             <img src="profile-photo.jpg" alt="Deaton Wright" class="relative w-full h-full object-cover rounded-lg shadow-2xl">
+                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Skills Section -->
         <section id="skills" class="section reveal">
              <div class="w-full text-center">
                 <h2 class="text-3xl font-bold mb-12 flex items-center justify-center" style="color: var(--text-primary);">
@@ -282,25 +275,24 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col reveal" style="--delay: 0.1s;">
                         <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Strategic Leadership</h3>
-                        <p class="text-sm" style="color: var(--text-secondary);">I excel at defining a strategic vision and leading cross-functional teams to execute on it. My expertise includes P&L management, market expansion, global strategy, and fostering innovation to drive sustainable growth.</p>
+                        <p class="text-sm" style="color: var(--text-secondary);">Expertise in P&L management, market expansion, business development, and cross-functional leadership. Proven in strategic planning, process improvement, and stakeholder management to drive sustainable growth.</p>
                     </div>
                     <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col reveal" style="--delay: 0.2s;">
                         <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Data & Analytics</h3>
-                        <p class="text-sm" style="color: var(--text-secondary);">Leveraging tools like SQL, Tableau, and Power BI to transform raw data into actionable insights. Proficient in financial modeling, A/B testing, and customer segmentation to uncover growth opportunities and drive decisions.</p>
+                        <p class="text-sm" style="color: var(--text-secondary);">Transforming complex data into actionable insights using SQL, Tableau, Power BI, and Google Analytics. Proficient in financial modeling, A/B testing, and customer segmentation to fuel data-driven decisions.</p>
                     </div>
                     <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col reveal" style="--delay: 0.3s;">
                         <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Revenue & Growth</h3>
-                        <p class="text-sm" style="color: var(--text-secondary);">Specializing in full-funnel growth, from customer acquisition to retention. I develop and implement pricing strategies, subscription models, and promotional campaigns that maximize revenue and market share.</p>
+                        <p class="text-sm" style="color: var(--text-secondary);">Specializing in full-funnel growth strategies, including customer acquisition & retention, dynamic pricing strategies, subscription models, and effective promotion management to maximize market share.</p>
                     </div>
                     <div class="skill-card glass-effect p-6 rounded-lg text-left flex flex-col reveal" style="--delay: 0.4s;">
                         <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Technical Proficiency</h3>
-                        <p class="text-sm" style="color: var(--text-secondary);">Comfortable in modern tech environments, utilizing Python for data analysis, Advanced Excel for complex modeling, and platforms like Airtable and Microsoft Azure to streamline operations and build scalable solutions.</p>
+                        <p class="text-sm" style="color: var(--text-secondary);">Skilled in leveraging modern tools to build scalable solutions. Proficient with Python, Advanced Excel, Airtable, and Microsoft Azure to streamline operations and enhance data analysis capabilities.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Experience Section -->
         <section id="experience" class="section reveal">
             <div class="w-full">
                 <h2 class="text-3xl font-bold mb-12 flex items-center" style="color: var(--text-primary);">
@@ -317,10 +309,10 @@
                             <p class="text-sm mt-1" style="color: var(--text-secondary);">August 2023 - Present</p>
                         </div>
                         <ul class="list-disc list-inside mt-4 space-y-2 pl-4" style="color: var(--text-secondary);">
-                            <li>Architected scalable reporting dashboards using advanced SQL and Excel, increasing team efficiency by 25% and providing leadership with real-time performance insights.</li>
-                            <li>Co-developed a comprehensive go-to-market strategy for a new market pipeline, leading to a successful launch that surpassed initial targets by 57%.</li>
-                            <li>Distilled complex operational data into actionable business intelligence, influencing a strategic pivot that unlocked a significant new revenue stream.</li>
-                            <li>Led end-to-end strategic initiatives to drive growth, from ideation to execution, overseeing a project that improved operational efficiency by 15% and reduced costs.</li>
+                            <li>Owned full P&L for the $33M Southeast market, driving a 15% YoY revenue increase while cutting operational costs by 10%.</li>
+                            <li>Led a team of 4 Operations Managers and 50+ indirect reports, achieving a 95% team retention rate.</li>
+                            <li>Designed a predictive maintenance program that increased fleet uptime by 25% and reduced vehicle loss by 40%.</li>
+                            <li>Successfully negotiated permit renewals with 10+ municipalities and secured 7 new suburban expansion contracts.</li>
                         </ul>
                     </div>
                     <div class="timeline-item mb-12 relative reveal">
@@ -330,10 +322,10 @@
                             <p class="text-sm mt-1" style="color: var(--text-secondary);">Jan 2021 - Aug 2023</p>
                         </div>
                         <ul class="list-disc list-inside mt-4 space-y-2 pl-4" style="color: var(--text-secondary);">
-                            <li>Spearheaded a data-driven strategy leveraging purchasing patterns to launch targeted promotional campaigns, driving an 80% increase in new customer acquisition.</li>
-                            <li>Revitalized service delivery by introducing tiered service options, which improved customer satisfaction scores by 70% and reduced churn by 50%.</li>
-                            <li>Translated comprehensive market analyses into actionable pricing strategies, resulting in a 180% revenue increase for key services.</li>
-                            <li>Oversaw a global program to overhaul shipping processes across 42 countries, negotiating with new carriers to reduce average shipping costs by 50%.</li>
+                            <li>Authored and executed a new pricing strategy based on market analysis that drove a 180% increase in revenue for key product lines.</li>
+                            <li>Engineered a customer segmentation framework that fueled an 80% increase in new customer acquisition and a 15% improvement in retention.</li>
+                            <li>Revitalized the customer journey with tiered service options, resulting in a 70% improvement in satisfaction scores.</li>
+                            <li>Steered a multi-million dollar business unit to profitability through optimized P&L management and targeted cost-cutting.</li>
                         </ul>
                     </div>
                     <div class="timeline-item relative reveal">
@@ -343,17 +335,16 @@
                             <p class="text-sm mt-1" style="color: var(--text-secondary);">May 2016 - Jan 2021</p>
                         </div>
                         <ul class="list-disc list-inside mt-4 space-y-2 pl-4" style="color: var(--text-secondary);">
-                           <li>Engineered a data-driven customer segmentation framework that fueled an 80% increase in new customer acquisition and a 15% improvement in retention.</li>
-                            <li>Revitalized the customer experience by designing and launching tiered service options, which improved satisfaction scores by 70% and reduced churn by 50%.</li>
-                            <li>Synthesized competitive and market analyses into a pricing strategy that drove a 180% increase in revenue for key product lines.</li>
-                            <li>Steered a multi-million dollar business unit to profitability by optimizing P&L management and implementing strategic cost-cutting initiatives.</li>
+                           <li>Led a global program to overhaul shipping processes across 42 countries, slashing average shipping costs by 50%.</li>
+                           <li>Drove a 180% revenue increase for key service lines by creating a revitalized pricing and service strategy.</li>
+                           <li>Authored a data-backed proposal to enter a new market, securing a $2.5 million investment for a successful launch.</li>
+                           <li>Spearheaded a data-driven strategy using purchasing patterns that resulted in an 80% increase in new customer acquisition.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Interests Section -->
         <section id="interests" class="section reveal">
             <div class="w-full">
                 <h2 class="text-3xl font-bold mb-12 flex items-center justify-center" style="color: var(--text-primary);">
@@ -408,7 +399,6 @@
             </div>
         </section>
         
-        <!-- Education Section -->
         <section id="education" class="section reveal">
             <div class="w-full text-center">
                 <h2 class="text-3xl font-bold mb-8" style="color: var(--text-primary);">Education</h2>
@@ -419,7 +409,6 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact" class="section text-center reveal">
             <div class="w-full">
                 <h2 class="text-3xl font-bold mb-8 flex items-center justify-center" style="color: var(--text-primary);">
@@ -440,7 +429,7 @@
 
     <footer class="text-center py-6 text-sm" style="color: var(--text-secondary);">
         <p>Designed & Built by Deaton</p>
-        <p>All Photos and Documents Are Property of the Deigner</p>
+        <p>All Photos and Documents Are Property of the Designer</p>
     </footer>
 
     <script>
@@ -532,7 +521,7 @@
 
         // --- Typewriter Effect ---
         const typewriterElement = document.getElementById('typewriter');
-        const phrases = ["I build and scale businesses.", "I create value from data.", "I lead high-performing teams."];
+        const phrases = ["Driving P&L Growth.", "Building High-Performing Teams.", "Fueling Sustainable Growth."];
         let phraseIndex = 0, charIndex = 0, isDeleting = false;
 
         function type() {
@@ -573,6 +562,8 @@
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
             applyTheme(isDark ? 'dark' : 'light');
+            // Re-initialize particles to update color
+            init();
         });
 
         // --- Animate on Scroll ---
