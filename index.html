@@ -34,7 +34,6 @@
             background-color: var(--bg-color);
             color: var(--text-primary);
             transition: background-color 0.3s ease, color 0.3s ease;
-            cursor: none; /* Hide default cursor */
         }
         ::selection {
             background: var(--accent);
@@ -161,38 +160,9 @@
             transform: translateY(0);
         }
 
-        /* Custom Cursor Styling */
-        .cursor-dot, .cursor-dot-outline {
-            pointer-events: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            border-radius: 50%;
-            opacity: 0;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-            z-index: 1000;
-        }
-        .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent);
-        }
-        .cursor-dot-outline {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(100, 255, 218, 0.2);
-            transition: all 0.1s ease-out;
-        }
-        body:hover .cursor-dot, body:hover .cursor-dot-outline {
-            opacity: 1;
-        }
-
     </style>
 </head>
 <body class="antialiased leading-relaxed text-slate-800">
-    <div class="cursor-dot-outline"></div>
-    <div class="cursor-dot"></div>
 
     <canvas id="interactive-canvas"></canvas>
     
@@ -624,22 +594,6 @@
                 });
             }, { threshold: 0.1 });
             document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-
-            // --- Custom Cursor Logic ---
-            const cursorDot = document.querySelector(".cursor-dot");
-            const cursorDotOutline = document.querySelector(".cursor-dot-outline");
-            if (cursorDot && cursorDotOutline) {
-                window.addEventListener("mousemove", function (e) {
-                    const posX = e.clientX;
-                    const posY = e.clientY;
-                    cursorDot.style.left = `${posX}px`;
-                    cursorDot.style.top = `${posY}px`;
-                    cursorDotOutline.animate({
-                        left: `${posX}px`,
-                        top: `${posY}px`
-                    }, { duration: 500, fill: "forwards" });
-                });
-            }
 
             // --- Active Nav Link & Timeline on Scroll ---
             const sections = document.querySelectorAll('section[id]');
