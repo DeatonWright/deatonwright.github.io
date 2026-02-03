@@ -30,7 +30,7 @@
     </script>
 
     <style>
-        /* --- Core Styles --- */
+        /* --- Core Layout --- */
         body {
             background-color: #0a192f;
             color: #ccd6f6;
@@ -50,7 +50,7 @@
             z-index: 0; pointer-events: none;
         }
 
-        /* Glassmorphism & Cards */
+        /* Glassmorphism Cards */
         .glass-panel {
             background: rgba(17, 34, 64, 0.7);
             backdrop-filter: blur(12px);
@@ -66,19 +66,29 @@
             border-color: rgba(100, 255, 218, 0.3);
         }
 
-        /* Section Heading Line */
+        /* Heading Lines */
         .section-heading { display: flex; align-items: center; white-space: nowrap; }
         .section-heading::after {
             content: ""; display: block; width: 300px; height: 1px;
             background: #233554; margin-left: 20px;
         }
 
-        /* Animations */
+        /* Animation Classes */
+        /* FIX: Default state is VISIBLE so it works even if JS fails */
         .fade-in-up {
-            opacity: 0; transform: translateY(30px);
+            opacity: 1; 
+            transform: translateY(0);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+        /* JS will add this class to prepare animations */
+        .js-hidden {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .js-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         /* Skill Pills */
         .skill-pill {
@@ -107,14 +117,14 @@
             .section-heading::after { width: 100%; }
         }
 
-        /* Blinking Cursor */
+        /* Typewriter Cursor */
         .cursor::after {
             content: '|'; animation: blink 1s step-end infinite; color: #64ffda;
         }
         @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
-<body class="selection:bg-primary selection:text-bg">
+<body class="selection:bg-primary selection:text-bg antialiased">
 
     <canvas id="canvas-bg"></canvas>
 
@@ -139,7 +149,7 @@
             </div>
         </div>
         
-        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-card border-b border-white/5 p-4 flex flex-col gap-4 text-center">
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-card border-b border-white/5 p-4 flex flex-col gap-4 text-center shadow-xl">
              <a href="#about" class="text-secondary hover:text-primary">About</a>
              <a href="#skills" class="text-secondary hover:text-primary">Skills</a>
              <a href="#experience" class="text-secondary hover:text-primary">Experience</a>
@@ -150,17 +160,17 @@
     <main class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
         
         <section class="min-h-screen flex flex-col justify-center pt-20 pb-20">
-            <p class="font-mono text-primary mb-5 fade-in-up" style="transition-delay: 100ms">Hi, my name is</p>
-            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-slate-100 mb-4 tracking-tight fade-in-up" style="transition-delay: 200ms">
+            <p class="font-mono text-primary mb-5 fade-in-up">Hi, my name is</p>
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-slate-100 mb-4 tracking-tight fade-in-up">
                 Deaton Wright.
             </h1>
-            <h2 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-secondary mb-8 fade-in-up min-h-[1.2em]" style="transition-delay: 300ms">
+            <h2 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-secondary mb-8 fade-in-up min-h-[1.2em]">
                 <span id="typewriter" class="text-slate-100"></span><span class="cursor"></span>
             </h2>
-            <p class="max-w-xl text-secondary text-lg leading-relaxed mb-12 fade-in-up" style="transition-delay: 400ms">
-                [cite_start]Product Strategy & Operations Leader with 10+ years of experience leading 0-to-1 incubations and scaling commercial initiatives. [cite: 5] [cite_start]I use "data as a first language" (SQL, Python) to bridge the gap between product vision and operational execution. [cite: 6]
+            <p class="max-w-xl text-secondary text-lg leading-relaxed mb-12 fade-in-up">
+                Product Strategy & Operations Leader with 10+ years of experience leading 0-to-1 incubations and scaling commercial initiatives. I use "data as a first language" (SQL, Python) to bridge the gap between product vision and operational execution.
             </p>
-            <div class="flex gap-6 fade-in-up" style="transition-delay: 500ms">
+            <div class="flex gap-6 fade-in-up">
                 <a href="#experience" class="px-8 py-4 bg-primary/10 border border-primary text-primary font-bold rounded hover:bg-primary/20 transition-all active:scale-95 text-center">
                     Check out my work
                 </a>
@@ -169,21 +179,21 @@
 
         <section class="py-12 fade-in-up">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                <div class="p-4 border border-white/5 rounded bg-card/50">
+                <div class="p-4 border border-white/5 rounded bg-card/50 hover:border-primary/50 transition-colors">
                     <h3 class="text-4xl font-bold text-slate-100 counter" data-target="33">0</h3>
-                    [cite_start]<p class="text-primary font-mono text-sm mt-2">$33M+ P&L Managed [cite: 7]</p>
+                    <p class="text-primary font-mono text-sm mt-2">$33M+ P&L Managed</p>
                 </div>
-                <div class="p-4 border border-white/5 rounded bg-card/50">
+                <div class="p-4 border border-white/5 rounded bg-card/50 hover:border-primary/50 transition-colors">
                     <h3 class="text-4xl font-bold text-slate-100 counter" data-target="42">0</h3>
-                    <p class="text-primary font-mono text-sm mt-2">Intl. [cite_start]Markets Scaled [cite: 50]</p>
+                    <p class="text-primary font-mono text-sm mt-2">Intl. Markets Scaled</p>
                 </div>
-                <div class="p-4 border border-white/5 rounded bg-card/50">
+                <div class="p-4 border border-white/5 rounded bg-card/50 hover:border-primary/50 transition-colors">
                     <h3 class="text-4xl font-bold text-slate-100 counter" data-target="180">0</h3>
-                    [cite_start]<p class="text-primary font-mono text-sm mt-2">% Revenue Increase [cite: 40]</p>
+                    <p class="text-primary font-mono text-sm mt-2">% Revenue Increase</p>
                 </div>
-                <div class="p-4 border border-white/5 rounded bg-card/50">
-                    <h3 class="text-4xl font-bold text-slate-100 counter" data-target="50">0</h3>
-                    [cite_start]<p class="text-primary font-mono text-sm mt-2">% Cost Reduction [cite: 52]</p>
+                <div class="p-4 border border-white/5 rounded bg-card/50 hover:border-primary/50 transition-colors">
+                    <h3 class="text-4xl font-bold text-slate-100 counter" data-target="57">0</h3>
+                    <p class="text-primary font-mono text-sm mt-2">% Launch Target Beat</p>
                 </div>
             </div>
         </section>
@@ -196,21 +206,21 @@
             <div class="grid md:grid-cols-3 gap-12">
                 <div class="md:col-span-2 space-y-6 text-secondary text-lg leading-relaxed">
                     <p>
-                        [cite_start]I am a Product Strategy & Operations Leader with over a decade of experience in high-ambiguity technology environments. [cite: 5] [cite_start]My expertise lies in bridging the gap between product vision and operational execution. [cite: 6]
+                        I am a Product Strategy & Operations Leader with over a decade of experience in high-ambiguity technology environments. My expertise lies in bridging the gap between product vision and operational execution.
                     </p>
                     <p>
-                        [cite_start]I utilize data as a first language—specifically <span class="text-primary">SQL and Python</span>—to drive rigorous analysis and objective strategy. [cite: 6] [cite_start]I have a proven track record of managing $33M+ P&Ls and aligning Engineering, Research, and GTM teams to solve complex, systemic challenges. [cite: 7]
+                        I utilize data as a first language—specifically <span class="text-primary">SQL and Python</span>—to drive rigorous analysis and objective strategy. I have a proven track record of managing $33M+ P&Ls and aligning Engineering, Research, and GTM teams to solve complex, systemic challenges.
                     </p>
                     <p>
-                        [cite_start]Currently, I serve as a Regional Manager at Bird, where I've led strategic '0-to-1' product incubations and architected business intelligence infrastructure. [cite: 18, 20, 21]
+                        Currently, I serve as a Regional Manager at Bird, where I've led strategic '0-to-1' product incubations and architected business intelligence infrastructure.
                     </p>
                 </div>
                 
                 <div class="relative group mx-auto md:mx-0 max-w-xs">
                     <div class="absolute inset-0 border-2 border-primary rounded translate-x-4 translate-y-4 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
                     <div class="relative rounded overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-500 bg-card aspect-square">
-                         <div class="w-full h-full flex items-center justify-center bg-slate-800">
-                            <span class="text-4xl">DW</span>
+                         <div class="w-full h-full flex items-center justify-center bg-slate-800 border border-white/10">
+                            <span class="text-4xl font-bold text-slate-600">DW</span>
                          </div>
                     </div>
                 </div>
@@ -228,13 +238,13 @@
                         <h3 class="text-xl font-bold text-slate-100">Product Strategy & Ops</h3>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        [cite_start]<span class="skill-pill">Strategic Planning [cite: 9]</span>
-                        [cite_start]<span class="skill-pill">P&L Management ($33M+) [cite: 9]</span>
-                        [cite_start]<span class="skill-pill">0-to-1 Incubation [cite: 10]</span>
-                        [cite_start]<span class="skill-pill">GTM Strategy [cite: 10]</span>
-                        [cite_start]<span class="skill-pill">User Segmentation [cite: 10]</span>
-                        [cite_start]<span class="skill-pill">Pricing Strategy [cite: 11]</span>
-                        [cite_start]<span class="skill-pill">Unit Economics Optimization [cite: 12]</span>
+                        <span class="skill-pill">Strategic Planning</span>
+                        <span class="skill-pill">P&L Management ($33M+)</span>
+                        <span class="skill-pill">0-to-1 Incubation</span>
+                        <span class="skill-pill">GTM Strategy</span>
+                        <span class="skill-pill">User Segmentation</span>
+                        <span class="skill-pill">Pricing Strategy</span>
+                        <span class="skill-pill">Unit Economics Optimization</span>
                     </div>
                 </div>
 
@@ -243,14 +253,14 @@
                         <h3 class="text-xl font-bold text-slate-100">Data & Analytics</h3>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        [cite_start]<span class="skill-pill">Advanced SQL [cite: 13]</span>
-                        [cite_start]<span class="skill-pill">Python [cite: 14]</span>
-                        [cite_start]<span class="skill-pill">Tableau [cite: 13]</span>
-                        [cite_start]<span class="skill-pill">Power BI [cite: 13]</span>
-                        [cite_start]<span class="skill-pill">Financial Modeling [cite: 13]</span>
-                        [cite_start]<span class="skill-pill">A/B Testing [cite: 14]</span>
-                        [cite_start]<span class="skill-pill">Cohort Analysis [cite: 14]</span>
-                        [cite_start]<span class="skill-pill">Google Analytics [cite: 13]</span>
+                        <span class="skill-pill">Advanced SQL</span>
+                        <span class="skill-pill">Python</span>
+                        <span class="skill-pill">Tableau</span>
+                        <span class="skill-pill">Power BI</span>
+                        <span class="skill-pill">Financial Modeling</span>
+                        <span class="skill-pill">A/B Testing</span>
+                        <span class="skill-pill">Cohort Analysis</span>
+                        <span class="skill-pill">Google Analytics</span>
                     </div>
                 </div>
 
@@ -259,12 +269,12 @@
                         <h3 class="text-xl font-bold text-slate-100">Software & Platforms</h3>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        [cite_start]<span class="skill-pill">Microsoft Azure [cite: 14]</span>
-                        [cite_start]<span class="skill-pill">Jira [cite: 14]</span>
-                        [cite_start]<span class="skill-pill">Confluence [cite: 15]</span>
-                        [cite_start]<span class="skill-pill">Asana [cite: 15]</span>
-                        [cite_start]<span class="skill-pill">Airtable [cite: 14]</span>
-                        [cite_start]<span class="skill-pill">Advanced Excel/GSheets [cite: 14]</span>
+                        <span class="skill-pill">Microsoft Azure</span>
+                        <span class="skill-pill">Jira</span>
+                        <span class="skill-pill">Confluence</span>
+                        <span class="skill-pill">Asana</span>
+                        <span class="skill-pill">Airtable</span>
+                        <span class="skill-pill">Advanced Excel/GSheets</span>
                     </div>
                 </div>
             </div>
@@ -286,14 +296,14 @@
                             <p class="text-sm text-primary font-mono mb-1">Previously Biz Ops Manager & Associate</p>
                             <div class="flex justify-between text-sm text-secondary">
                                 <span>Bird</span>
-                                [cite_start]<span>Aug 2023 - Present [cite: 19]</span>
+                                <span>Aug 2023 - Present</span>
                             </div>
                         </header>
                         <ul class="space-y-3 text-secondary list-[square] pl-4 marker:text-primary">
-                            [cite_start]<li>Owned P&L strategy for a <span class="text-slate-100">$33M regional marketplace</span>, engineering a 12% reduction in OPEX and a 37% YoY revenue lift. [cite: 23]</li>
-                            [cite_start]<li>Led a strategic '0-to-1' product incubation to diagnose systemic inefficiencies, exceeding launch targets by <span class="text-primary">57%</span>. [cite: 21]</li>
-                            [cite_start]<li>Architected "Single Source of Truth" business intelligence using SQL, reducing manual overhead by 50%. [cite: 20]</li>
-                            [cite_start]<li>Optimized fleet unit economics to achieve a 15% increase in contribution margin via Python-based root cause analysis. [cite: 26]</li>
+                            <li>Owned P&L strategy for a <span class="text-slate-100">$33M regional marketplace</span>, engineering a 12% reduction in OPEX and a 37% YoY revenue lift.</li>
+                            <li>Led a strategic '0-to-1' product incubation to diagnose systemic inefficiencies, exceeding launch targets by <span class="text-primary">57%</span>.</li>
+                            <li>Architected "Single Source of Truth" business intelligence using SQL, reducing manual overhead by 50%.</li>
+                            <li>Optimized fleet unit economics to achieve a 15% increase in contribution margin via Python-based root cause analysis.</li>
                         </ul>
                     </div>
                 </div>
@@ -305,14 +315,14 @@
                             <p class="text-sm text-primary font-mono mb-1">Previously Director of Operations</p>
                             <div class="flex md:justify-end justify-between text-sm text-secondary gap-4">
                                 <span>WB Surf Inc.</span>
-                                [cite_start]<span>Jan 2021 - Aug 2023 [cite: 36]</span>
+                                <span>Jan 2021 - Aug 2023</span>
                             </div>
                         </header>
                         <ul class="space-y-3 text-secondary list-[square] pl-4 md:pl-0 md:list-none marker:text-primary inline-block text-left md:text-right">
-                            [cite_start]<li>Redefined GTM strategy, breaking down silos between Marketing, Sales, and Product to accelerate commercialization. [cite: 37]</li>
-                            [cite_start]<li>Steered a distressed business unit to profitability by restructuring the P&L and driving a <span class="text-primary">180% revenue increase</span> through algorithmic pricing. [cite: 40]</li>
-                            [cite_start]<li>Reduced COGS by 18% by leading a strategic consolidation of upstream suppliers. [cite: 44]</li>
-                            [cite_start]<li>Stabilized workforce turnover from 45% to 15% by professionalizing onboarding. [cite: 45]</li>
+                            <li>Redefined GTM strategy, breaking down silos between Marketing, Sales, and Product to accelerate commercialization.</li>
+                            <li>Steered a distressed business unit to profitability by restructuring the P&L and driving a <span class="text-primary">180% revenue increase</span> through algorithmic pricing.</li>
+                            <li>Reduced COGS by 18% by leading a strategic consolidation of upstream suppliers.</li>
+                            <li>Stabilized workforce turnover from 45% to 15% by professionalizing onboarding.</li>
                         </ul>
                     </div>
                     <div class="timeline-dot hidden md:block"></div>
@@ -326,14 +336,14 @@
                             <p class="text-sm text-primary font-mono mb-1">Previously Operations Director</p>
                             <div class="flex justify-between text-sm text-secondary mt-1">
                                 <span>Real</span>
-                                [cite_start]<span>May 2015 - Jan 2021 [cite: 48, 54]</span>
+                                <span>May 2015 - Jan 2021</span>
                             </div>
                         </header>
                         <ul class="space-y-3 text-secondary list-[square] pl-4 marker:text-primary">
-                            [cite_start]<li>Directed end-to-end planning of a new vertical launch, securing <span class="text-slate-100">$2.5M in growth capital</span>. [cite: 49]</li>
-                            [cite_start]<li>Codified strategy for international scale, building a "launch-in-a-box" framework for 42 international markets. [cite: 50]</li>
-                            [cite_start]<li>Revolutionized customer service, driving a 70% improvement in CSAT and reducing churn by 50%. [cite: 51]</li>
-                            [cite_start]<li>Renegotiated vendor ecosystems to slash logistics costs by 50%. [cite: 52]</li>
+                            <li>Directed end-to-end planning of a new vertical launch, securing <span class="text-slate-100">$2.5M in growth capital</span>.</li>
+                            <li>Codified strategy for international scale, building a "launch-in-a-box" framework for 42 international markets.</li>
+                            <li>Revolutionized customer service, driving a 70% improvement in CSAT and reducing churn by 50%.</li>
+                            <li>Renegotiated vendor ecosystems to slash logistics costs by 50%.</li>
                         </ul>
                     </div>
                 </div>
@@ -386,8 +396,8 @@
 
         <section class="py-12 text-center fade-in-up">
             <h3 class="text-slate-100 font-bold text-2xl mb-2">Education</h3>
-            [cite_start]<p class="text-primary text-lg">University of North Carolina, Wilmington [cite: 59]</p>
-            [cite_start]<p class="text-secondary text-sm">BS - Business Analytics, Management and Leadership [cite: 60]</p>
+            <p class="text-primary text-lg">University of North Carolina, Wilmington</p>
+            <p class="text-secondary text-sm">BS - Business Analytics, Management and Leadership</p>
         </section>
 
         <section id="contact" class="py-32 text-center max-w-2xl mx-auto fade-in-up">
@@ -398,7 +408,7 @@
             </p>
             
             <div class="flex flex-col items-center gap-4">
-                 [cite_start]<p class="text-slate-100 font-mono text-xl">(910) 585-2547 [cite: 3]</p>
+                 <p class="text-slate-100 font-mono text-xl">(910) 585-2547</p>
                 <a href="mailto:wrightdeaton@gmail.com" class="px-8 py-4 border border-primary text-primary font-bold rounded hover:bg-primary/10 transition-colors">
                     Say Hello
                 </a>
@@ -414,14 +424,14 @@
     <div class="hidden md:block fixed bottom-0 left-12 w-10 z-20">
         <div class="flex flex-col gap-6 items-center">
             <a href="https://github.com" target="_blank" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg></a>
-            <a href="#" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg></a>
+            <a href="https://www.linkedin.com/in/deaton-wright" target="_blank" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg></a>
             <div class="h-24 w-[1px] bg-secondary"></div>
         </div>
     </div>
 
     <div class="hidden md:block fixed bottom-0 right-12 w-10 z-20">
         <div class="flex flex-col gap-6 items-center">
-            [cite_start]<a href="mailto:wrightdeaton@gmail.com" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all" style="writing-mode: vertical-rl;">wrightdeaton@gmail.com [cite: 2]</a>
+            <a href="mailto:wrightdeaton@gmail.com" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all" style="writing-mode: vertical-rl;">wrightdeaton@gmail.com</a>
             <div class="h-24 w-[1px] bg-secondary"></div>
         </div>
     </div>
@@ -430,6 +440,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             
             // 1. Constellation Canvas Effect (Interactive)
+            // A simple particle system that connects dots with lines
             const canvas = document.getElementById('canvas-bg');
             const ctx = canvas.getContext('2d');
             let width, height;
@@ -482,6 +493,7 @@
                 }
             }
 
+            // Init particles
             for (let i = 0; i < 60; i++) particles.push(new Particle());
 
             function animateCanvas() {
@@ -490,6 +502,7 @@
                     const p1 = particles[i];
                     p1.update();
                     p1.draw();
+                    // Connect close particles
                     for (let j = i + 1; j < particles.length; j++) {
                         const p2 = particles[j];
                         const dx = p1.x - p2.x;
@@ -510,15 +523,22 @@
             animateCanvas();
 
             // 2. Intersection Observer for Scroll Animations
+            // This applies the fade-in effect when elements scroll into view
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
+                        entry.target.classList.add('js-visible');
+                        entry.target.classList.remove('js-hidden');
                     }
                 });
             }, { threshold: 0.1 });
 
-            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+            // Initialize elements for animation: hide them first, then observe
+            // This ensures if JS fails, elements remain visible (default CSS)
+            document.querySelectorAll('.fade-in-up').forEach(el => {
+                el.classList.add('js-hidden');
+                observer.observe(el);
+            });
             
             // 3. Number Counter Animation
             const counterObserver = new IntersectionObserver((entries) => {
@@ -546,11 +566,11 @@
             const typewriterEl = document.getElementById('typewriter');
             if (typewriterEl) {
                 const phrases = [
-                    [cite_start]"I bridge Strategy & Operations.", [cite: 5]
-                    [cite_start]"I manage $33M+ P&Ls.", [cite: 9]
-                    [cite_start]"I drive 180% revenue gains.", [cite: 40]
-                    [cite_start]"I leverage data as a first language.", [cite: 6]
-                    [cite_start]"I scale global markets.", [cite: 50]
+                    "I bridge Strategy & Operations.",
+                    "I manage $33M+ P&Ls.",
+                    "I drive 180% revenue gains.",
+                    "I leverage data as a first language.",
+                    "I scale global markets.",
                 ];
                 let phraseIndex = 0;
                 let charIndex = 0;
@@ -558,9 +578,7 @@
                 let typeSpeed = 50;
 
                 function type() {
-                    // Strip citation for display
-                    const cleanPhrases = phrases.map(p => p.replace(/\/g, ''));
-                    const currentPhrase = cleanPhrases[phraseIndex];
+                    const currentPhrase = phrases[phraseIndex];
                     
                     if (isDeleting) {
                         typewriterEl.textContent = currentPhrase.substring(0, charIndex - 1);
@@ -585,12 +603,12 @@
                 setTimeout(type, 500);
             }
 
-            // 5. Vanilla Tilt
+            // 5. Vanilla Tilt (3D hover effect on cards)
             VanillaTilt.init(document.querySelectorAll(".glass-panel"), {
                 max: 5, speed: 400, glare: true, "max-glare": 0.1,
             });
 
-            // 6. Mobile Menu
+            // 6. Mobile Menu Toggle
             const mobileBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             if (mobileBtn) {
