@@ -3,574 +3,601 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deaton Wright | Product Strategy & Operations Leader</title>
+    <title>Deaton Wright | Strategic Operations Leader</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#64ffda',
+                        secondary: '#8892b0',
+                        bg: '#0a192f',
+                        card: '#112240',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root {
-            --bg-color: #ffffff;
-            --text-primary: #212529;
-            --text-secondary: #495057;
-            --accent: #0d9488; /* Teal-600 */
-            --accent-glow: #5eead4; /* Teal-300 */
-            --card-bg: rgba(248, 249, 250, 0.9);
-            --header-bg: rgba(255, 255, 255, 0.9);
-            --border-color: rgba(0, 0, 0, 0.05);
-        }
-
-        html.dark {
-            --bg-color: #0a192f;
-            --text-primary: #ccd6f6;
-            --text-secondary: #8892b0;
-            --accent: #64ffda;
-            --accent-glow: #64ffda;
-            --header-bg: rgba(10, 25, 47, 0.85);
-            --card-bg: rgba(23, 42, 69, 0.8);
-            --border-color: rgba(100, 255, 218, 0.1);
-        }
-
+        /* --- Core Styles --- */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: #0a192f;
+            color: #ccd6f6;
+            overflow-x: hidden;
         }
-        ::selection {
-            background: var(--accent);
-            color: #0a192f;
-        }
-        #interactive-canvas {
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0a192f; }
+        ::-webkit-scrollbar-thumb { background: #495670; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64ffda; }
+
+        /* Canvas Background */
+        #canvas-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
+        /* Glassmorphism & Cards */
+        .glass-panel {
+            background: rgba(17, 34, 64, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-        main, header, aside, footer {
-            position: relative;
-            z-index: 1;
-        }
-        .section {
-            min-height: 80vh;
-            padding: 80px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .glass-effect {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-        header#header {
-            background: var(--header-bg);
-        }
-        .skill-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-        }
-        .skill-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
-            border-color: var(--accent);
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 1.75rem;
-            transform: translateY(-50%);
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: var(--accent);
-            border: 3px solid var(--bg-color);
-            transition: border-color 0.3s ease;
-            z-index: 10;
-        }
-        .timeline-line {
-            position: absolute;
-            left: -23px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: var(--border-color);
-            transition: background-color 0.3s ease;
-        }
-        .nav-link {
-            transition: color 0.3s;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: var(--accent);
-        }
-        .typewriter-cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1em;
-            background-color: var(--accent);
-            animation: blink 1s infinite;
-            margin-left: 5px;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
         }
         
-        /* Animate on Scroll */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-            transition-delay: var(--delay, 0s);
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5);
+            border-color: rgba(100, 255, 218, 0.3);
         }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+
+        /* Section Heading Line */
+        .section-heading { display: flex; align-items: center; white-space: nowrap; }
+        .section-heading::after {
+            content: ""; display: block; width: 300px; height: 1px;
+            background: #233554; margin-left: 20px;
         }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Skill Pills */
+        .skill-pill {
+            display: inline-block; padding: 0.25rem 0.75rem; margin: 0.25rem;
+            font-size: 0.875rem; color: #64ffda;
+            background: rgba(100, 255, 218, 0.1);
+            border-radius: 9999px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            transition: all 0.2s ease;
+        }
+        .skill-pill:hover { background: rgba(100, 255, 218, 0.2); transform: translateY(-1px); }
+
+        /* Timeline */
+        .timeline-line {
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+            background: #233554; transform: translateX(-50%);
+        }
+        .timeline-dot {
+            position: absolute; left: 50%; top: 0; width: 16px; height: 16px;
+            border-radius: 50%; background: #0a192f; border: 2px solid #64ffda;
+            transform: translate(-50%, 0); z-index: 10;
+        }
+        @media (max-width: 768px) {
+            .timeline-line { left: 20px; }
+            .timeline-dot { left: 20px; }
+            .section-heading::after { width: 100%; }
+        }
+
+        /* Blinking Cursor */
+        .cursor::after {
+            content: '|'; animation: blink 1s step-end infinite; color: #64ffda;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
-<body class="antialiased leading-relaxed text-slate-800">
+<body class="selection:bg-primary selection:text-bg">
 
-    <canvas id="interactive-canvas"></canvas>
-    
-    <aside class="hidden md:block fixed bottom-0 left-10 z-10 fade-in-left">
-        <div class="flex flex-col items-center space-y-6">
-            <a href="https://github.com/your-github-username" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-teal-500 transform transition-transform hover:-translate-y-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-            </a>
-            <a href="https://www.linkedin.com/in/deaton-wright" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-teal-500 transform transition-transform hover:-translate-y-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-            </a>
-            <div class="h-24 w-px bg-slate-400"></div>
-        </div>
-    </aside>
+    <canvas id="canvas-bg"></canvas>
 
-    <aside class="hidden md:block fixed bottom-0 right-10 z-10 fade-in-right">
-        <div class="flex flex-col items-center space-y-6">
-            <a href="mailto:wrightdeaton@gmail.com" class="text-slate-400 hover:text-teal-500 transform transition-transform hover:-translate-y-1 tracking-widest text-xs" style="writing-mode: vertical-rl;">
-                wrightdeaton@gmail.com
-            </a>
-            <div class="h-24 w-px bg-slate-400"></div>
-        </div>
-    </aside>
+    <nav id="navbar" class="fixed w-full z-50 top-0 transition-all duration-300 py-4 px-6 md:px-12 backdrop-blur-md bg-bg/80 border-b border-white/5">
+        <div class="flex justify-between items-center max-w-7xl mx-auto">
+            <a href="#" class="text-xl font-bold font-display text-primary tracking-tight hover:text-slate-100 transition-colors">DW.</a>
+            
+            <div class="hidden md:flex gap-8 text-sm font-medium">
+                <a href="#about" class="text-secondary hover:text-primary transition-colors hover:-translate-y-0.5 transform block">About</a>
+                <a href="#skills" class="text-secondary hover:text-primary transition-colors hover:-translate-y-0.5 transform block">Skills</a>
+                <a href="#experience" class="text-secondary hover:text-primary transition-colors hover:-translate-y-0.5 transform block">Experience</a>
+                <a href="#contact" class="text-secondary hover:text-primary transition-colors hover:-translate-y-0.5 transform block">Contact</a>
+            </div>
 
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 shadow-sm border-b border-gray-100 dark:border-gray-800">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <a href="#hero" class="text-xl font-bold text-teal-500 tracking-tight">DW.</a>
-                <nav class="hidden md:flex space-x-8 items-center text-sm">
-                    <a href="#about" class="nav-link">About</a>
-                    <a href="#skills" class="nav-link">Toolkit</a>
-                    <a href="#experience" class="nav-link">Experience</a>
-                    <a href="#contact" class="nav-link">Contact</a>
-                    <a href="Deaton_Wright_Resume.pdf" target="_blank" class="border border-teal-500 text-teal-500 px-4 py-2 rounded hover:bg-teal-500 hover:text-white transition-all text-xs font-semibold">RESUME</a>
-                    <button id="theme-toggle" class="p-2 rounded-lg text-slate-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none">
-                        <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                        <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 10.607a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-                    </button>
-                </nav>
-                <button id="mobile-menu-btn" class="md:hidden text-teal-500">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            <div class="flex gap-4">
+                 <a href="resume.pdf" target="_blank" class="px-5 py-2 rounded border border-primary text-primary text-sm font-medium hover:bg-primary/10 transition-colors">
+                    Resume
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-primary">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-800">
-            <div class="flex flex-col items-center space-y-4 py-6">
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Toolkit</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#contact" class="nav-link">Contact</a>
-                <a href="resume.pdf" class="text-teal-500 font-bold">Resume</a>
-            </div>
-        </div>
-    </header>
-
-    <main class="container mx-auto px-6 sm:px-12 md:px-20 lg:px-32">
         
-        <section id="hero" class="section flex-col justify-center min-h-screen">
-            <div class="w-full max-w-4xl">
-                <p class="text-teal-500 font-mono mb-5 reveal" style="--delay: 0.1s;">Hi, my name is</p>
-                <h1 class="text-5xl sm:text-7xl font-extrabold reveal text-slate-900 dark:text-slate-100 tracking-tight" style="--delay: 0.2s;">Deaton Wright.</h1>
-                <h2 class="text-4xl sm:text-6xl font-bold mt-4 reveal" style="color: var(--text-secondary); --delay: 0.3s;">
-                    <span id="typewriter"></span><span class="typewriter-cursor"></span>
-                </h2>
-                <p class="mt-8 max-w-xl text-lg leading-relaxed reveal" style="color: var(--text-secondary); --delay: 0.4s;">
-                    [cite_start]I'm a Product Strategy & Operations Leader with 10+ years of experience bridging the gap between product vision and operational execution[cite: 5, 6]. [cite_start]I use "data as a first language" to scale commercial initiatives and manage $33M+ P&Ls in high-ambiguity environments[cite: 6, 7].
-                </p>
-                <div class="mt-10 reveal" style="--delay: 0.5s;">
-                    <a href="#experience" class="bg-transparent border border-teal-500 text-teal-500 hover:bg-teal-500/10 font-mono py-4 px-8 rounded transition-colors text-sm">
-                        Check out my work
-                    </a>
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-card border-b border-white/5 p-4 flex flex-col gap-4 text-center">
+             <a href="#about" class="text-secondary hover:text-primary">About</a>
+             <a href="#skills" class="text-secondary hover:text-primary">Skills</a>
+             <a href="#experience" class="text-secondary hover:text-primary">Experience</a>
+             <a href="#contact" class="text-secondary hover:text-primary">Contact</a>
+        </div>
+    </nav>
+
+    <main class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+        
+        <section class="min-h-screen flex flex-col justify-center pt-20 pb-20">
+            <p class="font-mono text-primary mb-5 fade-in-up" style="transition-delay: 100ms">Hi, my name is</p>
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-slate-100 mb-4 tracking-tight fade-in-up" style="transition-delay: 200ms">
+                Deaton Wright.
+            </h1>
+            <h2 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-secondary mb-8 fade-in-up min-h-[1.2em]" style="transition-delay: 300ms">
+                <span id="typewriter" class="text-slate-100"></span><span class="cursor"></span>
+            </h2>
+            <p class="max-w-xl text-secondary text-lg leading-relaxed mb-12 fade-in-up" style="transition-delay: 400ms">
+                [cite_start]Product Strategy & Operations Leader with 10+ years of experience leading 0-to-1 incubations and scaling commercial initiatives. [cite: 5] [cite_start]I use "data as a first language" (SQL, Python) to bridge the gap between product vision and operational execution. [cite: 6]
+            </p>
+            <div class="flex gap-6 fade-in-up" style="transition-delay: 500ms">
+                <a href="#experience" class="px-8 py-4 bg-primary/10 border border-primary text-primary font-bold rounded hover:bg-primary/20 transition-all active:scale-95 text-center">
+                    Check out my work
+                </a>
+            </div>
+        </section>
+
+        <section class="py-12 fade-in-up">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="p-4 border border-white/5 rounded bg-card/50">
+                    <h3 class="text-4xl font-bold text-slate-100 counter" data-target="33">0</h3>
+                    [cite_start]<p class="text-primary font-mono text-sm mt-2">$33M+ P&L Managed [cite: 7]</p>
+                </div>
+                <div class="p-4 border border-white/5 rounded bg-card/50">
+                    <h3 class="text-4xl font-bold text-slate-100 counter" data-target="42">0</h3>
+                    <p class="text-primary font-mono text-sm mt-2">Intl. [cite_start]Markets Scaled [cite: 50]</p>
+                </div>
+                <div class="p-4 border border-white/5 rounded bg-card/50">
+                    <h3 class="text-4xl font-bold text-slate-100 counter" data-target="180">0</h3>
+                    [cite_start]<p class="text-primary font-mono text-sm mt-2">% Revenue Increase [cite: 40]</p>
+                </div>
+                <div class="p-4 border border-white/5 rounded bg-card/50">
+                    <h3 class="text-4xl font-bold text-slate-100 counter" data-target="50">0</h3>
+                    [cite_start]<p class="text-primary font-mono text-sm mt-2">% Cost Reduction [cite: 52]</p>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="section reveal">
-            <div class="w-full max-w-5xl">
-                <h2 class="text-2xl font-bold mb-8 flex items-center text-slate-900 dark:text-slate-100">
-                    <span class="text-teal-500 mr-2">01.</span> About Me
-                    <span class="flex-grow h-px bg-slate-200 dark:bg-slate-700 ml-4 max-w-xs"></span>
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                    <div class="md:col-span-2 space-y-4 text-slate-600 dark:text-slate-400">
-                        <p>
-                            I specialize in leading 0-to-1 incubations and scaling commercial initiatives. [cite_start]My expertise lies in aligning Engineering, Research, and GTM teams to solve systemic challenges[cite: 5, 7].
-                        </p>
-                        <p>
-                            [cite_start]Currently, I operate as a Regional Manager at <span class="text-teal-500">Bird</span>, where I've architected business intelligence infrastructure and led strategic product incubations that exceeded targets by 57%[cite: 20, 21].
-                        </p>
-                        <p>
-                            My approach utilizes SQL and Python to drive rigorous analysis and objective strategy. [cite_start]I have a proven track record of managing $33M+ P&Ls and optimizing unit economics[cite: 7, 12].
-                        </p>
-                        <p>
-                            Here are a few technologies and tools I've been working with recently:
-                        </p>
-                        <ul class="grid grid-cols-2 gap-2 mt-4 font-mono text-sm">
-                            <li class="flex items-center"><span class="text-teal-500 mr-2">▹</span> SQL (Advanced)</li>
-                            <li class="flex items-center"><span class="text-teal-500 mr-2">▹</span> Python</li>
-                            <li class="flex items-center"><span class="text-teal-500 mr-2">▹</span> Tableau / Power BI</li>
-                            <li class="flex items-center"><span class="text-teal-500 mr-2">▹</span> Financial Modeling</li>
-                            <li class="flex items-center"><span class="text-teal-500 mr-2">▹</span> Microsoft Azure</li>
-                            <li class="flex items-center"><span class="text-teal-500 mr-2">▹</span> Jira / Confluence</li>
-                        </ul>
-                    </div>
-                    <div class="md:col-span-1 flex justify-center items-start">
-                         <div class="relative w-64 h-64 group">
-                             <div class="absolute inset-0 border-2 border-teal-500 rounded translate-x-4 translate-y-4 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
-                             <div class="absolute inset-0 bg-teal-500/20 rounded group-hover:bg-transparent transition-colors z-10"></div>
-                             <div class="relative w-full h-full bg-slate-300 rounded overflow-hidden grayscale hover:grayscale-0 transition-all duration-300">
-                                <div class="flex items-center justify-center h-full text-slate-500 text-xs text-center p-4">
-                                    [Add Profile Photo Here]
-                                </div>
-                             </div>
+        <section id="about" class="py-24 fade-in-up">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-12 section-heading">
+                About Me
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="md:col-span-2 space-y-6 text-secondary text-lg leading-relaxed">
+                    <p>
+                        [cite_start]I am a Product Strategy & Operations Leader with over a decade of experience in high-ambiguity technology environments. [cite: 5] [cite_start]My expertise lies in bridging the gap between product vision and operational execution. [cite: 6]
+                    </p>
+                    <p>
+                        [cite_start]I utilize data as a first language—specifically <span class="text-primary">SQL and Python</span>—to drive rigorous analysis and objective strategy. [cite: 6] [cite_start]I have a proven track record of managing $33M+ P&Ls and aligning Engineering, Research, and GTM teams to solve complex, systemic challenges. [cite: 7]
+                    </p>
+                    <p>
+                        [cite_start]Currently, I serve as a Regional Manager at Bird, where I've led strategic '0-to-1' product incubations and architected business intelligence infrastructure. [cite: 18, 20, 21]
+                    </p>
+                </div>
+                
+                <div class="relative group mx-auto md:mx-0 max-w-xs">
+                    <div class="absolute inset-0 border-2 border-primary rounded translate-x-4 translate-y-4 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
+                    <div class="relative rounded overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-500 bg-card aspect-square">
+                         <div class="w-full h-full flex items-center justify-center bg-slate-800">
+                            <span class="text-4xl">DW</span>
                          </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="skills" class="section reveal">
-             <div class="w-full max-w-6xl">
-                <h2 class="text-2xl font-bold mb-12 flex items-center text-slate-900 dark:text-slate-100">
-                    <span class="text-teal-500 mr-2">02.</span> My Toolkit
-                    <span class="flex-grow h-px bg-slate-200 dark:bg-slate-700 ml-4 max-w-xs"></span>
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="skill-card glass-effect p-8 rounded text-left flex flex-col reveal" style="--delay: 0.1s;">
-                        <div class="text-teal-500 mb-4">
-                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"></path></svg>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-slate-100">Product Strategy</h3>
-                        <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400 mb-4">
-                            Specialized in 0-to-1 incubation, roadmap planning, and GTM strategy. [cite_start]I bridge the gap between vision and execution. [cite: 5, 10]
-                        </p>
-                        <ul class="text-xs font-mono text-slate-500 mt-auto space-y-1">
-                            <li>• P&L Management ($33M+)</li>
-                            <li>• User Segmentation</li>
-                            <li>• Competitive Analysis</li>
+        <section id="skills" class="py-24 fade-in-up">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-12 section-heading">
+                Technical Toolkit
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="glass-panel p-6 rounded-lg hover-lift">
+                    <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-2">
+                        <h3 class="text-xl font-bold text-slate-100">Product Strategy & Ops</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        [cite_start]<span class="skill-pill">Strategic Planning [cite: 9]</span>
+                        [cite_start]<span class="skill-pill">P&L Management ($33M+) [cite: 9]</span>
+                        [cite_start]<span class="skill-pill">0-to-1 Incubation [cite: 10]</span>
+                        [cite_start]<span class="skill-pill">GTM Strategy [cite: 10]</span>
+                        [cite_start]<span class="skill-pill">User Segmentation [cite: 10]</span>
+                        [cite_start]<span class="skill-pill">Pricing Strategy [cite: 11]</span>
+                        [cite_start]<span class="skill-pill">Unit Economics Optimization [cite: 12]</span>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-lg hover-lift">
+                    <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-2">
+                        <h3 class="text-xl font-bold text-slate-100">Data & Analytics</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        [cite_start]<span class="skill-pill">Advanced SQL [cite: 13]</span>
+                        [cite_start]<span class="skill-pill">Python [cite: 14]</span>
+                        [cite_start]<span class="skill-pill">Tableau [cite: 13]</span>
+                        [cite_start]<span class="skill-pill">Power BI [cite: 13]</span>
+                        [cite_start]<span class="skill-pill">Financial Modeling [cite: 13]</span>
+                        [cite_start]<span class="skill-pill">A/B Testing [cite: 14]</span>
+                        [cite_start]<span class="skill-pill">Cohort Analysis [cite: 14]</span>
+                        [cite_start]<span class="skill-pill">Google Analytics [cite: 13]</span>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-lg hover-lift">
+                    <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-2">
+                        <h3 class="text-xl font-bold text-slate-100">Software & Platforms</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        [cite_start]<span class="skill-pill">Microsoft Azure [cite: 14]</span>
+                        [cite_start]<span class="skill-pill">Jira [cite: 14]</span>
+                        [cite_start]<span class="skill-pill">Confluence [cite: 15]</span>
+                        [cite_start]<span class="skill-pill">Asana [cite: 15]</span>
+                        [cite_start]<span class="skill-pill">Airtable [cite: 14]</span>
+                        [cite_start]<span class="skill-pill">Advanced Excel/GSheets [cite: 14]</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-24 fade-in-up">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-16 section-heading">
+                Where I've Worked
+            </h2>
+
+            <div class="relative">
+                <div class="timeline-line hidden md:block"></div>
+
+                <div class="relative md:grid md:grid-cols-2 gap-12 mb-16 items-center">
+                    <div class="hidden md:block"></div> <div class="timeline-dot hidden md:block"></div>
+                    <div class="glass-panel p-6 rounded-lg hover-lift">
+                        <header class="mb-4 border-b border-white/5 pb-4">
+                            <h3 class="text-2xl font-bold text-slate-100">Regional Manager</h3>
+                            <p class="text-sm text-primary font-mono mb-1">Previously Biz Ops Manager & Associate</p>
+                            <div class="flex justify-between text-sm text-secondary">
+                                <span>Bird</span>
+                                [cite_start]<span>Aug 2023 - Present [cite: 19]</span>
+                            </div>
+                        </header>
+                        <ul class="space-y-3 text-secondary list-[square] pl-4 marker:text-primary">
+                            [cite_start]<li>Owned P&L strategy for a <span class="text-slate-100">$33M regional marketplace</span>, engineering a 12% reduction in OPEX and a 37% YoY revenue lift. [cite: 23]</li>
+                            [cite_start]<li>Led a strategic '0-to-1' product incubation to diagnose systemic inefficiencies, exceeding launch targets by <span class="text-primary">57%</span>. [cite: 21]</li>
+                            [cite_start]<li>Architected "Single Source of Truth" business intelligence using SQL, reducing manual overhead by 50%. [cite: 20]</li>
+                            [cite_start]<li>Optimized fleet unit economics to achieve a 15% increase in contribution margin via Python-based root cause analysis. [cite: 26]</li>
                         </ul>
                     </div>
-                    <div class="skill-card glass-effect p-8 rounded text-left flex flex-col reveal" style="--delay: 0.2s;">
-                        <div class="text-teal-500 mb-4">
-                             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-slate-100">Data Engineering</h3>
-                        <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400 mb-4">
-                            [cite_start]I build "Single Source of Truth" infrastructure using SQL and Python to replace fragmented reporting with centralized dashboards. [cite: 20]
-                        </p>
-                        <ul class="text-xs font-mono text-slate-500 mt-auto space-y-1">
-                            <li>• Automated SQL Pipelines</li>
-                            <li>• Python Analysis</li>
-                            <li>• Tableau / Power BI</li>
+                </div>
+
+                <div class="relative md:grid md:grid-cols-2 gap-12 mb-16 items-center">
+                    <div class="glass-panel p-6 rounded-lg hover-lift md:text-right">
+                        <header class="mb-4 border-b border-white/5 pb-4">
+                            <h3 class="text-2xl font-bold text-slate-100">Vice President - Operations</h3>
+                            <p class="text-sm text-primary font-mono mb-1">Previously Director of Operations</p>
+                            <div class="flex md:justify-end justify-between text-sm text-secondary gap-4">
+                                <span>WB Surf Inc.</span>
+                                [cite_start]<span>Jan 2021 - Aug 2023 [cite: 36]</span>
+                            </div>
+                        </header>
+                        <ul class="space-y-3 text-secondary list-[square] pl-4 md:pl-0 md:list-none marker:text-primary inline-block text-left md:text-right">
+                            [cite_start]<li>Redefined GTM strategy, breaking down silos between Marketing, Sales, and Product to accelerate commercialization. [cite: 37]</li>
+                            [cite_start]<li>Steered a distressed business unit to profitability by restructuring the P&L and driving a <span class="text-primary">180% revenue increase</span> through algorithmic pricing. [cite: 40]</li>
+                            [cite_start]<li>Reduced COGS by 18% by leading a strategic consolidation of upstream suppliers. [cite: 44]</li>
+                            [cite_start]<li>Stabilized workforce turnover from 45% to 15% by professionalizing onboarding. [cite: 45]</li>
                         </ul>
                     </div>
-                    <div class="skill-card glass-effect p-8 rounded text-left flex flex-col reveal" style="--delay: 0.3s;">
-                        <div class="text-teal-500 mb-4">
-                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-slate-100">Unit Economics</h3>
-                        <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400 mb-4">
-                            [cite_start]Focus on root cause analysis to optimize contribution margins and reduce OPEX through rigorous vendor and labor efficiency programs. [cite: 23, 26]
-                        </p>
-                        <ul class="text-xs font-mono text-slate-500 mt-auto space-y-1">
-                            <li>• Financial Modeling</li>
-                            <li>• Cohort Analysis</li>
-                            <li>• Ops-in-a-Box Playbooks</li>
+                    <div class="timeline-dot hidden md:block"></div>
+                    <div class="hidden md:block"></div> </div>
+
+                <div class="relative md:grid md:grid-cols-2 gap-12 items-center">
+                    <div class="hidden md:block"></div> <div class="timeline-dot hidden md:block"></div>
+                    <div class="glass-panel p-6 rounded-lg hover-lift">
+                        <header class="mb-4 border-b border-white/5 pb-4">
+                            <h3 class="text-2xl font-bold text-slate-100">Chief Operating Officer</h3>
+                            <p class="text-sm text-primary font-mono mb-1">Previously Operations Director</p>
+                            <div class="flex justify-between text-sm text-secondary mt-1">
+                                <span>Real</span>
+                                [cite_start]<span>May 2015 - Jan 2021 [cite: 48, 54]</span>
+                            </div>
+                        </header>
+                        <ul class="space-y-3 text-secondary list-[square] pl-4 marker:text-primary">
+                            [cite_start]<li>Directed end-to-end planning of a new vertical launch, securing <span class="text-slate-100">$2.5M in growth capital</span>. [cite: 49]</li>
+                            [cite_start]<li>Codified strategy for international scale, building a "launch-in-a-box" framework for 42 international markets. [cite: 50]</li>
+                            [cite_start]<li>Revolutionized customer service, driving a 70% improvement in CSAT and reducing churn by 50%. [cite: 51]</li>
+                            [cite_start]<li>Renegotiated vendor ecosystems to slash logistics costs by 50%. [cite: 52]</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="experience" class="section reveal">
-            <div class="w-full max-w-4xl">
-                <h2 class="text-2xl font-bold mb-12 flex items-center text-slate-900 dark:text-slate-100">
-                    <span class="text-teal-500 mr-2">03.</span> Where I've Worked
-                    <span class="flex-grow h-px bg-slate-200 dark:bg-slate-700 ml-4 max-w-xs"></span>
-                </h2>
-                
-                <div class="relative pl-8 border-l-2 border-slate-200 dark:border-slate-700 ml-3">
-                    
-                    <div class="timeline-item mb-12 relative">
-                        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
-                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">Bird</h3>
-                            <span class="font-mono text-xs text-slate-500">Aug 2023 - Present</span>
-                        </div>
-                        <div class="mb-4">
-                            <p class="text-teal-500 font-medium">Regional Manager <span class="text-slate-400 text-sm font-normal"> (Previously Biz Ops Manager & Associate)</span></p>
-                        </div>
-                        <ul class="list-disc list-outside ml-4 space-y-3 text-slate-600 dark:text-slate-400 text-sm marker:text-teal-500">
-                            [cite_start]<li><strong>Strategic Incubation:</strong> Led a '0-to-1' product incubation using Python-based analysis to validate a new revenue stream, exceeding launch targets by 57%[cite: 21].</li>
-                            [cite_start]<li><strong>P&L Ownership:</strong> Managed strategy for a $33M regional marketplace, engineering a 12% reduction in OPEX and a 37% YoY revenue lift[cite: 23].</li>
-                            [cite_start]<li><strong>Data Infrastructure:</strong> Architected the region's "Single Source of Truth" BI infrastructure using SQL, reducing manual reporting overhead by 50%[cite: 20].</li>
-                            [cite_start]<li><strong>Unit Economics:</strong> Achieved a 15% increase in contribution margin by conducting root cause analysis on vehicle churn[cite: 26].</li>
-                            [cite_start]<li><strong>Revenue Recovery:</strong> Recovered $500k in annualized revenue by auditing vendor invoicing and identifying 3PL discrepancies[cite: 27].</li>
-                        </ul>
+        <section id="interests" class="py-24 fade-in-up">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-12 section-heading">
+                Beyond the Office
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer bg-slate-800">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-cyan-900 to-blue-900 transition-transform duration-500 group-hover:scale-110"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Surfing</h4>
                     </div>
-
-                    <div class="timeline-item mb-12 relative">
-                        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
-                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">WB Surf Inc.</h3>
-                            <span class="font-mono text-xs text-slate-500">Jan 2021 - Aug 2023</span>
-                        </div>
-                        <div class="mb-4">
-                            <p class="text-teal-500 font-medium">Vice President - Operations</p>
-                        </div>
-                        <ul class="list-disc list-outside ml-4 space-y-3 text-slate-600 dark:text-slate-400 text-sm marker:text-teal-500">
-                            [cite_start]<li><strong>GTM Strategy:</strong> Redefined Go-to-Market strategy, breaking down silos between Marketing, Sales, and Product to accelerate commercialization[cite: 37].</li>
-                            [cite_start]<li><strong>Turnaround:</strong> Steered a distressed business unit to profitability by restructuring the P&L and implementing aggressive cost controls[cite: 40].</li>
-                            [cite_start]<li><strong>Pricing Algorithms:</strong> Drove a 180% revenue increase in core lines through algorithmic pricing adjustments[cite: 40].</li>
-                            [cite_start]<li><strong>Operational Efficiency:</strong> Reduced COGS by 18% through strategic supplier consolidation and JIT inventory implementation[cite: 44].</li>
-                        </ul>
+                </div>
+                 <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer bg-slate-800">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-emerald-900 to-teal-900 transition-transform duration-500 group-hover:scale-110"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Hiking</h4>
                     </div>
-
-                    <div class="timeline-item relative">
-                        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
-                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">Real</h3>
-                            <span class="font-mono text-xs text-slate-500">May 2015 - Jan 2021</span>
-                        </div>
-                        <div class="mb-4">
-                            <p class="text-teal-500 font-medium">Chief Operating Officer</p>
-                        </div>
-                        <ul class="list-disc list-outside ml-4 space-y-3 text-slate-600 dark:text-slate-400 text-sm marker:text-teal-500">
-                            [cite_start]<li><strong>Global Scale:</strong> Codified strategy for international scale, building a "launch-in-a-box" framework for 42 international markets[cite: 50].</li>
-                            [cite_start]<li><strong>New Vertical:</strong> Directed end-to-end planning of a new vertical launch, securing $2.5M in growth capital[cite: 49].</li>
-                            [cite_start]<li><strong>Cost Reduction:</strong> Orchestrated a global operational overhaul, renegotiating vendor ecosystems to slash logistics costs by 50%[cite: 52].</li>
-                            [cite_start]<li><strong>CSAT Revolution:</strong> Designed tiered support structures, driving a 70% improvement in CSAT and reducing churn by 50%[cite: 51].</li>
-                        </ul>
+                </div>
+                 <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer bg-slate-800">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-900 to-purple-900 transition-transform duration-500 group-hover:scale-110"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Kiteboarding</h4>
                     </div>
-
+                </div>
+                 <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer bg-slate-800">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-orange-900 to-amber-900 transition-transform duration-500 group-hover:scale-110"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Camping</h4>
+                    </div>
+                </div>
+                 <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer bg-slate-800">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-sky-900 to-cyan-800 transition-transform duration-500 group-hover:scale-110"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Fishing</h4>
+                    </div>
+                </div>
+                 <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer bg-slate-800">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-slate-600 to-gray-800 transition-transform duration-500 group-hover:scale-110"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Snowboarding</h4>
+                    </div>
                 </div>
             </div>
         </section>
-        
-        <section class="section reveal pt-0">
-             <div class="w-full max-w-4xl text-center">
-                <div class="glass-effect p-8 rounded-lg inline-block">
-                    <h3 class="text-lg font-bold text-teal-500">University of North Carolina, Wilmington</h3>
-                    [cite_start]<p class="text-slate-600 dark:text-slate-400 mt-2">BS - Business Analytics, Management and Leadership [cite: 60]</p>
-                </div>
-             </div>
+
+        <section class="py-12 text-center fade-in-up">
+            <h3 class="text-slate-100 font-bold text-2xl mb-2">Education</h3>
+            [cite_start]<p class="text-primary text-lg">University of North Carolina, Wilmington [cite: 59]</p>
+            [cite_start]<p class="text-secondary text-sm">BS - Business Analytics, Management and Leadership [cite: 60]</p>
         </section>
 
-        <section id="contact" class="section text-center reveal">
-            <div class="w-full max-w-2xl">
-                <p class="text-teal-500 font-mono mb-4">04. What's Next?</p>
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-slate-100">Get In Touch</h2>
-                <p class="text-slate-600 dark:text-slate-400 text-lg mb-12">
-                    I'm currently looking for new opportunities in Product Strategy and Operations. Whether you have a question about my work with Bird, WB Surf, or just want to say hi, my inbox is always open!
-                </p>
-                <a href="mailto:wrightdeaton@gmail.com" class="bg-transparent border border-teal-500 text-teal-500 font-mono py-4 px-10 rounded hover:bg-teal-500/10 transition-colors">
+        <section id="contact" class="py-32 text-center max-w-2xl mx-auto fade-in-up">
+            <h2 class="text-primary font-mono text-lg mb-6">What's Next?</h2>
+            <h3 class="font-display text-4xl md:text-5xl font-bold text-slate-100 mb-6">Get In Touch</h3>
+            <p class="text-secondary text-lg mb-12">
+                I'm currently looking for new opportunities in Product Strategy and Operations. Whether you have a question about my work or just want to say hi, I'll try my best to get back to you!
+            </p>
+            
+            <div class="flex flex-col items-center gap-4">
+                 [cite_start]<p class="text-slate-100 font-mono text-xl">(910) 585-2547 [cite: 3]</p>
+                <a href="mailto:wrightdeaton@gmail.com" class="px-8 py-4 border border-primary text-primary font-bold rounded hover:bg-primary/10 transition-colors">
                     Say Hello
                 </a>
             </div>
         </section>
 
+        <footer class="text-center py-8 text-sm text-secondary font-mono">
+            <p>Designed & Built by Deaton Wright</p>
+        </footer>
+
     </main>
 
-    <footer class="text-center py-6 text-xs font-mono text-slate-500 hover:text-teal-500 transition-colors">
-        <a href="https://github.com/your-github-username" target="_blank">
-            <p>Designed & Built by Deaton Wright</p>
-        </a>
-    </footer>
+    <div class="hidden md:block fixed bottom-0 left-12 w-10 z-20">
+        <div class="flex flex-col gap-6 items-center">
+            <a href="https://github.com" target="_blank" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg></a>
+            <a href="#" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg></a>
+            <div class="h-24 w-[1px] bg-secondary"></div>
+        </div>
+    </div>
+
+    <div class="hidden md:block fixed bottom-0 right-12 w-10 z-20">
+        <div class="flex flex-col gap-6 items-center">
+            [cite_start]<a href="mailto:wrightdeaton@gmail.com" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all" style="writing-mode: vertical-rl;">wrightdeaton@gmail.com [cite: 2]</a>
+            <div class="h-24 w-[1px] bg-secondary"></div>
+        </div>
+    </div>
 
     <script>
-        // --- Interactive Canvas Background ---
-        const canvas = document.getElementById('interactive-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let particlesArray;
-        const mouse = { x: null, y: null, radius: (canvas.height/100) * (canvas.width/100) };
-
-        window.addEventListener('mousemove', (event) => { mouse.x = event.x; mouse.y = event.y; });
-        window.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            mouse.radius = (canvas.height/100) * (canvas.width/100);
-            init();
-        });
-
-        class Particle {
-            constructor(x, y, directionX, directionY, size) {
-                this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                // Adjust particle color based on theme
-                const isDark = document.documentElement.classList.contains('dark');
-                ctx.fillStyle = isDark ? 'rgba(100, 255, 218, 0.1)' : 'rgba(13, 148, 136, 0.1)';
-                ctx.fill();
-            }
-            update() {
-                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
-                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
-                
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius + this.size){
-                    if(mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 3;
-                    if(mouse.x > this.x && this.x > this.size * 10) this.x -= 3;
-                    if(mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 3;
-                    if(mouse.y > this.y && this.y > this.size * 10) this.y -= 3;
-                }
-                this.x += this.directionX;
-                this.y += this.directionY;
-                this.draw();
-            }
-        }
-
-        function init() {
-            particlesArray = [];
-            let numberOfParticles = (canvas.height * canvas.width) / 9000;
-            for (let i=0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 2) + 1;
-                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * 0.4) - 0.2;
-                let directionY = (Math.random() * 0.4) - 0.2;
-                particlesArray.push(new Particle(x, y, directionX, directionY, size));
-            }
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0,0,innerWidth, innerHeight);
-            for (let i=0; i<particlesArray.length; i++) {
-                particlesArray[i].update();
-            }
-        }
-        
-        init();
-        animate();
-
-        // --- ALL PAGE LOGIC ---
         document.addEventListener('DOMContentLoaded', () => {
-
-            // Mobile Menu
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if(mobileMenuBtn && mobileMenu) {
-                mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            
+            // 1. Constellation Canvas Effect (Interactive)
+            const canvas = document.getElementById('canvas-bg');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+            
+            // Mouse tracking
+            let mouse = { x: null, y: null };
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.x;
+                mouse.y = e.y;
+            });
+            
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
             }
+            window.addEventListener('resize', resize);
+            resize();
 
-            // Header Scroll
-            let lastScrollTop = 0;
-            const header = document.getElementById('header');
-            window.addEventListener('scroll', function() {
-                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                if (header) {
-                    if (scrollTop > lastScrollTop && scrollTop > 70) {
-                        header.style.top = '-100px'; // hide
-                    } else {
-                        header.style.top = '0';
-                        if (scrollTop > 50) {
-                            header.classList.add('shadow-md');
-                            header.classList.add('backdrop-blur-md');
-                        } else {
-                            header.classList.remove('shadow-md');
-                            header.classList.remove('backdrop-blur-md');
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.size = Math.random() * 2 + 1;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+                    
+                    // Mouse repulsion/attraction subtle effect
+                    if (mouse.x != null) {
+                        let dx = mouse.x - this.x;
+                        let dy = mouse.y - this.y;
+                        let distance = Math.sqrt(dx*dx + dy*dy);
+                        if (distance < 100) {
+                             this.x -= dx/20;
+                             this.y -= dy/20;
                         }
                     }
                 }
-                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-            });
-
-            // Typewriter Effect (Updated with resume metrics)
-            const typewriterElement = document.getElementById('typewriter');
-            if (typewriterElement) {
-                const phrases = [
-                    "I manage $33M+ P&Ls.", 
-                    "I build SQL/Python data pipelines.", 
-                    "I drive 57% revenue beats.",
-                    "I solve systemic challenges."
-                ];
-                let phraseIndex = 0, charIndex = 0, isDeleting = false;
-
-                function type() {
-                    const currentPhrase = phrases[phraseIndex];
-                    if (isDeleting) charIndex--; else charIndex++;
-                    typewriterElement.textContent = currentPhrase.substring(0, charIndex);
-                    let typeSpeed = isDeleting ? 50 : 100;
-                    if (!isDeleting && charIndex === currentPhrase.length) { typeSpeed = 2000; isDeleting = true; } 
-                    else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500; }
-                    setTimeout(type, typeSpeed);
-                }
-                setTimeout(type, 1000);
-            }
-
-            // Theme Toggle
-            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-            const themeToggleButton = document.getElementById('theme-toggle');
-
-            function applyTheme(theme) {
-                if (theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                    if(themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
-                    if(themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    if(themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
-                    if(themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
+                draw() {
+                    ctx.fillStyle = 'rgba(100, 255, 218, 0.1)';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
                 }
             }
-            
-            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                applyTheme('dark');
-            } else {
-                applyTheme('light');
-            }
 
-            if(themeToggleButton) {
-                themeToggleButton.addEventListener('click', function() {
-                    const isDark = document.documentElement.classList.toggle('dark');
-                    localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
-                    applyTheme(isDark ? 'dark' : 'light');
-                });
-            }
+            for (let i = 0; i < 60; i++) particles.push(new Particle());
 
-            // Scroll Reveal
+            function animateCanvas() {
+                ctx.clearRect(0, 0, width, height);
+                for (let i = 0; i < particles.length; i++) {
+                    const p1 = particles[i];
+                    p1.update();
+                    p1.draw();
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dx = p1.x - p2.x;
+                        const dy = p1.y - p2.y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < 150) {
+                            ctx.strokeStyle = `rgba(100, 255, 218, ${0.1 - dist/1500})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateCanvas);
+            }
+            animateCanvas();
+
+            // 2. Intersection Observer for Scroll Animations
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
+                entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
                     }
                 });
             }, { threshold: 0.1 });
-            document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+            
+            // 3. Number Counter Animation
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        const target = +entry.target.getAttribute('data-target');
+                        const updateCount = () => {
+                            const count = +entry.target.innerText;
+                            const speed = target / 100; // Lower is slower
+                            if(count < target) {
+                                entry.target.innerText = Math.ceil(count + speed);
+                                setTimeout(updateCount, 20);
+                            } else {
+                                entry.target.innerText = target;
+                            }
+                        }
+                        updateCount();
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+            // 4. Typewriter Effect
+            const typewriterEl = document.getElementById('typewriter');
+            if (typewriterEl) {
+                const phrases = [
+                    [cite_start]"I bridge Strategy & Operations.", [cite: 5]
+                    [cite_start]"I manage $33M+ P&Ls.", [cite: 9]
+                    [cite_start]"I drive 180% revenue gains.", [cite: 40]
+                    [cite_start]"I leverage data as a first language.", [cite: 6]
+                    [cite_start]"I scale global markets.", [cite: 50]
+                ];
+                let phraseIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+                let typeSpeed = 50;
+
+                function type() {
+                    // Strip citation for display
+                    const cleanPhrases = phrases.map(p => p.replace(/\/g, ''));
+                    const currentPhrase = cleanPhrases[phraseIndex];
+                    
+                    if (isDeleting) {
+                        typewriterEl.textContent = currentPhrase.substring(0, charIndex - 1);
+                        charIndex--;
+                        typeSpeed = 30;
+                    } else {
+                        typewriterEl.textContent = currentPhrase.substring(0, charIndex + 1);
+                        charIndex++;
+                        typeSpeed = 50;
+                    }
+
+                    if (!isDeleting && charIndex === currentPhrase.length) {
+                        typeSpeed = 2000;
+                        isDeleting = true;
+                    } else if (isDeleting && charIndex === 0) {
+                        isDeleting = false;
+                        phraseIndex = (phraseIndex + 1) % phrases.length;
+                        typeSpeed = 500;
+                    }
+                    setTimeout(type, typeSpeed);
+                }
+                setTimeout(type, 500);
+            }
+
+            // 5. Vanilla Tilt
+            VanillaTilt.init(document.querySelectorAll(".glass-panel"), {
+                max: 5, speed: 400, glare: true, "max-glare": 0.1,
+            });
+
+            // 6. Mobile Menu
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileBtn) {
+                mobileBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
         });
     </script>
 </body>
