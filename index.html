@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deaton Wright | Senior Strategy & Operations Manager</title>
+    <title>Deaton Wright | Strategic Operations Leader</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,63 +30,172 @@
     </script>
 
     <style>
-        body { background-color: #0a192f; color: #ccd6f6; overflow-x: hidden; }
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #0a192f; }
-        ::-webkit-scrollbar-thumb { background: #495670; border-radius: 5px; }
-        ::-webkit-scrollbar-thumb:hover { background: #64ffda; }
-        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        
+        /* --- Core Styles --- */
+        body {
+            background-color: #0a192f;
+            color: #ccd6f6;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a192f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #495670;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64ffda;
+        }
+
+        /* Canvas Background */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism & Cards */
         .glass-panel {
             background: rgba(17, 34, 64, 0.7);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(100, 255, 218, 0.1);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             height: 100%;
         }
-        .hover-lift:hover { transform: translateY(-5px); border-color: rgba(100, 255, 218, 0.3); }
-        .section-heading { display: flex; align-items: center; white-space: nowrap; }
-        .section-heading::after { content: ""; display: block; width: 300px; height: 1px; background: #233554; margin-left: 20px; }
         
-        /* Animations */
-        .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
-        
-        .skill-pill {
-            display: inline-block; padding: 0.25rem 0.75rem; margin: 0.25rem;
-            font-size: 0.875rem; color: #64ffda; background: rgba(100, 255, 218, 0.1);
-            border-radius: 9999px; border: 1px solid rgba(100, 255, 218, 0.2); transition: all 0.2s ease;
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5);
+            border-color: rgba(100, 255, 218, 0.3);
         }
-        .skill-pill:hover { background: rgba(100, 255, 218, 0.2); transform: translateY(-1px); }
+
+        /* Typography & Accents */
+        .text-gradient {
+            background: linear-gradient(135deg, #64ffda 0%, #00b8d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
         
-        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #233554; transform: translateX(-50%); }
-        .timeline-dot { position: absolute; left: 50%; top: 0; width: 16px; height: 16px; border-radius: 50%; background: #0a192f; border: 2px solid #64ffda; transform: translate(-50%, 0); z-index: 10; }
-        @media (max-width: 768px) { .timeline-line { left: 20px; } .timeline-dot { left: 20px; } .section-heading::after { width: 100%; } }
+        .section-heading {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+        .section-heading::after {
+            content: "";
+            display: block;
+            width: 300px;
+            height: 1px;
+            background: #233554;
+            margin-left: 20px;
+        }
+        @media (max-width: 768px) {
+            .section-heading::after { width: 100%; }
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Skill Pills */
+        .skill-pill {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            margin: 0.25rem;
+            font-size: 0.875rem;
+            color: #64ffda;
+            background: rgba(100, 255, 218, 0.1);
+            border-radius: 9999px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            transition: all 0.2s ease;
+        }
+        .skill-pill:hover {
+            background: rgba(100, 255, 218, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Timeline Specifics */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #233554;
+            transform: translateX(-50%);
+        }
+        @media (max-width: 768px) {
+            .timeline-line { left: 20px; }
+        }
         
-        .cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #64ffda; }
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #0a192f;
+            border: 2px solid #64ffda;
+            transform: translate(-50%, 0);
+            z-index: 10;
+        }
+        @media (max-width: 768px) {
+            .timeline-dot { left: 20px; }
+        }
+
+        /* Blinking Cursor */
+        .cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #64ffda;
+        }
         @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
-<body class="selection:bg-primary selection:text-bg antialiased">
+<body class="selection:bg-primary selection:text-bg">
 
     <canvas id="canvas-bg"></canvas>
 
-    <nav id="navbar" class="fixed w-full z-50 top-0 py-4 px-6 md:px-12 backdrop-blur-md bg-bg/80 border-b border-white/5 transition-all duration-300">
+    <nav id="navbar" class="fixed w-full z-50 top-0 transition-all duration-300 py-4 px-6 md:px-12 backdrop-blur-md bg-bg/80 border-b border-white/5">
         <div class="flex justify-between items-center max-w-7xl mx-auto">
-            <a href="#" class="text-xl font-bold font-display text-primary tracking-tight hover:text-slate-100 transition-colors">DW.</a>
+            [cite_start]<a href="#" class="text-xl font-bold font-display text-primary tracking-tight hover:text-slate-100 transition-colors">Deaton Wright [cite: 61]</a>
+            
             <div class="hidden md:flex gap-8 text-sm font-medium">
-                <a href="#about" class="text-secondary hover:text-primary transition-colors">About</a>
-                <a href="#skills" class="text-secondary hover:text-primary transition-colors">Skills</a>
-                <a href="#experience" class="text-secondary hover:text-primary transition-colors">Experience</a>
-                <a href="#contact" class="text-secondary hover:text-primary transition-colors">Contact</a>
+                <a href="#about" class="text-secondary hover:text-primary transition-colors hover:-translate-y-0.5 transform block">About</a>
+                <a href="#skills" class="text-secondary hover:text-primary transition-colors hover:-translate-y-0.5 transform block">Skills</a>
+                <a href="#experience" class="text-secondary hover:text-primary transition-colors hover:-translate-y-0.5 transform block">Experience</a>
+                <a href="#interests" class="text-secondary hover:text-primary transition-colors hover:-translate-y-0.5 transform block">Interests</a>
             </div>
+
             <div class="flex gap-4">
-                 <a href="resume.pdf" target="_blank" class="px-5 py-2 rounded border border-primary text-primary text-sm font-medium hover:bg-primary/10 transition-colors">Resume</a>
-                <button id="mobile-menu-btn" class="md:hidden text-primary"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
+                 <a href="resume.pdf" target="_blank" class="px-5 py-2 rounded border border-primary text-primary text-sm font-medium hover:bg-primary/10 transition-colors">
+                    Resume
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-primary">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-card border-b border-white/5 p-4 flex flex-col gap-4 text-center shadow-xl">
+        
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-card border-b border-white/5 p-4 flex flex-col gap-4 text-center">
              <a href="#about" class="text-secondary hover:text-primary">About</a>
              <a href="#skills" class="text-secondary hover:text-primary">Skills</a>
              <a href="#experience" class="text-secondary hover:text-primary">Experience</a>
@@ -97,87 +206,82 @@
     <main class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
         
         <section class="min-h-screen flex flex-col justify-center pt-20 pb-20">
-            <p class="font-mono text-primary mb-5 fade-in-up">Hi, my name is</p>
-            [cite_start]<h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-slate-100 mb-4 tracking-tight fade-in-up">Deaton Wright. [cite: 61]</h1>
-            <h2 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-secondary mb-8 fade-in-up min-h-[1.2em]">
+            <p class="font-mono text-primary mb-5 fade-in-up" style="transition-delay: 100ms">Hi, my name is</p>
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-slate-100 mb-4 tracking-tight fade-in-up" style="transition-delay: 200ms">
+                [cite_start]Deaton Wright. [cite: 61]
+            </h1>
+            <h2 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-secondary mb-8 fade-in-up min-h-[1.2em]" style="transition-delay: 300ms">
                 <span id="typewriter" class="text-slate-100"></span><span class="cursor"></span>
             </h2>
-            <p class="max-w-xl text-secondary text-lg leading-relaxed mb-12 fade-in-up">
-                [cite_start]I turn transactional users into highly engaged community members[cite: 66]. [cite_start]As a Strategy & Operations leader with 10+ years of experience in high-velocity marketplaces, I specialize in the "0-to-1" transition from transactional volume to sustained, high-LTV engagement[cite: 66].
+            <p class="max-w-xl text-secondary text-lg leading-relaxed mb-12 fade-in-up" style="transition-delay: 400ms">
+                I turn transactional users into highly engaged community members. [cite_start]As a Strategy & Operations leader with 10+ years of experience in high-velocity marketplaces, I specialize in the "0-to-1" transition from transactional volume to sustained, high-LTV engagement. [cite: 66]
             </p>
-            <div class="flex gap-6 fade-in-up">
-                <a href="#experience" class="px-8 py-4 bg-primary/10 border border-primary text-primary font-bold rounded hover:bg-primary/20 transition-all active:scale-95 text-center">Check out my work</a>
-            </div>
-        </section>
-
-        <section class="py-12 fade-in-up">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                <div class="p-4 border border-white/5 rounded bg-card/50 hover:border-primary/50 transition-colors">
-                    <h3 class="text-4xl font-bold text-slate-100"><span class="counter" data-target="22">0</span>%</h3>
-                    [cite_start]<p class="text-primary font-mono text-sm mt-2">Engagement Lift [cite: 81]</p>
-                </div>
-                <div class="p-4 border border-white/5 rounded bg-card/50 hover:border-primary/50 transition-colors">
-                    <h3 class="text-4xl font-bold text-slate-100"><span class="counter" data-target="30">0</span>%</h3>
-                    [cite_start]<p class="text-primary font-mono text-sm mt-2">Activation Lift [cite: 83]</p>
-                </div>
-                <div class="p-4 border border-white/5 rounded bg-card/50 hover:border-primary/50 transition-colors">
-                    <h3 class="text-4xl font-bold text-slate-100"><span class="counter" data-target="180">0</span>%</h3>
-                    [cite_start]<p class="text-primary font-mono text-sm mt-2">Revenue Increase [cite: 109]</p>
-                </div>
-                <div class="p-4 border border-white/5 rounded bg-card/50 hover:border-primary/50 transition-colors">
-                    <h3 class="text-4xl font-bold text-slate-100"><span class="counter" data-target="70">0</span>%</h3>
-                    [cite_start]<p class="text-primary font-mono text-sm mt-2">CSAT Improvement [cite: 120]</p>
-                </div>
+            <div class="flex gap-6 fade-in-up" style="transition-delay: 500ms">
+                <a href="#contact" class="px-8 py-4 bg-primary/10 border border-primary text-primary font-bold rounded hover:bg-primary/20 transition-all active:scale-95 text-center">
+                    Get In Touch
+                </a>
+                <a href="#experience" class="px-8 py-4 border border-primary text-primary font-bold rounded hover:bg-primary/10 transition-all active:scale-95 text-center">
+                    View Work
+                </a>
             </div>
         </section>
 
         <section id="about" class="py-24 fade-in-up">
-            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-12 section-heading">About Me</h2>
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-12 section-heading">
+                About Me
+            </h2>
+            
             <div class="grid md:grid-cols-3 gap-12">
                 <div class="md:col-span-2 space-y-6 text-secondary text-lg leading-relaxed">
-                    <p>I don't just analyze the P&L; [cite_start]I build the SQL/Python infrastructure to diagnose unit economics, incubate retention pilots like Bird+, and scale the teams required to execute them[cite: 67].</p>
-                    [cite_start]<p>From architecting subscription models at Bird to building global loyalty ecosystems at Real, I've driven significant impact on retention, LTV, and profitability[cite: 68].</p>
-                    [cite_start]<p>Currently, I am the Sr. Manager of Rider Growth at Bird, where I design A/B testing roadmaps for multi-channel lifecycle campaigns and optimize user communication strategies[cite: 78, 79, 81].</p>
+                    <p>
+                        [cite_start]I turn transactional users into highly engaged community members. [cite: 66] My career has been defined by one core mission: building efficient systems that empower teams to deliver exceptional results.
+                    </p>
+                    <p>
+                        I don't just analyze the P&L; [cite_start]I build the <span class="text-primary">SQL/Python infrastructure</span> to diagnose unit economics, incubate retention pilots like Bird+, and scale the teams required to execute them. [cite: 67]
+                    </p>
+                    <p>
+                        [cite_start]From architecting subscription models at Bird to building global loyalty ecosystems at Real, I've driven significant impact on <span class="text-slate-100 font-semibold">retention, LTV, and profitability.</span> [cite: 68]
+                    </p>
                 </div>
                 
                 <div class="relative group mx-auto md:mx-0 max-w-xs">
                     <div class="absolute inset-0 border-2 border-primary rounded translate-x-4 translate-y-4 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
-                    <div class="relative rounded overflow-hidden bg-card aspect-square border border-white/10 group-hover:border-primary/50 transition-colors">
-                         <img src="profile.jpg" alt="Deaton Wright" class="w-full h-full object-cover object-top relative z-10" onerror="this.style.display='none'; document.getElementById('fallback-profile').style.display='flex';">
-                         <div id="fallback-profile" class="absolute inset-0 w-full h-full flex flex-col items-center justify-center bg-card z-0 hidden">
-                            <h3 class="text-6xl font-bold text-slate-200">DW</h3>
-                            <p class="text-primary font-mono text-xs mt-2">Deaton Wright</p>
-                         </div>
+                    <div class="relative rounded overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-500 bg-card">
+                         <div class="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-800"></div>
+                         <img src="profile-photo.jpg" alt="Deaton Wright" class="relative w-full h-80 object-cover object-center z-10">
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="skills" class="py-24 fade-in-up">
-            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-12 section-heading">Technical Toolkit</h2>
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-12 section-heading">
+                Technical Toolkit
+            </h2>
+
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="glass-panel p-6 rounded-lg hover-lift">
                     <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-2">
-                        [cite_start]<h3 class="text-xl font-bold text-slate-100">Monetization & Operations [cite: 70, 75]</h3>
+                        [cite_start]<h3 class="text-xl font-bold text-slate-100">Monetization & Growth [cite: 70]</h3>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        [cite_start]<span class="skill-pill">Rapid Experimentation [cite: 71]</span>
+                        [cite_start]<span class="skill-pill">Rapid Experimentation (A/B Testing) [cite: 71]</span>
                         [cite_start]<span class="skill-pill">Yield Management [cite: 71]</span>
                         [cite_start]<span class="skill-pill">Pricing Strategy [cite: 71]</span>
                         [cite_start]<span class="skill-pill">CAC Optimization [cite: 71]</span>
                         [cite_start]<span class="skill-pill">LTV Modeling [cite: 71]</span>
                         [cite_start]<span class="skill-pill">0-to-1 Incubation [cite: 71]</span>
-                        [cite_start]<span class="skill-pill">Marketplace Dynamics [cite: 76]</span>
-                        [cite_start]<span class="skill-pill">Demand Planning [cite: 76]</span>
+                        [cite_start]<span class="skill-pill">Churn Reduction [cite: 72]</span>
+                        [cite_start]<span class="skill-pill">Pricing Sensitivity Analysis [cite: 72]</span>
                     </div>
                 </div>
+
                 <div class="glass-panel p-6 rounded-lg hover-lift">
                     <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-2">
                         [cite_start]<h3 class="text-xl font-bold text-slate-100">Technical Analytics [cite: 73]</h3>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        [cite_start]<span class="skill-pill">SQL [cite: 74]</span>
-                        [cite_start]<span class="skill-pill">Python [cite: 74]</span>
+                        [cite_start]<span class="skill-pill">SQL & Python [cite: 74]</span>
                         [cite_start]<span class="skill-pill">Tableau [cite: 74]</span>
                         [cite_start]<span class="skill-pill">Looker [cite: 74]</span>
                         [cite_start]<span class="skill-pill">Financial Modeling [cite: 74]</span>
@@ -187,61 +291,83 @@
                         [cite_start]<span class="skill-pill">Salesforce [cite: 75]</span>
                     </div>
                 </div>
+
+                <div class="glass-panel p-6 rounded-lg hover-lift">
+                    <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-2">
+                        [cite_start]<h3 class="text-xl font-bold text-slate-100">Operational Mechanics [cite: 75]</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        [cite_start]<span class="skill-pill">Marketplace Dynamics [cite: 76]</span>
+                        [cite_start]<span class="skill-pill">B2B2C Strategy [cite: 76]</span>
+                        [cite_start]<span class="skill-pill">Demand Planning [cite: 76]</span>
+                        [cite_start]<span class="skill-pill">OKR Architecture [cite: 76]</span>
+                        [cite_start]<span class="skill-pill">Cross-Functional Leadership [cite: 76]</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="experience" class="py-24 fade-in-up">
-            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-16 section-heading">Where I've Worked</h2>
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-16 section-heading">
+                Where I've Worked
+            </h2>
+
             <div class="relative">
                 <div class="timeline-line hidden md:block"></div>
+
                 <div class="relative md:grid md:grid-cols-2 gap-12 mb-16 items-center">
-                    <div class="hidden md:block"></div>
-                    <div class="timeline-dot hidden md:block"></div>
+                    <div class="hidden md:block"></div> <div class="timeline-dot hidden md:block"></div>
                     <div class="glass-panel p-6 rounded-lg hover-lift">
                         <header class="mb-4 border-b border-white/5 pb-4">
                             <h3 class="text-2xl font-bold text-slate-100">Sr. [cite_start]Manager, Rider Growth [cite: 79]</h3>
-                            [cite_start]<p class="text-sm text-primary font-mono mb-1">Bird (Previously Regional Manager) [cite: 78, 86]</p>
-                            [cite_start]<div class="flex justify-between text-sm text-secondary"><span>Jan 2026 - Present [cite: 80]</span></div>
+                            [cite_start]<p class="text-sm text-primary font-mono mb-1">Bird [cite: 78]</p>
+                            <div class="flex justify-between text-sm text-secondary">
+                                [cite_start]<span>Jan 2026 - Present [cite: 80]</span>
+                            </div>
                         </header>
                         <ul class="space-y-3 text-secondary list-[square] pl-4 marker:text-primary">
-                            [cite_start]<li>Designed and managed end-to-end A/B testing roadmaps for multi-channel lifecycle campaigns, driving a 22% increase in active rider engagement and retention[cite: 81].</li>
-                            [cite_start]<li>Launched data-driven outreach initiatives designed to educate users, increasing rider frequency and driving a 30% lift in targeted market activation[cite: 82, 83].</li>
-                            [cite_start]<li>Set up robust tracking mechanisms, integrating Tableau dashboards with CRM tools to monitor real-time campaign effectiveness[cite: 84].</li>
-                            [cite_start]<li>Incubated and launched the regional Bird+ subscription service to combat churn among power users, exceeding launch revenue targets by 57%[cite: 88, 89].</li>
+                            [cite_start]<li>Designed and managed end-to-end A/B testing roadmaps for multi-channel lifecycle campaigns, driving a <span class="text-primary">22% increase</span> in active rider engagement and retention. [cite: 81]</li>
+                            [cite_start]<li>Launched data-driven outreach initiatives designed to educate users and build trust. [cite: 82] [cite_start]These campaigns increased rider frequency and drove a 30% lift in targeted market activation. [cite: 83]</li>
+                            [cite_start]<li>Set up robust tracking mechanisms, integrating Tableau dashboards with CRM tools (Airtable/Salesforce/Braze) to monitor real-time campaign effectiveness. [cite: 84]</li>
+                            [cite_start]<li>Incubated and launched the regional Bird+ subscription service to combat churn among power users, exceeding launch revenue targets by 57%. [cite: 88, 89]</li>
                         </ul>
                     </div>
                 </div>
+
                 <div class="relative md:grid md:grid-cols-2 gap-12 mb-16 items-center">
                     <div class="glass-panel p-6 rounded-lg hover-lift md:text-right">
                         <header class="mb-4 border-b border-white/5 pb-4">
                             [cite_start]<h3 class="text-2xl font-bold text-slate-100">Operations - Vice President [cite: 105]</h3>
-                            [cite_start]<p class="text-sm text-primary font-mono mb-1">WB Surf Inc. (Previously Director) [cite: 104, 111]</p>
-                            [cite_start]<div class="flex md:justify-end justify-between text-sm text-secondary"><span>Jan 2021 - Aug 2023 [cite: 106, 112]</span></div>
+                            [cite_start]<p class="text-sm text-primary font-mono mb-1">WB Surf Inc. [cite: 104]</p>
+                            <div class="flex md:justify-end justify-between text-sm text-secondary gap-4">
+                                [cite_start]<span>Dec 2022 - Aug 2023 [cite: 106]</span>
+                            </div>
                         </header>
                         <ul class="space-y-3 text-secondary list-[square] pl-4 md:pl-0 md:list-none marker:text-primary inline-block text-left md:text-right">
-                            [cite_start]<li>Institutionalized a SQL-based segmentation framework that identified high-LTV cohorts, increasing high-value new users by 80%[cite: 108].</li>
-                            [cite_start]<li>Steered a distressed unit to profitability by deploying an algorithmic pricing strategy that drove a 180% revenue increase in core product lines[cite: 109].</li>
-                            [cite_start]<li>Scaled fulfillment capacity by 3x and reduced Cost of Goods Sold (COGS) by 18% through strategic supplier consolidation[cite: 112, 113].</li>
-                            [cite_start]<li>Stabilized workforce volatility, achieving a 45% to 15% churn reduction via data-driven incentive structures[cite: 114].</li>
+                            [cite_start]<li>Shifted the strategy from "Volume" to "Value." [cite: 107] [cite_start]Institutionalized a SQL-based segmentation framework that identified high-LTV cohorts, increasing high-value new users by 80%. [cite: 108]</li>
+                            [cite_start]<li>Steered a distressed unit to profitability by deploying an algorithmic pricing strategy that drove a <span class="text-primary">180% revenue increase</span> in core product lines. [cite: 109]</li>
+                            [cite_start]<li>Scaled fulfillment capacity by 3x and reduced Cost of Goods Sold (COGS) by 18% through strategic supplier consolidation and JIT inventory. [cite: 112, 113]</li>
+                            [cite_start]<li>Stabilized workforce volatility (45% to 15% churn reduction) by designing a data-driven incentive structure. [cite: 114]</li>
                         </ul>
                     </div>
                     <div class="timeline-dot hidden md:block"></div>
-                    <div class="hidden md:block"></div>
-                </div>
+                    <div class="hidden md:block"></div> </div>
+
                 <div class="relative md:grid md:grid-cols-2 gap-12 items-center">
-                    <div class="hidden md:block"></div>
-                    <div class="timeline-dot hidden md:block"></div>
+                    <div class="hidden md:block"></div> <div class="timeline-dot hidden md:block"></div>
                     <div class="glass-panel p-6 rounded-lg hover-lift">
                         <header class="mb-4 border-b border-white/5 pb-4">
                             [cite_start]<h3 class="text-2xl font-bold text-slate-100">General Manager [cite: 116]</h3>
-                            [cite_start]<p class="text-sm text-primary font-mono mb-1">Real (Previously Operations Manager) [cite: 115, 122]</p>
-                            [cite_start]<div class="flex justify-between text-sm text-secondary"><span>May 2015 - Jan 2021 [cite: 117, 123]</span></div>
+                            [cite_start]<p class="text-sm text-primary font-mono mb-1">Real [cite: 115]</p>
+                            <div class="flex justify-between text-sm text-secondary mt-1">
+                                [cite_start]<span>March 2019 - Jan 2021 [cite: 117]</span>
+                            </div>
                         </header>
                         <ul class="space-y-3 text-secondary list-[square] pl-4 marker:text-primary">
-                            [cite_start]<li>Unified fragmented business units into a single "Member View," designing a cross-sell strategy that increased repeat visit rates by 30%[cite: 118].</li>
-                            [cite_start]<li>Revolutionized the customer service delivery model, driving a 70% improvement in CSAT and reducing churn by 50%[cite: 119, 120].</li>
-                            [cite_start]<li>Architected the "Launch-in-a-Box" framework for international expansion, scaling into 42 markets[cite: 121].</li>
-                            [cite_start]<li>Maintained gross margins above 65% during rapid scale by architecting a centralized procurement engine[cite: 128].</li>
+                            [cite_start]<li>Unified fragmented business units into a single "Member View," designing a cross-sell strategy that increased repeat visit rates by 30%. [cite: 118]</li>
+                            [cite_start]<li>Revolutionized the customer service delivery model by implementing a tiered support structure. [cite: 119] [cite_start]This drove a <span class="text-slate-100">70% improvement in CSAT</span> and reduced churn by 50%. [cite: 120]</li>
+                            [cite_start]<li>Architected the "Launch-in-a-Box" framework for international expansion, creating a scalable operating system to deploy into 42 markets. [cite: 121]</li>
+                            [cite_start]<li>Maintained gross margins above 65% during rapid scale by architecting a centralized procurement engine. [cite: 128]</li>
                         </ul>
                     </div>
                 </div>
@@ -249,42 +375,69 @@
         </section>
 
         <section id="interests" class="py-24 fade-in-up">
-            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-12 section-heading">Beyond the Office</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                <div class="group relative aspect-square rounded-lg overflow-hidden cursor-pointer border border-white/5 bg-slate-900">
-                    <div class="absolute inset-0 bg-gradient-to-br from-cyan-900 to-blue-900 z-0"></div> <img src="surfing.jpg" class="absolute inset-0 w-full h-full object-cover object-top z-10 transition-opacity duration-300" onerror="this.style.opacity='0'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-20"></div>
-                    <div class="absolute bottom-4 left-4 z-30"><h4 class="text-slate-100 font-bold text-lg drop-shadow-md">Surfing</h4></div>
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-100 mb-12 section-heading">
+                Beyond the Office
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                
+                <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-cyan-900 to-blue-900 transition-transform duration-500 group-hover:scale-110"></div>
+                    <img src="surfing.jpg" alt="Surfing" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Surfing</h4>
+                        <p class="text-primary text-xs opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">Chasing waves & balance.</p>
+                    </div>
                 </div>
-                <div class="group relative aspect-square rounded-lg overflow-hidden cursor-pointer border border-white/5 bg-slate-900">
-                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-800 to-green-900 z-0"></div>
-                    <img src="hiking.jpg" class="absolute inset-0 w-full h-full object-cover object-top z-10 transition-opacity duration-300" onerror="this.style.opacity='0'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-20"></div>
-                    <div class="absolute bottom-4 left-4 z-30"><h4 class="text-slate-100 font-bold text-lg drop-shadow-md">Hiking</h4></div>
+                
+                 <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-emerald-900 to-teal-900 transition-transform duration-500 group-hover:scale-110"></div>
+                    <img src="hiking.jpg" alt="Hiking" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Hiking</h4>
+                        <p class="text-primary text-xs opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">Exploring new trails.</p>
+                    </div>
                 </div>
-                <div class="group relative aspect-square rounded-lg overflow-hidden cursor-pointer border border-white/5 bg-slate-900">
-                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-800 to-purple-900 z-0"></div>
-                    <img src="kiteboarding.jpg" class="absolute inset-0 w-full h-full object-cover object-top z-10 transition-opacity duration-300" onerror="this.style.opacity='0'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-20"></div>
-                    <div class="absolute bottom-4 left-4 z-30"><h4 class="text-slate-100 font-bold text-lg drop-shadow-md">Kiteboarding</h4></div>
+                
+                 <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-900 to-purple-900 transition-transform duration-500 group-hover:scale-110"></div>
+                    <img src="kiteboarding.jpg" alt="Kiteboarding" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Kiteboarding</h4>
+                        <p class="text-primary text-xs opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">Harnessing the wind.</p>
+                    </div>
                 </div>
-                <div class="group relative aspect-square rounded-lg overflow-hidden cursor-pointer border border-white/5 bg-slate-900">
-                    <div class="absolute inset-0 bg-gradient-to-br from-orange-800 to-amber-900 z-0"></div>
-                    <img src="camping.jpg" class="absolute inset-0 w-full h-full object-cover object-top z-10 transition-opacity duration-300" onerror="this.style.opacity='0'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-20"></div>
-                    <div class="absolute bottom-4 left-4 z-30"><h4 class="text-slate-100 font-bold text-lg drop-shadow-md">Camping</h4></div>
+                
+                 <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-orange-900 to-amber-900 transition-transform duration-500 group-hover:scale-110"></div>
+                    <img src="camping.jpg" alt="Camping" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Camping</h4>
+                        <p class="text-primary text-xs opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">Nights under stars.</p>
+                    </div>
                 </div>
-                <div class="group relative aspect-square rounded-lg overflow-hidden cursor-pointer border border-white/5 bg-slate-900">
-                    <div class="absolute inset-0 bg-gradient-to-br from-sky-800 to-blue-900 z-0"></div>
-                    <img src="fishing.jpg" class="absolute inset-0 w-full h-full object-cover object-top z-10 transition-opacity duration-300" onerror="this.style.opacity='0'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-20"></div>
-                    <div class="absolute bottom-4 left-4 z-30"><h4 class="text-slate-100 font-bold text-lg drop-shadow-md">Fishing</h4></div>
+                
+                 <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-sky-900 to-cyan-800 transition-transform duration-500 group-hover:scale-110"></div>
+                    <img src="fishing.jpg" alt="Fishing" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Fishing</h4>
+                        <p class="text-primary text-xs opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">Patience & Strategy.</p>
+                    </div>
                 </div>
-                <div class="group relative aspect-square rounded-lg overflow-hidden cursor-pointer border border-white/5 bg-slate-900">
-                    <div class="absolute inset-0 bg-gradient-to-br from-slate-600 to-gray-800 z-0"></div>
-                    <img src="snowboarding.jpg" class="absolute inset-0 w-full h-full object-cover object-top z-10 transition-opacity duration-300" onerror="this.style.opacity='0'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-20"></div>
-                    <div class="absolute bottom-4 left-4 z-30"><h4 class="text-slate-100 font-bold text-lg drop-shadow-md">Snowboarding</h4></div>
+                
+                 <div class="group relative h-48 rounded-lg overflow-hidden cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-slate-600 to-gray-800 transition-transform duration-500 group-hover:scale-110"></div>
+                    <img src="snowboarding.jpg" alt="Snowboarding" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <h4 class="text-slate-100 font-bold text-lg">Snowboarding</h4>
+                        <p class="text-primary text-xs opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">Carving mountains.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -298,110 +451,184 @@
         <section id="contact" class="py-32 text-center max-w-2xl mx-auto fade-in-up">
             <h2 class="text-primary font-mono text-lg mb-6">What's Next?</h2>
             <h3 class="font-display text-4xl md:text-5xl font-bold text-slate-100 mb-6">Get In Touch</h3>
-            <p class="text-secondary text-lg mb-12">I'm currently looking for new opportunities in Product Strategy and Operations. Whether you have a question about my work or just want to say hi, I'll try my best to get back to you!</p>
+            <p class="text-secondary text-lg mb-12">
+                I'm currently looking for new opportunities to drive operational excellence. Whether you have a question about my experience or just want to say hi, I'll try my best to get back to you!
+            </p>
+            
             <div class="flex flex-col items-center gap-4">
                  [cite_start]<p class="text-slate-100 font-mono text-xl">(910) 585-2547 [cite: 64]</p>
-                <a href="mailto:wrightdeaton@gmail.com" class="px-8 py-4 border border-primary text-primary font-bold rounded hover:bg-primary/10 transition-colors">Say Hello</a>
+                <a href="mailto:wrightdeaton@gmail.com" class="px-8 py-4 border border-primary text-primary font-bold rounded hover:bg-primary/10 transition-colors">
+                    Say Hello
+                </a>
             </div>
         </section>
 
-        <footer class="text-center py-8 text-sm text-secondary font-mono"><p>Designed & Built by Deaton Wright</p></footer>
+        <footer class="text-center py-8 text-sm text-secondary font-mono">
+            <div class="flex justify-center gap-6 mb-4 md:hidden">
+            </div>
+            <p>Designed & Built by Deaton Wright</p>
+        </footer>
+
     </main>
 
-    <div class="hidden md:block fixed bottom-0 left-12 w-10 z-20"><div class="flex flex-col gap-6 items-center"><a href="https://linkedin.com/in/deaton-wright" target="_blank" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg></a><div class="h-24 w-[1px] bg-secondary"></div></div></div>
-    <div class="hidden md:block fixed bottom-0 right-12 w-10 z-20"><div class="flex flex-col gap-6 items-center"><a href="mailto:wrightdeaton@gmail.com" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all" style="writing-mode: vertical-rl;">wrightdeaton@gmail.com</a><div class="h-24 w-[1px] bg-secondary"></div></div></div>
+    <div class="hidden md:block fixed bottom-0 left-12 w-10 z-20">
+        <div class="flex flex-col gap-6 items-center">
+            <a href="https://github.com" target="_blank" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg></a>
+            <a href="https://linkedin.com/in/deaton-wright" target="_blank" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg></a>
+            <div class="h-24 w-[1px] bg-secondary"></div>
+        </div>
+    </div>
+
+    <div class="hidden md:block fixed bottom-0 right-12 w-10 z-20">
+        <div class="flex flex-col gap-6 items-center">
+            [cite_start]<a href="mailto:wrightdeaton@gmail.com" class="text-secondary hover:text-primary hover:-translate-y-1 transition-all" style="writing-mode: vertical-rl;">wrightdeaton@gmail.com [cite: 63]</a>
+            <div class="h-24 w-[1px] bg-secondary"></div>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Interactive Background
+            
+            // 1. Constellation Canvas Effect
             const canvas = document.getElementById('canvas-bg');
             const ctx = canvas.getContext('2d');
             let width, height;
             let particles = [];
-            let mouse = { x: null, y: null };
-            window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
-            function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
-            window.addEventListener('resize', resize); resize();
+            
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
             class Particle {
-                constructor() { this.x = Math.random()*width; this.y = Math.random()*height; this.vx = (Math.random()-0.5)*0.5; this.vy = (Math.random()-0.5)*0.5; this.size = Math.random()*2+1; }
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.size = Math.random() * 2 + 1;
+                }
                 update() {
-                    this.x += this.vx; this.y += this.vy;
-                    if(this.x<0||this.x>width) this.vx*=-1; if(this.y<0||this.y>height) this.vy*=-1;
-                    if(mouse.x!=null){ let dx=mouse.x-this.x; let dy=mouse.y-this.y; let d=Math.sqrt(dx*dx+dy*dy); if(d<100){ this.x-=dx/20; this.y-=dy/20; } }
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
                 }
-                draw() { ctx.fillStyle='rgba(100,255,218,0.1)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); }
+                draw() {
+                    ctx.fillStyle = 'rgba(100, 255, 218, 0.1)'; // Teal tint
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
-            for(let i=0;i<60;i++) particles.push(new Particle());
-            function animate() {
-                ctx.clearRect(0,0,width,height);
-                for(let i=0;i<particles.length;i++){
-                    let p=particles[i]; p.update(); p.draw();
-                    for(let j=i+1;j<particles.length;j++){
-                        let p2=particles[j]; let dx=p.x-p2.x; let dy=p.y-p2.y; let d=Math.sqrt(dx*dx+dy*dy);
-                        if(d<150){ ctx.strokeStyle=`rgba(100,255,218,${0.1-d/1500})`; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p2.x,p2.y); ctx.stroke(); }
+
+            // Create initial particles
+            for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+            function animateCanvas() {
+                ctx.clearRect(0, 0, width, height);
+                
+                // Draw connections
+                for (let i = 0; i < particles.length; i++) {
+                    const p1 = particles[i];
+                    p1.update();
+                    p1.draw();
+                    
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dx = p1.x - p2.x;
+                        const dy = p1.y - p2.y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        
+                        if (dist < 150) {
+                            ctx.strokeStyle = `rgba(100, 255, 218, ${0.1 - dist/1500})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
                     }
                 }
-                requestAnimationFrame(animate);
+                requestAnimationFrame(animateCanvas);
             }
-            animate();
+            animateCanvas();
 
-            // 2. Observer for Animations
+
+            // 2. Intersection Observer for Scroll Animations
+            const observerOptions = { threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
-
-            // 3. Robust Counter Animation
-            const countUp = (el, target) => {
-                let current = 0;
-                const increment = target / 50;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if(current >= target) {
-                        el.textContent = target;
-                        clearInterval(timer);
-                    } else {
-                        el.textContent = Math.ceil(current);
-                    }
-                }, 30);
-            };
-            const counterObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if(entry.isIntersecting) {
-                        const target = +entry.target.getAttribute('data-target');
-                        countUp(entry.target, target);
-                        counterObserver.unobserve(entry.target);
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
                     }
                 });
-            }, { threshold: 0.5 });
-            document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+            }, observerOptions);
 
-            // 4. Typewriter Array updated for new content
+            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+            // 3. Typewriter Effect Updated for new Resume phrases
             const typewriterEl = document.getElementById('typewriter');
-            const phrases = [
-                [cite_start]"I build SQL/Python pipelines. [cite: 67]", 
-                [cite_start]"I incubate models like Bird+. [cite: 88]", 
-                [cite_start]"I drive 180% revenue gains. [cite: 109]", 
-                [cite_start]"I increase retention & LTV. [cite: 68]"
-            ];
-            let pIdx = 0, cIdx = 0, isDeleting = false;
-            function type() {
-                const current = phrases[pIdx];
-                typewriterEl.textContent = current.substring(0, isDeleting ? cIdx-- : cIdx++);
-                let speed = isDeleting ? 30 : 50;
-                if(!isDeleting && cIdx === current.length) { speed = 2000; isDeleting = true; }
-                else if(isDeleting && cIdx === 0) { isDeleting = false; pIdx = (pIdx+1)%phrases.length; speed = 500; }
-                setTimeout(type, speed);
-            }
-            setTimeout(type, 500);
+            if (typewriterEl) {
+                const phrases = [
+                    "I build SQL/Python infrastructure.",
+                    "I increase retention and LTV.",
+                    "I turn users into communities.",
+                    "I scale high-velocity marketplaces."
+                ];
+                
+                let phraseIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+                let typeSpeed = 40; // Base speed
 
-            // 5. Tilt
-            VanillaTilt.init(document.querySelectorAll(".glass-panel"), { max: 5, speed: 400, glare: true, "max-glare": 0.1 });
-            
-            // 6. Mobile Menu
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-            if(btn) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+                function type() {
+                    const currentPhrase = phrases[phraseIndex];
+                    
+                    if (isDeleting) {
+                        typewriterEl.textContent = currentPhrase.substring(0, charIndex - 1);
+                        charIndex--;
+                        typeSpeed = 25; // Faster deleting
+                    } else {
+                        typewriterEl.textContent = currentPhrase.substring(0, charIndex + 1);
+                        charIndex++;
+                        typeSpeed = 40; // Fast typing
+                    }
+
+                    if (!isDeleting && charIndex === currentPhrase.length) {
+                        typeSpeed = 2000; // Pause at end
+                        isDeleting = true;
+                    } else if (isDeleting && charIndex === 0) {
+                        isDeleting = false;
+                        phraseIndex = (phraseIndex + 1) % phrases.length;
+                        typeSpeed = 500; // Pause before new phrase
+                    }
+
+                    setTimeout(type, typeSpeed);
+                }
+                
+                // Start after existing fade-ins
+                setTimeout(type, 500);
+            }
+
+            // 4. Vanilla Tilt for Cards
+            VanillaTilt.init(document.querySelectorAll(".glass-panel"), {
+                max: 5,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.1,
+            });
+
+            // 5. Mobile Menu
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileBtn) {
+                mobileBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
         });
     </script>
 </body>
